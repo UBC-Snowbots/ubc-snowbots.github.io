@@ -1,13 +1,17 @@
 # Builds the static export and publishes it to GitHub Pages.
 #
-# This does nothing until the repo has a remote and Pages is enabled
-# (Settings -> Pages -> Source: GitHub Actions). See README for the
-# www.ubcrover.com custom-domain caveat before you turn it on.
+# Requires Settings -> Pages -> Source: "GitHub Actions". With the default
+# "Deploy from a branch" setting, Pages serves the repository SOURCE through
+# Jekyll — and because a Next.js repo has no index.html at its root, Jekyll
+# renders README.md instead of the site. This workflow is what turns the source
+# into the static `out/` directory that actually gets served.
+#
+# Runs on main or master: this repo's default branch is master.
 name: Deploy
 
 on:
   push:
-    branches: [main]
+    branches: [main, master]
   workflow_dispatch:
 
 permissions:

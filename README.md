@@ -131,15 +131,20 @@ anything, so the full-resolution files are never lost. It uses stock ImageMagick
 
 `bun run build` writes a complete static site to `out/`.
 
-`public/CNAME` contains `www.ubcrover.com` and `public/.nojekyll` stops GitHub
-Pages from stripping the `_next/` directory. Both are copied into `out/` on
-build.
+`public/.nojekyll` stops GitHub Pages from stripping the `_next/` directory and
+is copied into `out/` on build.
 
-> **Before you push:** `www.ubcrover.com` is currently served by
-> `ubcrover/ubcrover.github.io`. A custom domain can only be claimed by one Pages
-> site at a time, so enabling Pages here will fail until the domain is released
-> from the old repo. Either do that cutover deliberately, or delete
-> `public/CNAME` and deploy to the default `github.io` URL first.
+**Pages must be set to "GitHub Actions"** (Settings -> Pages -> Source). On the
+default "Deploy from a branch" setting Pages runs Jekyll over the repository
+source, finds no `index.html` at the root, and renders `README.md` instead of
+the site.
 
-This repo has **no git remote configured** — that was intentional. Add one when
-you're ready.
+There is deliberately **no `public/CNAME`**. Add one only when you know which
+custom domain this deployment should own — a Pages site claims that domain
+exclusively, so committing the wrong one takes the domain away from whichever
+repo currently serves it.
+
+> **Custom domains:** a domain can only be claimed by one Pages site at a time.
+> `www.ubcrover.com` is served by `ubcrover/ubcrover.github.io`; `snowbots.ca`
+> was served from the root `CNAME` of this repo's previous contents. Whichever
+> you want here, add it as `public/CNAME` and set it under Settings -> Pages.
