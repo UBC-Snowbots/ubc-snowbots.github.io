@@ -9,6 +9,7 @@ import {
   SITE,
   SUBTEAMS,
   SUBTEAM_LEADS,
+  TEAM_INTRO,
   TEAM_PHOTO,
   leadsForSubteam,
 } from "@/lib/content";
@@ -39,6 +40,16 @@ export default function TeamPage() {
         lede={`${SITE.memberCount} students across engineering, science and business, organised into ${SITE.subteamCount} sub-teams.`}
         image={TEAM_PHOTO}
       />
+
+      {/* Intro band between the masthead and the first section, as on the
+          reference page. */}
+      <section className="mx-auto max-w-[1600px] px-5 py-12 sm:px-8 sm:py-16">
+        <Reveal>
+          <p className="text-chalk-dim/85 mx-auto max-w-3xl text-center text-base leading-relaxed text-balance sm:text-lg">
+            {TEAM_INTRO}
+          </p>
+        </Reveal>
+      </section>
 
       {/* Captains */}
       <TeamBanner title="Our Captains" />

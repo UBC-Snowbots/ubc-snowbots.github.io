@@ -362,6 +362,10 @@ export const CAD = {
  */
 export const TEAM_PHOTO = "/media/team/team-photo.jpg";
 
+/** Intro line on /team, between the masthead and the Captains band. */
+export const TEAM_INTRO =
+  "Get to know the brilliant minds driving innovation at UBC Rover. Each member brings unique expertise to our cutting-edge projects.";
+
 export type Project = {
   index: string;
   title: string;
