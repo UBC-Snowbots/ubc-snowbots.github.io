@@ -563,9 +563,6 @@ export const subsystemsForSubteam = (slug: string) =>
 /** Co-captains — the "Our Captains" band on /team. */
 export const CAPTAINS = () => LEADS.filter((l) => /captain/i.test(l.role));
 
-/** Everyone else with a lead title — the "Our Leads" band on /team. */
-export const SUBTEAM_LEADS = () => LEADS.filter((l) => !/captain/i.test(l.role));
-
 export const leadsForSubteam = (slug: string) => {
   const team = getSubteam(slug);
   if (!team) return [];

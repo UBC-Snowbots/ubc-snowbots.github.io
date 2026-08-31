@@ -8,7 +8,6 @@ import {
   CAPTAINS,
   SITE,
   SUBTEAMS,
-  SUBTEAM_LEADS,
   TEAM_INTRO,
   TEAM_PHOTO,
   leadsForSubteam,
@@ -30,7 +29,6 @@ export const metadata: Metadata = {
  */
 export default function TeamPage() {
   const captains = CAPTAINS();
-  const leads = SUBTEAM_LEADS();
 
   return (
     <>
@@ -58,18 +56,6 @@ export default function TeamPage() {
       </section>
 
       {/* Leads */}
-      <TeamBanner title="Our Leads" />
-      <section className="mx-auto max-w-[1600px] px-5 pt-7 pb-12 sm:px-8 sm:pt-9 sm:pb-16">
-        <Reveal>
-          <p className="text-chalk-dim/70 mx-auto mb-6 max-w-2xl text-center text-sm leading-relaxed">
-            {/* TODO(team): role titles — taskmaster, systems lead and so on —
-                still to be decided. Update LEADS[].role in lib/content.ts. */}
-            Role titles are still being finalised.
-          </p>
-        </Reveal>
-        <MemberGrid people={leads} />
-      </section>
-
       {/* One band per sub-team */}
       {SUBTEAMS.map((team) => (
         <div key={team.slug}>
