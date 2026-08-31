@@ -577,7 +577,7 @@ export type LeadLink = { kind: "github" | "linkedin" | "website"; href: string }
  *
  * `image` is optional — where there is no portrait the card renders initials
  * rather than a stock silhouette. See components/MemberCard.tsx.
- * TODO(team): portraits for Aaron, Ben, Jennifer, William and Matt.
+ * TODO(team): Andres is the only lead still without a portrait.
  */
 export type Person = {
   name: string;
@@ -596,8 +596,16 @@ export const PEOPLE: Person[] = [
     image: "/media/people/rowan.jpg",
     links: li("https://www.linkedin.com/in/rowan-zawadzki-4b7539158/"),
   },
-  { name: "Aaron Rhim", links: li("https://www.linkedin.com/in/aaronrhim/") },
-  { name: "Ben Newington", links: li("https://www.linkedin.com/in/bennewington/") },
+  {
+    name: "Aaron Rhim",
+    image: "/media/people/aaron.png",
+    links: li("https://www.linkedin.com/in/aaronrhim/"),
+  },
+  {
+    name: "Ben Newington",
+    image: "/media/people/ben.jpg",
+    links: li("https://www.linkedin.com/in/bennewington/"),
+  },
   {
     name: "Riddhima Gupta",
     image: "/media/people/riddhima.jpg",
@@ -605,13 +613,19 @@ export const PEOPLE: Person[] = [
   },
   {
     name: "Jennifer Phung",
+    image: "/media/people/jennifer.png",
     links: li("https://www.linkedin.com/in/jennifer-phung-734541338/"),
   },
   {
     name: "William Banquier",
+    image: "/media/people/william.png",
     links: li("https://www.linkedin.com/in/william-banquier/"),
   },
-  { name: "Matt Yung", links: li("https://www.linkedin.com/in/mattyung12/") },
+  {
+    name: "Matt Yung",
+    image: "/media/people/matt.jpg",
+    links: li("https://www.linkedin.com/in/mattyung12/"),
+  },
 ];
 
 const person = (name: string): Person => PEOPLE.find((p) => p.name === name) ?? { name };

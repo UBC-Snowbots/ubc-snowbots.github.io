@@ -11,16 +11,31 @@ export default function TeamBanner({
   title,
   image = TEAM_PHOTO,
   eyebrow,
+  inline = false,
 }: {
   title: string;
   image?: string;
   eyebrow?: string;
+  /**
+   * `inline` puts the band inside the page container beside other content
+   * instead of running edge to edge: it stretches to its grid row and gains a
+   * full border rather than just top and bottom. Used where a sub-team has a
+   * single lead, so the header and that one card sit side by side rather than
+   * leaving a near-empty row under a full-width band.
+   */
+  inline?: boolean;
 }) {
   return (
     /* No `full-bleed` here: this band's parent is already full width, and
        full-bleed's 100vw includes the scrollbar on browsers with classic
        (non-overlay) scrollbars, which would shift the photo sideways. */
-    <section className="relative isolate flex h-52 w-full items-center justify-center overflow-hidden border-y border-white/10 sm:h-64">
+    <section
+      className={
+        inline
+          ? "relative isolate flex h-56 w-full items-center justify-center overflow-hidden border border-white/10 lg:h-full lg:min-h-[24rem]"
+          : "relative isolate flex h-52 w-full items-center justify-center overflow-hidden border-y border-white/10 sm:h-64"
+      }
+    >
       <img
         src={image}
         alt=""
@@ -38,7 +53,11 @@ export default function TeamBanner({
 
       <div className="px-5 text-center">
         {eyebrow ? <p className="text-eyebrow mb-3">{eyebrow}</p> : null}
-        <h2 className="font-display text-chalk text-4xl leading-[0.95] font-extrabold tracking-[-0.035em] sm:text-6xl">
+        <h2
+          className={`font-display text-chalk leading-[0.95] font-extrabold tracking-[-0.035em] ${
+            inline ? "text-3xl sm:text-5xl" : "text-4xl sm:text-6xl"
+          }`}
+        >
           {title}
         </h2>
       </div>
