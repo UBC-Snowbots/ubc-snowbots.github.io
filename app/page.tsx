@@ -39,13 +39,13 @@ export default function Home() {
         {/* pt clears the fixed header stack (banner 36px + bar 64/80px + 3px
             rule). The block is bottom-aligned, so without a top pad the eyebrow
             slides under the header on short viewports. */}
-        <div className="mx-auto w-full max-w-[1600px] px-5 pt-32 pb-16 sm:px-8 sm:pt-36 sm:pb-24">
+        <div className="mx-auto w-full max-w-[1600px] px-5 pt-28 pb-12 sm:px-8 sm:pt-32 sm:pb-20 [@media(max-height:820px)]:pt-24 [@media(max-height:820px)]:pb-10">
           <Reveal initiallyVisible>
             <p className="text-eyebrow">University of British Columbia</p>
           </Reveal>
 
           <Reveal delay={80} initiallyVisible>
-            <h1 className="font-display text-chalk mt-5 text-[clamp(3.25rem,13vw,12rem)] leading-[0.82] font-extrabold tracking-[-0.045em]">
+            <h1 className="font-display text-chalk mt-5 text-[clamp(2.75rem,min(13vw,17vh),12rem)] leading-[0.82] font-extrabold tracking-[-0.045em]">
               UBC
               <br />
               <span className="text-amber-500">ROVER</span>
@@ -53,13 +53,16 @@ export default function Home() {
           </Reveal>
 
           <Reveal delay={160} initiallyVisible>
-            <div className="stripe-rule mt-9 h-[26px] w-full max-w-lg" aria-hidden />
+            <div
+              className="stripe-rule mt-7 h-[26px] w-full max-w-lg [@media(max-height:820px)]:mt-5"
+              aria-hidden
+            />
           </Reveal>
 
           {/* The slogan, set as three beats so it reads like the flyer's
               stamped triad rather than a sentence. */}
           <Reveal delay={220} initiallyVisible>
-            <p className="font-display text-chalk mt-9 flex flex-wrap items-baseline gap-x-4 text-4xl leading-[0.95] font-extrabold tracking-[-0.03em] uppercase sm:gap-x-7 sm:text-6xl lg:text-7xl">
+            <p className="font-display text-chalk mt-7 flex flex-wrap items-baseline gap-x-4 text-[clamp(1.9rem,min(6vw,7.5vh),4.5rem)] leading-[0.95] font-extrabold tracking-[-0.03em] uppercase sm:gap-x-7 [@media(max-height:820px)]:mt-5">
               {SITE.slogan.map((word) => (
                 <span key={word}>
                   {word}
@@ -69,14 +72,14 @@ export default function Home() {
                 </span>
               ))}
             </p>
-            <p className="text-chalk-dim/80 mt-6 max-w-xl text-base leading-relaxed">
+            <p className="text-chalk-dim/80 mt-5 max-w-xl text-base leading-relaxed [@media(max-height:720px)]:hidden [@media(max-height:820px)]:mt-3">
               We design and build advanced semi-autonomous rovers for international
               competition.
             </p>
           </Reveal>
 
           <Reveal delay={300} initiallyVisible>
-            <div className="mt-10 flex flex-wrap items-center gap-4">
+            <div className="mt-8 flex flex-wrap items-center gap-4 [@media(max-height:820px)]:mt-5">
               <Link
                 href={applyHref()}
                 className="text-navy-950 bg-amber-500 px-8 py-4 font-mono text-[11px] tracking-[0.18em] uppercase transition-colors duration-200 hover:bg-amber-400"
@@ -156,7 +159,7 @@ export default function Home() {
                   className={
                     stat.value === "PLACEHOLDER"
                       ? "font-mono text-sm leading-none tracking-[0.14em] text-amber-500/70"
-                      : "font-display text-4xl leading-none font-extrabold tracking-[-0.04em] text-amber-500 sm:text-6xl"
+                      : "font-display text-4xl leading-none font-extrabold tracking-[-0.04em] text-amber-500 xl:text-6xl"
                   }
                 >
                   {stat.value}
@@ -353,22 +356,24 @@ export default function Home() {
         />
         <div aria-hidden className="grid-wash absolute inset-0 -z-10 opacity-30" />
 
-        <div className="mx-auto max-w-[1600px] px-5 py-10 text-center sm:px-8 sm:py-12">
+        <div className="mx-auto max-w-[1600px] px-5 py-8 text-center sm:px-8 sm:py-10 [@media(max-height:760px)]:py-5">
           <Reveal>
-            <p className="text-eyebrow">Recruitment opens every September</p>
-            <h2 className="font-display text-chalk mx-auto mt-3 max-w-4xl text-2xl leading-[0.95] font-extrabold tracking-[-0.04em] sm:text-4xl">
+            <p className="text-eyebrow [@media(max-height:680px)]:hidden">
+              Recruitment opens every September
+            </p>
+            <h2 className="font-display text-chalk mx-auto mt-3 max-w-4xl text-2xl leading-[0.95] font-extrabold tracking-[-0.04em] sm:text-4xl [@media(max-height:760px)]:mt-0 [@media(max-height:760px)]:text-xl">
               Come build the thing that drives itself.
             </h2>
-            <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <div className="mt-6 flex flex-wrap justify-center gap-3 [@media(max-height:760px)]:mt-4">
               <Link
                 href={applyHref()}
-                className="text-navy-950 bg-amber-500 px-8 py-3.5 font-mono text-[11px] tracking-[0.18em] uppercase transition-colors duration-200 hover:bg-amber-400"
+                className="text-navy-950 bg-amber-500 px-8 py-3.5 font-mono text-[11px] tracking-[0.18em] uppercase transition-colors duration-200 hover:bg-amber-400 [@media(max-height:760px)]:py-2.5"
               >
                 Apply Now
               </Link>
               <Link
                 href="/contact"
-                className="text-chalk border border-white/25 px-8 py-3.5 font-mono text-[11px] tracking-[0.18em] uppercase transition-colors duration-200 hover:border-amber-500 hover:text-amber-500"
+                className="text-chalk border border-white/25 px-8 py-3.5 font-mono text-[11px] tracking-[0.18em] uppercase transition-colors duration-200 hover:border-amber-500 hover:text-amber-500 [@media(max-height:760px)]:py-2.5"
               >
                 Get in Touch
               </Link>

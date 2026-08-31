@@ -41,17 +41,19 @@ export default function Footer() {
     <footer className="bg-navy-950 relative border-t border-white/10">
       <div className="stripe-rule-thin h-[3px] w-full" aria-hidden />
 
-      <div className="mx-auto max-w-[1600px] px-5 py-9 sm:px-8 sm:py-11">
-        <div className="grid gap-8 md:grid-cols-[1.6fr_1fr_1fr] md:gap-10">
+      <div className="mx-auto max-w-[1600px] px-5 py-7 sm:px-8 sm:py-9 [@media(max-height:760px)]:py-5">
+        <div className="grid gap-6 md:grid-cols-[1.6fr_1fr_1fr] md:gap-10 [@media(max-height:760px)]:gap-4">
           {/* Identity */}
           <div>
             <p className="font-display text-chalk text-2xl leading-none font-extrabold tracking-[-0.03em] sm:text-3xl">
               UBC <span className="text-amber-500">ROVER</span>
             </p>
-            <p className="text-chalk-dim/70 mt-3 max-w-sm text-xs leading-relaxed">
+            <p className="text-chalk-dim/70 mt-3 max-w-sm text-xs leading-relaxed [@media(max-height:760px)]:hidden">
               {SITE.blurb}
             </p>
-            <p className="text-eyebrow mt-4">{SITE.tagline}</p>
+            <p className="text-eyebrow mt-4 [@media(max-height:760px)]:mt-2">
+              {SITE.tagline}
+            </p>
           </div>
 
           {/* Link columns — 2-up on mobile so the footer stays short. */}
@@ -61,7 +63,7 @@ export default function Footer() {
                 <p className="text-chalk-dim/70 mb-3 font-mono text-[10px] tracking-[0.18em] uppercase">
                   {col.heading}
                 </p>
-                <ul className="space-y-1.5">
+                <ul className="space-y-1.5 [@media(max-height:760px)]:space-y-0.5">
                   {col.links.map((link) =>
                     link.external ? (
                       <li key={link.href}>
@@ -91,7 +93,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="text-chalk-dim/70 mt-8 flex flex-col gap-2 border-t border-white/10 pt-5 text-[11px] sm:flex-row sm:items-center sm:justify-between">
+        <div className="text-chalk-dim/70 mt-6 flex flex-col gap-2 border-t border-white/10 pt-4 text-[11px] sm:flex-row sm:items-center sm:justify-between [@media(max-height:760px)]:mt-4 [@media(max-height:760px)]:pt-3">
           <p>
             <a
               href={`mailto:${SITE.email}`}
