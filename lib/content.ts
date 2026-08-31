@@ -115,7 +115,7 @@ export const SECTIONS: SectionTile[] = [
   },
   {
     index: "03",
-    title: "The Team",
+    title: "Our Team",
     href: "/team",
     eyebrow: "Who builds it",
     blurb:
@@ -353,6 +353,15 @@ export const CAD = {
 /* Sub-teams                                                                   */
 /* -------------------------------------------------------------------------- */
 
+/**
+ * Group photo used behind every team banner on /team.
+ *
+ * TODO(team): this one shot stands in for all of them. When each sub-team has
+ * its own group photo, drop it in public/media/team/ and set `photo` on that
+ * sub-team in SUBTEAMS below — the banner picks it up automatically.
+ */
+export const TEAM_PHOTO = "/media/team/team-photo.jpg";
+
 export type Project = {
   index: string;
   title: string;
@@ -372,6 +381,8 @@ export type Subteam = {
   slug: string;
   name: string;
   discipline: string;
+  /** Group photo for this sub-team's banner. Falls back to TEAM_PHOTO. */
+  photo?: string;
   /** TODO(team): sub-team leads to rewrite. Carried over from the old site. */
   blurb: string;
   image: string;
@@ -544,6 +555,12 @@ export const getSubteam = (slug: string) => SUBTEAMS.find((t) => t.slug === slug
  */
 export const subsystemsForSubteam = (slug: string) =>
   SUBSYSTEMS.filter((sub) => sub.ownedBy === slug);
+
+/** Co-captains — the "Our Captains" band on /team. */
+export const CAPTAINS = () => LEADS.filter((l) => /captain/i.test(l.role));
+
+/** Everyone else with a lead title — the "Our Leads" band on /team. */
+export const SUBTEAM_LEADS = () => LEADS.filter((l) => !/captain/i.test(l.role));
 
 export const leadsForSubteam = (slug: string) => {
   const team = getSubteam(slug);
@@ -808,7 +825,7 @@ export const INQUIRY_TYPES = [
 export const NAV = [
   { label: "Sub-Teams", href: "/subteams" },
   { label: "Competition", href: "/compete" },
-  { label: "Team", href: "/team" },
+  { label: "Our Team", href: "/team" },
   { label: "Contact", href: "/contact" },
 ] as const;
 
