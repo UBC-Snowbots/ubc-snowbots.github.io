@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
+import StripeRule from "@/components/StripeRule";
 import { FORMSPREE_ENDPOINT, INQUIRY_TYPES, SITE, SOCIALS } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -165,7 +166,7 @@ export default function ContactPage() {
                 ))}
               </ul>
 
-              <div className="stripe-rule mt-10 h-[26px] w-full" aria-hidden />
+              <StripeRule className="mt-10" />
 
               <p className="text-chalk-dim/70 mt-10 text-sm leading-relaxed">
                 We are a student team, so replies land between lectures and lab time — but

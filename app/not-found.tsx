@@ -1,4 +1,5 @@
 import Link from "next/link";
+import StripeRule from "@/components/StripeRule";
 
 export default function NotFound() {
   return (
@@ -10,7 +11,7 @@ export default function NotFound() {
         <h1 className="font-display text-chalk mt-5 text-[clamp(3.5rem,14vw,11rem)] leading-[0.85] font-extrabold tracking-[-0.045em]">
           Off<span className="text-amber-500">-</span>course
         </h1>
-        <div className="stripe-rule mt-8 h-[26px] w-full max-w-md" aria-hidden />
+        <StripeRule className="mt-8 max-w-md" />
         <p className="text-chalk-dim/80 mt-8 max-w-lg text-base leading-relaxed">
           That page is not on the map. Navigation error — recalculating.
         </p>

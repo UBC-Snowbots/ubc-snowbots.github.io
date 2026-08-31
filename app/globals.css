@@ -107,31 +107,12 @@
    Utilities
    ========================================================================= */
 @layer utilities {
-  /* The flyer's signature: a stack of angled amber / rust / navy rules.
-     Pure CSS gradient — no image request, no layout cost.
-
-     The tilt is baked into the gradient angle (179deg) rather than applied with
-     a `-skew-y-1` transform. A skew rasterises the already-drawn hard-edged
-     bands and then shears that bitmap, which at 1x DPR produces visible stair
-     stepping — the bands jump a whole pixel at a time across the width. Letting
-     the browser rasterise one continuous angled gradient anti-aliases properly. */
-  .stripe-rule {
-    background-image: linear-gradient(
-      179deg,
-      var(--color-chalk) 0 2px,
-      transparent 2px 5px,
-      var(--color-amber-500) 5px 10px,
-      transparent 10px 13px,
-      var(--color-rust-500) 13px 18px,
-      transparent 18px 21px,
-      var(--color-indigo-400) 21px 26px
-    );
-  }
-
-  /* Thin variant for the 3px rules under the header, footer and page mastheads.
-     The full .stripe-rule is 26px of stops, so at 3px tall only its first band
-     survives and it reads as a plain white hairline. This splits the same four
-     brand colours horizontally instead, so the identity still lands. */
+  /* Thin rule for the 3px lines under the header, footer and page mastheads.
+     The full stripe (components/StripeRule.tsx) stacks four bands over 26px, so
+     at 3px tall only its first band would survive and it would read as a plain
+     white hairline. This splits the same four brand colours horizontally
+     instead, so the identity still lands at that height. Horizontal hard stops
+     need no anti-aliasing, so this stays crisp. */
   .stripe-rule-thin {
     background-image: linear-gradient(
       to right,

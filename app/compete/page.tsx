@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
+import StripeRule from "@/components/StripeRule";
 import { COMPETITIONS } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -82,10 +83,7 @@ export default function CompetePage() {
                     aria-hidden
                     className="from-navy-950/60 absolute inset-0 bg-gradient-to-t to-transparent"
                   />
-                  <div
-                    className="stripe-rule absolute right-0 bottom-0 left-0 h-[26px] opacity-90"
-                    aria-hidden
-                  />
+                  <StripeRule className="absolute right-0 bottom-0 left-0 opacity-90" />
                 </div>
               </Reveal>
             </article>

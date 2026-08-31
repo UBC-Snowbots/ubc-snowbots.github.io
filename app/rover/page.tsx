@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
+import StripeRule from "@/components/StripeRule";
 import { CAD, SUBSYSTEMS, getSubteam } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -90,7 +91,7 @@ export default function RoverPage() {
                     {sub.role}
                   </p>
 
-                  <div className="stripe-rule mt-6 h-[26px] w-40" aria-hidden />
+                  <StripeRule className="mt-6 w-40" />
 
                   <p className="text-chalk-dim/85 mt-7 text-base leading-relaxed">
                     {sub.summary}

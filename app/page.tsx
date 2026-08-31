@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import SectionTile from "@/components/SectionTile";
+import StripeRule from "@/components/StripeRule";
 import {
   COMPETITIONS,
   SECTIONS,
@@ -53,10 +54,7 @@ export default function Home() {
           </Reveal>
 
           <Reveal delay={160} initiallyVisible>
-            <div
-              className="stripe-rule mt-7 h-[26px] w-full max-w-lg [@media(max-height:820px)]:mt-5"
-              aria-hidden
-            />
+            <StripeRule className="mt-7 max-w-lg [@media(max-height:820px)]:mt-5" />
           </Reveal>
 
           {/* The slogan, set as three beats so it reads like the flyer's
