@@ -198,11 +198,11 @@ export default async function SubteamPage({ params }: Params) {
             <div>
               <p className="text-eyebrow">Our work</p>
               <h2 className="font-display text-chalk mt-4 text-3xl leading-[0.95] font-extrabold tracking-[-0.03em] sm:text-5xl">
-                Projects
+                R&amp;D Projects
               </h2>
             </div>
             <p className="text-chalk-dim/70 max-w-sm text-sm leading-relaxed">
-              What {team.name} has designed, built and taken to competition.
+              Research and development {team.name} has taken on beyond the build.
             </p>
           </div>
         </Reveal>

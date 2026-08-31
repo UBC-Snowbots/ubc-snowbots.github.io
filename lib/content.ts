@@ -391,7 +391,7 @@ export type Subteam = {
   blurb: string;
   image: string;
   capabilities: string[];
-  /** Rendered as Explore-style tiles on the sub-team's own page. */
+  /** R&D projects, rendered as Explore-style tiles on the sub-team page. */
   projects: Project[];
   /** Rendered on /join. Strictly roles and responsibilities. */
   openRoles: OpenRole[];
@@ -402,21 +402,21 @@ const placeholderProjects = (name: string, image: string): Project[] => [
     index: "01",
     title: "Project One",
     eyebrow: "PLACEHOLDER",
-    blurb: `PLACEHOLDER — a project the ${name} sub-team delivered. Replace with a real one: what was built, what problem it solved, and what came out of it at competition.`,
+    blurb: `PLACEHOLDER — an R&D project the ${name} sub-team took on. Replace with a real one: the question it set out to answer, what was tried, and what came of it.`,
     image,
   },
   {
     index: "02",
     title: "Project Two",
     eyebrow: "PLACEHOLDER",
-    blurb: `PLACEHOLDER — a second ${name} project. Two to four of these per sub-team reads best in this grid.`,
+    blurb: `PLACEHOLDER — a second ${name} R&D project. Two to four per sub-team reads best in this grid.`,
     image,
   },
   {
     index: "03",
     title: "Project Three",
     eyebrow: "PLACEHOLDER",
-    blurb: `PLACEHOLDER — a third ${name} project.`,
+    blurb: `PLACEHOLDER — a third ${name} R&D project.`,
     image,
   },
 ];
