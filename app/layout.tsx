@@ -73,7 +73,12 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+/* `children` is typed explicitly rather than via Next's generated `LayoutProps`
+   helper. That helper is emitted into .next/types during a build, so on a clean
+   CI checkout `tsc --noEmit` runs before `next build` has generated it and fails
+   with "Cannot find name 'LayoutProps'". It only passes locally because .next/
+   is already present. Same reasoning as app/subteams/[slug]/page.tsx. */
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
