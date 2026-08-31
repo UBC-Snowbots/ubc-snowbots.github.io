@@ -1,4 +1,4 @@
-import LeadLinks from "./LeadLinks";
+import LinkedInLink from "./LinkedInLink";
 import Reveal from "./Reveal";
 import type { Person } from "@/lib/content";
 
@@ -58,13 +58,17 @@ export function MemberCard({
           )}
         </div>
         <figcaption className="p-4 sm:p-5">
-          <p className="font-display text-chalk text-base leading-tight font-bold tracking-[-0.01em] sm:text-lg">
-            {person.name}
-          </p>
+          {/* Name and LinkedIn share a row so the caption is two lines whether
+              or not the person has a link. */}
+          <div className="flex items-start justify-between gap-3">
+            <p className="font-display text-chalk text-base leading-tight font-bold tracking-[-0.01em] sm:text-lg">
+              {person.name}
+            </p>
+            <LinkedInLink person={person} />
+          </div>
           <p className="mt-1 font-mono text-[10px] tracking-[0.14em] text-amber-500/80 uppercase">
             {role}
           </p>
-          <LeadLinks links={person.links} name={person.name} />
         </figcaption>
       </figure>
     </Reveal>

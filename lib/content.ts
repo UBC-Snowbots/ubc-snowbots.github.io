@@ -577,7 +577,7 @@ export type LeadLink = { kind: "github" | "linkedin" | "website"; href: string }
  *
  * `image` is optional — where there is no portrait the card renders initials
  * rather than a stock silhouette. See components/MemberCard.tsx.
- * TODO(team): Andres is the only lead still without a portrait.
+ * TODO(team): Andres and Darwyn are still without portraits.
  */
 export type Person = {
   name: string;
@@ -626,6 +626,8 @@ export const PEOPLE: Person[] = [
     image: "/media/people/matt.jpg",
     links: li("https://www.linkedin.com/in/mattyung12/"),
   },
+  // TODO(team): Darwyn has no portrait and no LinkedIn on record yet.
+  { name: "Darwyn M" },
 ];
 
 const person = (name: string): Person => PEOPLE.find((p) => p.name === name) ?? { name };
@@ -636,15 +638,14 @@ export const CAPTAIN_NAMES = ["Andres Fleet", "Rowan Zawadzki"] as const;
 /**
  * Leads per sub-team.
  *
- * TODO(team): Electrical and Business have no lead on record. Their bands show
- * a placeholder until someone supplies the names — an obvious gap beats a stale
- * name carried over from an older roster.
+ * TODO(team): Business has no lead on record. Its band shows a placeholder
+ * until someone supplies a name — an obvious gap beats a stale one.
  */
 export const SUBTEAM_LEAD_NAMES: Record<string, string[]> = {
   chassis: ["Andres Fleet"],
   arm: ["William Banquier", "Matt Yung"],
   "rover-lab": ["Jennifer Phung"],
-  electrical: [],
+  electrical: ["Darwyn M"],
   software: ["Rowan Zawadzki", "Aaron Rhim", "Ben Newington", "Riddhima Gupta"],
   science: ["Jennifer Phung"],
   business: [],
