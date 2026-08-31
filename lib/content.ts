@@ -717,7 +717,7 @@ export const SPONSOR_TIERS: SponsorTier[] = [
       { src: "/media/sponsors/tradecomm.jpg", name: "Tradecomm" },
       { src: "/media/sponsors/ubcmec.png", name: "UBC MEC" },
       { src: "/media/sponsors/petrokleen.jpg", name: "Petrokleen" },
-      { src: "/media/sponsors/protocase.png", name: "Protocase" },
+      { src: "/media/sponsors/protospace.png", name: "Protospace" },
     ],
   },
   {
@@ -765,8 +765,8 @@ export const SPONSOR_IMPACT: SponsorImpact[] = [
     outcome: "PLACEHOLDER — which subsystem it went into and what it enabled.",
   },
   {
-    sponsor: "Protocase",
-    logo: "/media/sponsors/protocase.png",
+    sponsor: "Protospace",
+    logo: "/media/sponsors/protospace.png",
     contribution: "PLACEHOLDER — what they provided (e.g. fabricated enclosures).",
     outcome: "PLACEHOLDER — what that made possible on the rover.",
   },

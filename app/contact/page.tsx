@@ -23,7 +23,7 @@ export default function ContactPage() {
         lede="Sponsorship, recruitment, media or partnership — we would like to hear from you."
       />
 
-      <section className="mx-auto max-w-[1600px] px-5 py-20 sm:px-8 sm:py-28">
+      <section className="mx-auto max-w-[1600px] px-5 py-14 sm:px-8 sm:py-20">
         <div className="grid gap-16 lg:grid-cols-[1.1fr_1fr] lg:gap-24">
           {/* Form — posts to the same Formspree endpoint the previous site used,
               so submissions keep landing in the team's existing inbox. It is a

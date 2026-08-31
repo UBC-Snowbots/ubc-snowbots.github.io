@@ -43,7 +43,7 @@ export default async function SubteamPage({ params }: Params) {
         image={team.image}
       />
 
-      <section className="mx-auto max-w-[1600px] px-5 py-20 sm:px-8 sm:py-24">
+      <section className="mx-auto max-w-[1600px] px-5 py-14 sm:px-8 sm:py-16">
         {/* Apply */}
         <Reveal>
           <div className="bg-navy-900 flex flex-col gap-6 border border-white/10 p-8 sm:flex-row sm:items-center sm:justify-between sm:p-10">
@@ -80,7 +80,7 @@ export default async function SubteamPage({ params }: Params) {
             list rather than rendering an empty section.
             ------------------------------------------------------------ */}
         <Reveal>
-          <div className="mt-20 border-b border-white/10 pb-6">
+          <div className="mt-14 border-b border-white/10 pb-6">
             <p className="text-eyebrow">What we do</p>
             <h2 className="font-display text-chalk mt-3 text-3xl leading-[0.95] font-extrabold tracking-[-0.03em] sm:text-5xl">
               {owned.length ? "The systems we build" : "What we handle"}
@@ -89,7 +89,7 @@ export default async function SubteamPage({ params }: Params) {
         </Reveal>
 
         {owned.length ? (
-          <div className="mt-12 space-y-20 sm:space-y-28">
+          <div className="mt-12 space-y-14 sm:space-y-18">
             {owned.map((sub, i) => (
               <article key={sub.slug} id={sub.slug} className="scroll-mt-32">
                 <div
@@ -194,7 +194,7 @@ export default async function SubteamPage({ params }: Params) {
 
         {/* Projects — same tile treatment as the home page Explore grid. */}
         <Reveal>
-          <div className="mt-24 flex flex-wrap items-end justify-between gap-6 border-b border-white/10 pb-8">
+          <div className="mt-16 flex flex-wrap items-end justify-between gap-6 border-b border-white/10 pb-8">
             <div>
               <p className="text-eyebrow">Our work</p>
               <h2 className="font-display text-chalk mt-4 text-3xl leading-[0.95] font-extrabold tracking-[-0.03em] sm:text-5xl">
@@ -265,7 +265,7 @@ export default async function SubteamPage({ params }: Params) {
 
         {/* Other sub-teams */}
         <Reveal>
-          <h2 className="font-display text-chalk mt-24 text-2xl font-extrabold tracking-[-0.02em] sm:text-3xl">
+          <h2 className="font-display text-chalk mt-16 text-2xl font-extrabold tracking-[-0.02em] sm:text-3xl">
             Other sub-teams
           </h2>
           <div className="mt-6 flex flex-wrap gap-3">

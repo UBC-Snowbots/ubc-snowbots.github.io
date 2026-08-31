@@ -105,7 +105,7 @@ export default function Home() {
       {/* ==================================================================
           MISSION — one bold statement, generous air (Relativity).
           ================================================================== */}
-      <section className="mx-auto max-w-[1600px] px-5 py-24 sm:px-8 sm:py-32">
+      <section className="mx-auto max-w-[1600px] px-5 py-16 sm:px-8 sm:py-20">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-20">
           <Reveal>
             <p className="text-eyebrow">Who we are</p>
@@ -140,7 +140,7 @@ export default function Home() {
         </div>
 
         {/* Stats band */}
-        <div className="mt-20 grid grid-cols-2 gap-px border border-white/10 bg-white/10 sm:mt-24 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="mt-14 grid grid-cols-2 gap-px border border-white/10 bg-white/10 sm:mt-16 sm:grid-cols-3 lg:grid-cols-5">
           {STATS.map((stat, i) => (
             <Reveal
               key={stat.label}
@@ -180,7 +180,7 @@ export default function Home() {
       >
         <div aria-hidden className="grid-wash absolute inset-0 opacity-40" />
 
-        <div className="relative mx-auto max-w-[1600px] px-5 py-24 sm:px-8 sm:py-28">
+        <div className="relative mx-auto max-w-[1600px] px-5 py-16 sm:px-8 sm:py-20">
           <Reveal>
             <div className="flex flex-wrap items-end justify-between gap-6 border-b border-white/10 pb-8">
               <div>
@@ -218,7 +218,7 @@ export default function Home() {
           COMPETITIONS — split panels, each linking out to the organiser.
           ================================================================== */}
       <section className="border-t border-white/10">
-        <div className="mx-auto max-w-[1600px] px-5 py-24 sm:px-8 sm:py-28">
+        <div className="mx-auto max-w-[1600px] px-5 py-16 sm:px-8 sm:py-20">
           <Reveal>
             <p className="text-eyebrow">Where we prove it</p>
             <h2 className="font-display text-chalk mt-4 text-4xl leading-[0.95] font-extrabold tracking-[-0.035em] sm:text-6xl">
@@ -296,7 +296,7 @@ export default function Home() {
           SPONSORS — logo wall.
           ================================================================== */}
       <section className="bg-navy-900 border-t border-white/10">
-        <div className="mx-auto max-w-[1600px] px-5 py-20 sm:px-8 sm:py-24">
+        <div className="mx-auto max-w-[1600px] px-5 py-14 sm:px-8 sm:py-16">
           <Reveal>
             <div className="flex flex-wrap items-end justify-between gap-6">
               <div>
@@ -326,7 +326,7 @@ export default function Home() {
             <ul className="mt-12 grid grid-cols-3 gap-3 sm:grid-cols-5 lg:grid-cols-8">
               {SPONSOR_TIERS.flatMap((t) => t.logos).map((logo) => (
                 <li key={logo.src}>
-                  <div className="bg-chalk/92 flex aspect-[3/2] items-center justify-center rounded-sm p-3 transition-transform duration-300 hover:scale-[1.04]">
+                  <div className="bg-chalk/92 flex aspect-[3/2] items-center justify-center rounded-sm p-3">
                     <img
                       src={logo.src}
                       alt={logo.name}

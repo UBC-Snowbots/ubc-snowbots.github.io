@@ -20,8 +20,8 @@ export default function CompetePage() {
         image="/media/team/chassis.jpg"
       />
 
-      <section className="mx-auto max-w-[1600px] px-5 py-20 sm:px-8 sm:py-28">
-        <div className="space-y-24 sm:space-y-32">
+      <section className="mx-auto max-w-[1600px] px-5 py-14 sm:px-8 sm:py-20">
+        <div className="space-y-16 sm:space-y-20">
           {COMPETITIONS.map((comp, i) => (
             <article
               key={comp.abbr}

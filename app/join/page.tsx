@@ -83,7 +83,7 @@ export default function JoinPage() {
       </section>
 
       {/* One compact block per sub-team, alternating sides. */}
-      <section className="mx-auto max-w-[1600px] px-5 py-16 sm:px-8 sm:py-20">
+      <section className="mx-auto max-w-[1600px] px-5 py-12 sm:px-8 sm:py-14">
         <Reveal>
           <div className="border-b border-white/10 pb-6">
             <p className="text-eyebrow">The sub-teams</p>
@@ -93,7 +93,7 @@ export default function JoinPage() {
           </div>
         </Reveal>
 
-        <div className="mt-12 space-y-12 sm:space-y-16">
+        <div className="mt-12 space-y-12 sm:space-y-12">
           {SUBTEAMS.map((team, i) => {
             const leads = leadsForSubteam(team.slug);
             return (

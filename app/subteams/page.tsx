@@ -30,7 +30,7 @@ export default function SubteamsPage() {
         image="/media/team/software.jpg"
       />
 
-      <section className="mx-auto max-w-[1600px] px-5 py-20 sm:px-8 sm:py-28">
+      <section className="mx-auto max-w-[1600px] px-5 py-14 sm:px-8 sm:py-20">
         <div className="space-y-5">
           {SUBTEAMS.map((team, i) => (
             <Reveal key={team.slug} delay={(i % 3) * 70}>

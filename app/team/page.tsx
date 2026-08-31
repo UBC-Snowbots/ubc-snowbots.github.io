@@ -22,7 +22,7 @@ export default function TeamPage() {
       />
 
       {/* Leadership */}
-      <section className="mx-auto max-w-[1600px] px-5 py-20 sm:px-8 sm:py-28">
+      <section className="mx-auto max-w-[1600px] px-5 py-14 sm:px-8 sm:py-20">
         <Reveal>
           <p className="text-eyebrow">Leadership</p>
           <h2 className="font-display text-chalk mt-4 text-4xl leading-[0.95] font-extrabold tracking-[-0.035em] sm:text-6xl">
@@ -71,7 +71,7 @@ export default function TeamPage() {
 
       {/* Pointer to the sub-teams page — the detail lives there now, not here. */}
       <section className="bg-navy-900 border-t border-white/10">
-        <div className="mx-auto max-w-[1600px] px-5 py-20 sm:px-8 sm:py-24">
+        <div className="mx-auto max-w-[1600px] px-5 py-14 sm:px-8 sm:py-16">
           <Reveal>
             <p className="text-eyebrow">Structure</p>
             <h2 className="font-display text-chalk mt-4 max-w-3xl text-4xl leading-[0.95] font-extrabold tracking-[-0.035em] sm:text-6xl">

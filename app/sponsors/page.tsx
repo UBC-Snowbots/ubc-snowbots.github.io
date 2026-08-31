@@ -19,7 +19,7 @@ export default function SponsorsPage() {
         image="/media/team/arm.jpg"
       />
 
-      <section className="mx-auto max-w-[1600px] px-5 py-20 sm:px-8 sm:py-28">
+      <section className="mx-auto max-w-[1600px] px-5 py-14 sm:px-8 sm:py-20">
         {/* What sponsorship gets you — one undifferentiated offer, quoted from
             the source site. The team does not tier its benefits, so neither do
             we; inventing a ladder would be promising things on their behalf. */}
@@ -39,7 +39,7 @@ export default function SponsorsPage() {
             sponsor, so this section is worth filling in properly.
             ------------------------------------------------------------ */}
         <Reveal>
-          <div className="mt-24 flex flex-wrap items-end justify-between gap-6 border-b border-white/10 pb-8">
+          <div className="mt-16 flex flex-wrap items-end justify-between gap-6 border-b border-white/10 pb-8">
             <div>
               <p className="text-eyebrow">Impact</p>
               <h2 className="font-display text-chalk mt-4 text-3xl leading-[0.95] font-extrabold tracking-[-0.03em] sm:text-5xl">
@@ -106,7 +106,7 @@ export default function SponsorsPage() {
         </div>
 
         {/* Tiers */}
-        <div className="mt-24 space-y-16">
+        <div className="mt-16 space-y-12">
           {SPONSOR_TIERS.map((tier) => (
             <Reveal key={tier.tier}>
               <h2 className="font-display text-chalk border-b border-white/10 pb-6 text-3xl font-extrabold tracking-[-0.03em] sm:text-4xl">
@@ -121,7 +121,7 @@ export default function SponsorsPage() {
                         cannot work across the set — it flattens the opaque ones
                         into solid slabs. Giving every logo the light ground it
                         was designed for is what keeps all fifteen legible. */}
-                    <div className="bg-chalk/92 flex aspect-[3/2] items-center justify-center rounded-sm p-5 transition-transform duration-300 hover:scale-[1.03]">
+                    <div className="bg-chalk/92 flex aspect-[3/2] items-center justify-center rounded-sm p-5">
                       <img
                         src={logo.src}
                         alt={logo.name}
@@ -139,7 +139,7 @@ export default function SponsorsPage() {
 
         {/* CTA */}
         <Reveal>
-          <div className="to-navy-950 mt-28 border border-white/10 bg-gradient-to-br from-indigo-600/40 p-10 text-center sm:p-16">
+          <div className="to-navy-950 mt-18 border border-white/10 bg-gradient-to-br from-indigo-600/40 p-10 text-center sm:p-16">
             <p className="text-eyebrow">Partnership</p>
             <h2 className="font-display text-chalk mx-auto mt-5 max-w-3xl text-3xl leading-[0.95] font-extrabold tracking-[-0.035em] sm:text-5xl">
               Put your name on a Mars rover.
