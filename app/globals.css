@@ -1,26 +1,245 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================================
+   UBC ROVER — design tokens
+   Palette sampled directly from the team recruitment flyer:
+     navy field      #0F2141  (top block)
+     indigo field    #37447D → #47548E  (bottom block, gradient)
+     amber rule      #DA9C3E / #CA7A32  (diagonal stripe)
+     rust rule       #93331D           (diagonal stripe)
+     desert sand     #B7A99C           (rover photo ground)
+   ========================================================================= */
+@theme {
+  /* -- navy: the ground the whole site sits on ---------------------------- */
+  --color-navy-950: #070d1b;
+  --color-navy-900: #0b1730;
+  --color-navy-850: #0f2141;
+  --color-navy-800: #132342;
+  --color-navy-700: #192648;
+  --color-navy-600: #1e2c55;
+  --color-navy-500: #263566;
+
+  /* -- indigo: the flyer's lower field, used for lift/elevation ----------- */
+  --color-indigo-700: #2f3a6e;
+  --color-indigo-600: #37447d;
+  --color-indigo-500: #3f4a84;
+  --color-indigo-400: #47548e;
+  --color-indigo-300: #5a66a0;
+
+  /* -- amber: the primary accent. CTAs, active states, the hot stripe ----- */
+  --color-amber-700: #a8621f;
+  --color-amber-600: #ca7a32;
+  --color-amber-500: #da9c3e;
+  --color-amber-400: #e6ab52;
+  --color-amber-300: #f0c07d;
+
+  /* -- rust: secondary accent, the second stripe in the flyer rule -------- */
+  --color-rust-600: #7c2a17;
+  --color-rust-500: #93331d;
+  --color-rust-400: #b04327;
+
+  /* -- neutrals ---------------------------------------------------------- */
+  --color-sand-400: #b7a99c;
+  --color-sand-300: #cfc5bb;
+  --color-chalk: #eef1f6;
+  --color-chalk-dim: #d2cfd1;
+
+  /* -- type -------------------------------------------------------------- */
+  --font-display: var(--font-archivo), "Archivo", system-ui, sans-serif;
+  --font-sans: var(--font-inter), "Inter", system-ui, sans-serif;
+  --font-mono: var(--font-mono-jb), ui-monospace, "JetBrains Mono", monospace;
+
+  /* -- motion: one shared curve so everything feels like one system ------- */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ============================================================================
+   Base
+   ========================================================================= */
+@layer base {
+  html {
+    /* Deliberately NOT `scroll-behavior: smooth`.
+       Next's App Router restores scroll position by calling scrollTo on every
+       client-side navigation, and Next 16 only suppresses smooth behaviour when
+       the document opts in via data-scroll-behavior. With smooth set globally,
+       each route change drops you mid-page and animates to the top for up to a
+       second and a half. Instant scroll is what makes navigation feel snappy. */
+    scroll-padding-top: 5rem; /* keeps anchored sections clear of the header */
+    -webkit-tap-highlight-color: transparent;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    background-color: var(--color-navy-950);
+    color: var(--color-chalk);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: var(--color-amber-500);
+    color: var(--color-navy-950);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-amber-500);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ============================================================================
+   Utilities
+   ========================================================================= */
+@layer utilities {
+  /* The flyer's signature: a stack of angled amber / rust / navy rules.
+     Pure CSS gradient — no image request, no layout cost.
+
+     The tilt is baked into the gradient angle (179deg) rather than applied with
+     a `-skew-y-1` transform. A skew rasterises the already-drawn hard-edged
+     bands and then shears that bitmap, which at 1x DPR produces visible stair
+     stepping — the bands jump a whole pixel at a time across the width. Letting
+     the browser rasterise one continuous angled gradient anti-aliases properly. */
+  .stripe-rule {
+    background-image: linear-gradient(
+      179deg,
+      var(--color-chalk) 0 2px,
+      transparent 2px 5px,
+      var(--color-amber-500) 5px 10px,
+      transparent 10px 13px,
+      var(--color-rust-500) 13px 18px,
+      transparent 18px 21px,
+      var(--color-indigo-400) 21px 26px
+    );
+  }
+
+  /* Thin variant for the 3px rules under the header, footer and page mastheads.
+     The full .stripe-rule is 26px of stops, so at 3px tall only its first band
+     survives and it reads as a plain white hairline. This splits the same four
+     brand colours horizontally instead, so the identity still lands. */
+  .stripe-rule-thin {
+    background-image: linear-gradient(
+      to right,
+      var(--color-amber-500) 0 25%,
+      var(--color-rust-500) 25% 50%,
+      var(--color-indigo-400) 50% 75%,
+      var(--color-chalk) 75% 100%
+    );
+  }
+
+  /* Fine grid wash — the "engineering drawing" texture behind dark sections. */
+  .grid-wash {
+    background-image:
+      linear-gradient(
+        to right,
+        color-mix(in srgb, var(--color-indigo-300) 10%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--color-indigo-300) 10%, transparent) 1px,
+        transparent 1px
+      );
+    background-size: 72px 72px;
+  }
+
+  .text-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-amber-500);
+  }
+
+  /* Edge-to-edge escape hatch for full-bleed media inside a padded container. */
+  .full-bleed {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+  }
+}
+
+/* ============================================================================
+   Motion
+   Everything animates transform/opacity only, so each effect stays on the
+   compositor and never triggers layout or paint during scroll.
+   ========================================================================= */
+
+/* Scroll reveal. Elements start shifted+transparent and are released when the
+   IntersectionObserver in <Reveal> adds [data-revealed]. If JS never runs the
+   `no-js` fallback below keeps content visible. */
+[data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  transition:
+    opacity 0.7s var(--ease-out-quart),
+    transform 0.7s var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+[data-reveal][data-revealed="true"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee {
+  animation: marquee-scroll var(--marquee-duration, 40s) linear infinite;
+}
+
+@keyframes scroll-cue {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translate3d(0, 7px, 0);
+    opacity: 1;
+  }
+}
+
+.animate-scroll-cue {
+  animation: scroll-cue 2.2s var(--ease-out-quart) infinite;
+}
+
+/* Honour the OS setting. Content still appears — only the movement stops. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
 }
