@@ -10,6 +10,7 @@ import {
   SUBTEAMS,
   TEAM_INTRO,
   TEAM_PHOTO,
+  leadTitleFor,
   leadsForSubteam,
 } from "@/lib/content";
 
@@ -52,7 +53,7 @@ export default function TeamPage() {
       {/* Captains */}
       <TeamBanner title="Our Captains" />
       <section className="mx-auto max-w-[1600px] px-5 pt-7 pb-12 sm:px-8 sm:pt-9 sm:pb-16">
-        <MemberGrid people={captains} />
+        <MemberGrid people={captains} role="Captain" />
       </section>
 
       {/* Leads */}
@@ -67,7 +68,8 @@ export default function TeamPage() {
           <section className="mx-auto max-w-[1600px] px-5 pt-7 pb-12 sm:px-8 sm:pt-9 sm:pb-16">
             <MemberGrid
               people={leadsForSubteam(team.slug)}
-              emptyNote={`The ${team.name} roster has not been added yet.`}
+              role={leadTitleFor(team.slug)}
+              emptyNote={`No ${team.name} lead on record yet.`}
             />
 
             <Reveal>

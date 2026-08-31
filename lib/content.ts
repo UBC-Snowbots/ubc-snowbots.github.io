@@ -560,90 +560,92 @@ export const getSubteam = (slug: string) => SUBTEAMS.find((t) => t.slug === slug
 export const subsystemsForSubteam = (slug: string) =>
   SUBSYSTEMS.filter((sub) => sub.ownedBy === slug);
 
-/** Co-captains — the "Our Captains" band on /team. */
-export const CAPTAINS = () => LEADS.filter((l) => /captain/i.test(l.role));
-
-export const leadsForSubteam = (slug: string) => {
-  const team = getSubteam(slug);
-  if (!team) return [];
-  const name = team.name.toLowerCase();
-  return LEADS.filter((l) => l.role.toLowerCase().replace(/ lead$/, "") === name);
-};
-
 /* -------------------------------------------------------------------------- */
-/* Leadership                                                                  */
+/* People                                                                      */
 /* -------------------------------------------------------------------------- */
 
 export type LeadLink = { kind: "github" | "linkedin" | "website"; href: string };
 
 /**
- * `focal` is the CSS object-position for the portrait crop — these are candid
- * photos, so heads sit at different heights in frame.
+ * A person is stored once, with their photo and links, and referenced by name
+ * from the role lists below.
  *
- * TODO(team): `links` is empty for everyone. Each lead opts in individually by
- * adding their own entries; nothing is published without them adding it.
- * TODO(team): role titles (taskmaster, systems lead, …) still to be decided.
+ * This shape exists because roles are many-to-many: Andres is both a captain
+ * and the chassis lead, Rowan is both a captain and a software lead, and
+ * Jennifer leads two sub-teams. A single `role` field per person cannot express
+ * that without duplicating photos and links, which then drift apart.
+ *
+ * `image` is optional — where there is no portrait the card renders initials
+ * rather than a stock silhouette. See components/MemberCard.tsx.
+ * TODO(team): portraits for Aaron, Ben, Jennifer, William and Matt.
  */
-export type Lead = {
+export type Person = {
   name: string;
-  role: string;
-  image: string;
+  image?: string;
+  /** object-position for the crop; these are candid photos, not headshots. */
   focal?: string;
   links?: LeadLink[];
 };
 
-export const LEADS: Lead[] = [
-  {
-    name: "Conor O'Neill",
-    role: "Co-Captain",
-    image: "/media/people/conor.jpg",
-    links: [],
-  },
-  { name: "Myra Wei", role: "Co-Captain", image: "/media/people/myra.jpg", links: [] },
-  {
-    name: "Andres Fleet",
-    role: "Chassis Lead",
-    image: "/media/people/andres.jpg",
-    links: [],
-  },
-  { name: "Eric Kondor", role: "Arm Lead", image: "/media/people/eric.jpg", links: [] },
-  {
-    name: "Lochy Rode",
-    role: "Electrical Lead",
-    image: "/media/people/lochy.JPG",
-    links: [],
-  },
-  {
-    name: "Danyaal Abbas",
-    role: "Science Lead",
-    image: "/media/people/danyaal.jpg",
-    links: [],
-  },
-  {
-    name: "Michael Day",
-    role: "Rover Lab Lead",
-    image: "/media/people/mike.jpg",
-    links: [],
-  },
+const li = (href: string): LeadLink[] => [{ kind: "linkedin", href }];
+
+export const PEOPLE: Person[] = [
+  { name: "Andres Fleet", image: "/media/people/andres.jpg" },
   {
     name: "Rowan Zawadzki",
-    role: "Software Lead",
     image: "/media/people/rowan.jpg",
-    links: [],
+    links: li("https://www.linkedin.com/in/rowan-zawadzki-4b7539158/"),
   },
+  { name: "Aaron Rhim", links: li("https://www.linkedin.com/in/aaronrhim/") },
+  { name: "Ben Newington", links: li("https://www.linkedin.com/in/bennewington/") },
   {
     name: "Riddhima Gupta",
-    role: "Software Lead",
     image: "/media/people/riddhima.jpg",
-    links: [],
+    links: li("https://www.linkedin.com/in/riddhima-gupta081/"),
   },
   {
-    name: "Cameron Basara",
-    role: "Software Lead",
-    image: "/media/people/cameron.jpg",
-    links: [],
+    name: "Jennifer Phung",
+    links: li("https://www.linkedin.com/in/jennifer-phung-734541338/"),
   },
+  {
+    name: "William Banquier",
+    links: li("https://www.linkedin.com/in/william-banquier/"),
+  },
+  { name: "Matt Yung", links: li("https://www.linkedin.com/in/mattyung12/") },
 ];
+
+const person = (name: string): Person => PEOPLE.find((p) => p.name === name) ?? { name };
+
+/** Team captains. */
+export const CAPTAIN_NAMES = ["Andres Fleet", "Rowan Zawadzki"] as const;
+
+/**
+ * Leads per sub-team.
+ *
+ * TODO(team): Electrical and Business have no lead on record. Their bands show
+ * a placeholder until someone supplies the names — an obvious gap beats a stale
+ * name carried over from an older roster.
+ */
+export const SUBTEAM_LEAD_NAMES: Record<string, string[]> = {
+  chassis: ["Andres Fleet"],
+  arm: ["William Banquier", "Matt Yung"],
+  "rover-lab": ["Jennifer Phung"],
+  electrical: [],
+  software: ["Rowan Zawadzki", "Aaron Rhim", "Ben Newington", "Riddhima Gupta"],
+  science: ["Jennifer Phung"],
+  business: [],
+};
+
+export const CAPTAINS = (): Person[] => CAPTAIN_NAMES.map(person);
+
+export const leadsForSubteam = (slug: string): Person[] =>
+  (SUBTEAM_LEAD_NAMES[slug] ?? []).map(person);
+
+/** Label shown under a name in a sub-team band, e.g. "Chassis Lead". */
+export const leadTitleFor = (slug: string): string => {
+  const team = getSubteam(slug);
+  return team ? `${team.name} Lead` : "Lead";
+};
 
 /* -------------------------------------------------------------------------- */
 /* Competitions                                                                */
