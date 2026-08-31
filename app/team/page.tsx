@@ -46,7 +46,6 @@ export default function TeamPage() {
         <TeamSection
           key={team.slug}
           title={`${team.name} Team`}
-          eyebrow={team.discipline}
           image={team.photo ?? TEAM_PHOTO}
           people={leadsForSubteam(team.slug)}
           role={leadTitleFor(team.slug)}

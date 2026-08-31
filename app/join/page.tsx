@@ -136,9 +136,7 @@ export default function JoinPage() {
 
                   {/* Copy */}
                   <div>
-                    <p className="text-eyebrow">
-                      {String(i + 1).padStart(2, "0")} &nbsp;/&nbsp; {team.discipline}
-                    </p>
+                    <p className="text-eyebrow">{String(i + 1).padStart(2, "0")}</p>
                     <h3 className="font-display text-chalk mt-3 text-3xl font-extrabold tracking-[-0.03em] sm:text-4xl">
                       {team.name}
                     </h3>

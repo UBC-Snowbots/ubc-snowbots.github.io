@@ -10,12 +10,10 @@ import { TEAM_PHOTO } from "@/lib/content";
 export default function TeamBanner({
   title,
   image = TEAM_PHOTO,
-  eyebrow,
   inline = false,
 }: {
   title: string;
   image?: string;
-  eyebrow?: string;
   /**
    * `inline` puts the band inside the page container beside other content
    * instead of running edge to edge: it stretches to its grid row and gains a
@@ -52,7 +50,6 @@ export default function TeamBanner({
       />
 
       <div className="px-5 text-center">
-        {eyebrow ? <p className="text-eyebrow mb-3">{eyebrow}</p> : null}
         <h2
           className={`font-display text-chalk leading-[0.95] font-extrabold tracking-[-0.035em] ${
             inline ? "text-3xl sm:text-5xl" : "text-4xl sm:text-6xl"

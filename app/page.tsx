@@ -227,7 +227,7 @@ export default function Home() {
           <Reveal>
             <p className="text-eyebrow">Where we prove it</p>
             <h2 className="font-display text-chalk mt-4 text-4xl leading-[0.95] font-extrabold tracking-[-0.035em] sm:text-6xl">
-              Two deserts. One rover.
+              Two Competitions.
             </h2>
           </Reveal>
 

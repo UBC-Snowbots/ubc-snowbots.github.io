@@ -15,7 +15,7 @@ export default function CompetePage() {
     <>
       <PageHero
         eyebrow="Where we prove it"
-        title="Two deserts. One rover."
+        title="Two Competitions."
         lede="A year of design and fabrication is judged in a few days of heat, dust and failure modes you did not plan for."
         image="/media/team/chassis.jpg"
       />

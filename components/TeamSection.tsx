@@ -19,7 +19,6 @@ import { TEAM_PHOTO, type Person } from "@/lib/content";
  */
 export default function TeamSection({
   title,
-  eyebrow,
   image = TEAM_PHOTO,
   people,
   role,
@@ -28,7 +27,6 @@ export default function TeamSection({
   footerLabel,
 }: {
   title: string;
-  eyebrow?: string;
   image?: string;
   people: Person[];
   role: string;
@@ -60,7 +58,7 @@ export default function TeamSection({
   if (people.length === 0) {
     return (
       <div>
-        <TeamBanner title={title} eyebrow={eyebrow} image={image} />
+        <TeamBanner title={title} image={image} />
         <section className="mx-auto max-w-[1600px] px-5 pt-7 pb-12 sm:px-8 sm:pt-9 sm:pb-16">
           <MemberGrid people={people} role={role} emptyNote={emptyNote} />
           {footer}
@@ -90,7 +88,7 @@ export default function TeamSection({
           </div>
         ) : null}
 
-        <TeamBanner title={title} eyebrow={eyebrow} image={image} inline />
+        <TeamBanner title={title} image={image} inline />
 
         <div className="flex flex-col gap-5">
           {right.map((p, i) => (

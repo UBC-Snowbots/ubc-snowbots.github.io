@@ -590,7 +590,11 @@ export type Person = {
 const li = (href: string): LeadLink[] => [{ kind: "linkedin", href }];
 
 export const PEOPLE: Person[] = [
-  { name: "Andres Fleet", image: "/media/people/andres.jpg" },
+  {
+    name: "Andres Fleet",
+    image: "/media/people/andres.jpg",
+    links: li("https://www.linkedin.com/in/andresfleet/"),
+  },
   {
     name: "Rowan Zawadzki",
     image: "/media/people/rowan.jpg",

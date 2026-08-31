@@ -35,9 +35,9 @@ export default function SubteamsPage() {
           {SUBTEAMS.map((team, i) => (
             <Reveal key={team.slug} delay={(i % 3) * 70}>
               <article className="group bg-navy-900 relative isolate overflow-hidden border border-white/10 transition-colors duration-500 hover:border-amber-500/40">
-                <div className="grid md:grid-cols-[minmax(0,22rem)_minmax(0,1fr)]">
+                <div className="grid md:grid-cols-[minmax(0,32rem)_minmax(0,1fr)]">
                   {/* Media */}
-                  <div className="relative aspect-[16/9] overflow-hidden md:aspect-auto md:min-h-[15rem]">
+                  <div className="relative aspect-[16/9] overflow-hidden md:aspect-auto md:min-h-[22rem]">
                     <img
                       src={team.image}
                       alt=""
@@ -52,10 +52,8 @@ export default function SubteamsPage() {
                   </div>
 
                   {/* Copy */}
-                  <div className="flex flex-col p-7 sm:p-9">
-                    <p className="text-eyebrow">
-                      {String(i + 1).padStart(2, "0")} &nbsp;/&nbsp; {team.discipline}
-                    </p>
+                  <div className="flex flex-col p-6 sm:p-8">
+                    <p className="text-eyebrow">{String(i + 1).padStart(2, "0")}</p>
 
                     <h2 className="mt-3">
                       {/* Stretched link: covers the whole card, one tab stop. */}
@@ -67,7 +65,7 @@ export default function SubteamsPage() {
                       </Link>
                     </h2>
 
-                    <p className="text-chalk-dim/80 mt-4 max-w-2xl text-sm leading-relaxed">
+                    <p className="text-chalk-dim/80 mt-4 max-w-xl text-sm leading-relaxed">
                       {team.blurb}
                     </p>
 

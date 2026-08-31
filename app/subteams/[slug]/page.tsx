@@ -37,7 +37,7 @@ export default async function SubteamPage({ params }: Params) {
   return (
     <>
       <PageHero
-        eyebrow={`Sub-team / ${team.discipline}`}
+        eyebrow="Sub-team"
         title={team.name}
         lede={team.blurb}
         image={team.image}
