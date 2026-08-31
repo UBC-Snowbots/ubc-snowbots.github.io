@@ -133,9 +133,20 @@ export default function ContactPage() {
               <p className="text-eyebrow mt-10">Find us</p>
               <address className="text-chalk-dim/85 mt-4 text-base leading-relaxed not-italic">
                 University of British Columbia
-                <br />
-                {SITE.address}
+                {SITE.addressLines.map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
               </address>
+
+              <p className="text-eyebrow mt-10">Website</p>
+              <a
+                href={SITE.url}
+                className="text-chalk-dim/85 mt-4 inline-block text-base transition-colors hover:text-amber-500"
+              >
+                {SITE.domain}
+              </a>
 
               <p className="text-eyebrow mt-10">Follow</p>
               <ul className="mt-4 flex flex-wrap gap-3">
@@ -145,9 +156,10 @@ export default function ContactPage() {
                       href={social.href}
                       target="_blank"
                       rel="noreferrer noopener"
-                      className="text-chalk-dim/85 inline-block border border-white/15 px-5 py-2.5 font-mono text-[11px] tracking-[0.14em] uppercase transition-colors duration-200 hover:border-amber-500 hover:text-amber-500"
+                      className="text-chalk-dim/85 inline-block border border-white/15 px-5 py-2.5 font-mono text-[11px] tracking-[0.14em] transition-colors duration-200 hover:border-amber-500 hover:text-amber-500"
                     >
-                      {social.label}
+                      <span className="uppercase">{social.label}</span>{" "}
+                      <span className="text-chalk-dim/55">{social.handle}</span>
                     </a>
                   </li>
                 ))}

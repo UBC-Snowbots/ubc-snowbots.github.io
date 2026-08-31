@@ -17,7 +17,8 @@ export const SITE = {
   blurb:
     "UBC Rover designs and builds advanced semi-autonomous rovers for international competition.",
   email: "rover.ubc@gmail.com",
-  address: "2345 East Mall, Vancouver, BC, Canada, V6T 1Z4",
+  address: "LMRS 160, 2259 Lower Mall, Vancouver, BC, Canada V6T 1Z4",
+  addressLines: ["LMRS 160", "2259 Lower Mall", "Vancouver, BC, Canada V6T 1Z4"],
   memberCount: 64,
   subteamCount: 7,
 } as const;
@@ -38,7 +39,9 @@ export const APPLY = {
   formUrl: null as string | null,
   fallbackHref: "/join",
   bannerText: "Applications open every Fall",
-  cta: "Apply Now",
+  /** Shown on in-page buttons, where "Apply" reads better than the nav label. */
+  buttonCta: "Apply Now",
+  cta: "Join Us",
 } as const;
 
 export const applyHref = (): string => APPLY.formUrl ?? APPLY.fallbackHref;
@@ -50,6 +53,23 @@ export const RECRUITMENT = {
   detail:
     "Our main recruitment cycle runs every Fall (September). Watch our socials for the announcement.",
 } as const;
+
+/* -------------------------------------------------------------------------- */
+/* Home page — "Who we are" figures                                            */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * TODO(team): `780m` and the screw count need confirming against a real source
+ * before this ships — the rest are established figures. The screw count is a
+ * deliberate placeholder until someone actually counts them.
+ */
+export const STATS = [
+  { value: "18", label: "Years active" },
+  { value: "64", label: "Students on the team" },
+  { value: "780m", label: "Effective operational radius" },
+  { value: "02", label: "International competitions" },
+  { value: "PLACEHOLDER", label: "Screws in the rover" },
+] as const;
 
 /* -------------------------------------------------------------------------- */
 /* Home page section tiles — the "click and enter" grid                        */
@@ -740,9 +760,17 @@ export const SPONSOR_IMPACT: SponsorImpact[] = [
 /* -------------------------------------------------------------------------- */
 
 export const SOCIALS = [
-  { label: "Instagram", href: "https://www.instagram.com/ubcrover/" },
-  { label: "Facebook", href: "https://www.facebook.com/UBCR0ver/" },
-  { label: "All links", href: "https://linktr.ee/ubcrover" },
+  {
+    label: "Instagram",
+    handle: "@ubcrover",
+    href: "https://www.instagram.com/ubcrover/",
+  },
+  { label: "Facebook", handle: "UBCR0ver", href: "https://www.facebook.com/UBCR0ver/" },
+  {
+    label: "All links",
+    handle: "linktr.ee/ubcrover",
+    href: "https://linktr.ee/ubcrover",
+  },
 ] as const;
 
 /** The contact form on the source site posts here. Same endpoint, new styling. */
@@ -762,9 +790,20 @@ export const INQUIRY_TYPES = [
 
 export const NAV = [
   { label: "The Rover", href: "/rover" },
-  { label: "Sub-teams", href: "/subteams" },
+  { label: "Sub-Teams", href: "/subteams" },
   { label: "Competition", href: "/compete" },
   { label: "Team", href: "/team" },
-  { label: "Sponsors", href: "/sponsors" },
   { label: "Contact", href: "/contact" },
 ] as const;
+
+/**
+ * The two calls to action, emphasised at the end of the nav. Kept separate from
+ * NAV so the ordering and the bold treatment cannot drift apart.
+ */
+export const NAV_EMPHASIS = [
+  { label: "Sponsors", href: "/sponsors" },
+  { label: "Join Us", href: "/join" },
+] as const;
+
+/** Every nav destination in order — used by the footer and the mobile panel. */
+export const ALL_NAV = [...NAV, ...NAV_EMPHASIS] as const;

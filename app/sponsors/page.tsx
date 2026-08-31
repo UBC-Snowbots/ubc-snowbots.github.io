@@ -24,9 +24,9 @@ export default function SponsorsPage() {
             the source site. The team does not tier its benefits, so neither do
             we; inventing a ladder would be promising things on their behalf. */}
         <Reveal>
-          <div className="bg-navy-900 border border-white/10 p-8 sm:p-12">
-            <p className="text-eyebrow">The offer</p>
-            <p className="font-display text-chalk mt-6 max-w-3xl text-xl leading-snug font-bold tracking-[-0.015em] sm:text-3xl">
+          <div className="bg-navy-900 flex flex-col gap-4 border border-white/10 p-6 sm:flex-row sm:items-baseline sm:gap-8 sm:p-7">
+            <p className="text-eyebrow shrink-0">The offer</p>
+            <p className="text-chalk-dim/85 max-w-3xl text-sm leading-relaxed">
               {SPONSOR_OFFER}
             </p>
           </div>

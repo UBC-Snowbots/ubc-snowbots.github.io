@@ -64,12 +64,7 @@
        client-side navigation, and Next 16 only suppresses smooth behaviour when
        the document opts in via data-scroll-behavior. With smooth set globally,
        each route change drops you mid-page and animates to the top for up to a
-       second and a half. Instant scroll is what makes navigation feel snappy.
-
-       Also deliberately NOT `scroll-snap-type`. Section snapping is driven by
-       components/SectionSnap.tsx instead: CSS proximity snapping recaptured
-       every slow wheel notch and stopped the home page scrolling at all. The
-       component carries the measurements. */
+       second and a half. Instant scroll is what makes navigation feel snappy. */
 
     /* Clears the fixed header stack (apply banner + nav bar + rule). */
     scroll-padding-top: 7.5rem;
@@ -161,13 +156,6 @@
         transparent 1px
       );
     background-size: 72px 72px;
-  }
-
-  /* Marker class only — SectionSnap reads these to find section boundaries.
-     Deliberately carries no scroll-snap-align: the browser must not capture
-     scrolling, or slow wheel input gets pulled back to the previous section. */
-  .snap-section {
-    scroll-margin-top: 7.5rem;
   }
 
   /**

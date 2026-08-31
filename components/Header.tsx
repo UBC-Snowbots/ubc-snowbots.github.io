@@ -4,9 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import ApplyBanner from "./ApplyBanner";
-import { NAV, applyHref } from "@/lib/content";
+import { ALL_NAV, NAV, NAV_EMPHASIS } from "@/lib/content";
 
-const MOBILE_LINKS = [...NAV, { label: "Join Us", href: "/join" }];
+const MOBILE_LINKS = ALL_NAV;
 
 /**
  * Fixed header that starts transparent over the hero and turns opaque once you
@@ -150,8 +150,10 @@ export default function Header() {
               </span>
             </Link>
 
-            {/* Desktop nav */}
-            <nav aria-label="Primary" className="hidden items-center gap-9 lg:flex">
+            {/* Desktop nav. Order is fixed in lib/content.ts: the five
+                informational pages, then Sponsors and Join Us emphasised as the
+                two calls to action. */}
+            <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">
               {NAV.map((item) => (
                 <Link
                   key={item.href}
@@ -166,12 +168,21 @@ export default function Header() {
                   {item.label}
                 </Link>
               ))}
-              <Link
-                href={applyHref()}
-                className="hover:text-navy-950 border border-amber-500 px-5 py-2.5 font-mono text-[11px] tracking-[0.16em] text-amber-500 uppercase transition-colors duration-200 hover:bg-amber-500"
-              >
-                Apply Now
-              </Link>
+
+              {NAV_EMPHASIS.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={isActive(item.href) ? "page" : undefined}
+                  className={`relative py-1 font-mono text-[11px] font-bold tracking-[0.16em] uppercase transition-colors duration-200 after:absolute after:-bottom-0.5 after:left-0 after:h-px after:bg-amber-500 after:transition-[width] after:duration-300 hover:text-amber-500 ${
+                    isActive(item.href)
+                      ? "text-amber-500 after:w-full"
+                      : "text-chalk after:w-0 hover:after:w-full"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              ))}
             </nav>
 
             {/* Mobile trigger */}
@@ -225,7 +236,9 @@ export default function Header() {
               key={item.href}
               href={item.href}
               onClick={closeAndReturnFocus}
-              className="font-display text-chalk border-b border-white/10 py-5 text-3xl font-bold tracking-[-0.02em] transition-colors hover:text-amber-500"
+              className={`font-display border-b border-white/10 py-5 text-3xl tracking-[-0.02em] transition-colors hover:text-amber-500 ${
+                i >= NAV.length ? "text-chalk font-extrabold" : "text-chalk font-bold"
+              }`}
             >
               <span className="mr-4 font-mono text-xs text-amber-500/60">
                 {String(i + 1).padStart(2, "0")}

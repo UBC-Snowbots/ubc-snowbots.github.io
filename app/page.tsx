@@ -1,26 +1,23 @@
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
-import SectionSnap from "@/components/SectionSnap";
 import SectionTile from "@/components/SectionTile";
-import { COMPETITIONS, SECTIONS, SITE, SPONSOR_TIERS, applyHref } from "@/lib/content";
-
-const STATS = [
-  { value: "64", label: "Students on the team" },
-  { value: "07", label: "Specialised sub-teams" },
-  { value: "02", label: "International competitions" },
-  { value: "∞", label: "Iterations before it works" },
-];
+import {
+  COMPETITIONS,
+  SECTIONS,
+  SITE,
+  SPONSOR_TIERS,
+  STATS,
+  applyHref,
+} from "@/lib/content";
 
 export default function Home() {
   return (
     <>
-      <SectionSnap />
-
       {/* ==================================================================
           HERO — full-bleed cinematic plate (Relativity), oversized condensed
           wordmark locked over it (Formula Electric).
           ================================================================== */}
-      <section className="snap-section relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden">
+      <section className="relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden">
         <img
           src="/media/rover-mog.jpg"
           alt="The UBC Rover vehicle deployed on desert terrain with its robotic arm extended."
@@ -39,7 +36,10 @@ export default function Home() {
           className="from-navy-950/85 via-navy-950/30 absolute inset-0 -z-10 bg-gradient-to-r to-transparent"
         />
 
-        <div className="mx-auto w-full max-w-[1600px] px-5 pb-16 sm:px-8 sm:pb-24">
+        {/* pt clears the fixed header stack (banner 36px + bar 64/80px + 3px
+            rule). The block is bottom-aligned, so without a top pad the eyebrow
+            slides under the header on short viewports. */}
+        <div className="mx-auto w-full max-w-[1600px] px-5 pt-32 pb-16 sm:px-8 sm:pt-36 sm:pb-24">
           <Reveal initiallyVisible>
             <p className="text-eyebrow">University of British Columbia</p>
           </Reveal>
@@ -104,7 +104,7 @@ export default function Home() {
       {/* ==================================================================
           MISSION — one bold statement, generous air (Relativity).
           ================================================================== */}
-      <section className="snap-section mx-auto max-w-[1600px] px-5 py-24 sm:px-8 sm:py-32">
+      <section className="mx-auto max-w-[1600px] px-5 py-24 sm:px-8 sm:py-32">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-20">
           <Reveal>
             <p className="text-eyebrow">Who we are</p>
@@ -139,11 +139,26 @@ export default function Home() {
         </div>
 
         {/* Stats band */}
-        <div className="mt-20 grid grid-cols-2 gap-px border border-white/10 bg-white/10 sm:mt-24 lg:grid-cols-4">
+        <div className="mt-20 grid grid-cols-2 gap-px border border-white/10 bg-white/10 sm:mt-24 sm:grid-cols-3 lg:grid-cols-5">
           {STATS.map((stat, i) => (
-            <Reveal key={stat.label} delay={i * 70} className="bg-navy-950">
+            <Reveal
+              key={stat.label}
+              delay={i * 70}
+              // Five items do not tile into 2 or 3 columns, and the grid's
+              // parent background shows through any uncovered cell as a pale
+              // block. Letting the last item span the remainder closes it.
+              className={`bg-navy-950 ${
+                i === STATS.length - 1 ? "col-span-2 lg:col-span-1" : ""
+              }`}
+            >
               <div className="p-7 sm:p-10">
-                <p className="font-display text-5xl leading-none font-extrabold tracking-[-0.04em] text-amber-500 sm:text-7xl">
+                <p
+                  className={
+                    stat.value === "PLACEHOLDER"
+                      ? "font-mono text-sm leading-none tracking-[0.14em] text-amber-500/70"
+                      : "font-display text-4xl leading-none font-extrabold tracking-[-0.04em] text-amber-500 sm:text-6xl"
+                  }
+                >
                   {stat.value}
                 </p>
                 <p className="text-chalk-dim/60 mt-4 font-mono text-[11px] leading-relaxed tracking-[0.14em] uppercase">
@@ -160,7 +175,7 @@ export default function Home() {
           ================================================================== */}
       <section
         aria-labelledby="explore-heading"
-        className="snap-section relative border-t border-white/10"
+        className="relative border-t border-white/10"
       >
         <div aria-hidden className="grid-wash absolute inset-0 opacity-40" />
 
@@ -173,7 +188,7 @@ export default function Home() {
                   id="explore-heading"
                   className="font-display text-chalk mt-4 text-4xl leading-[0.95] font-extrabold tracking-[-0.035em] sm:text-6xl"
                 >
-                  Five ways in
+                  Start here
                 </h2>
               </div>
               <p className="text-chalk-dim/70 max-w-sm text-sm leading-relaxed">
@@ -201,7 +216,7 @@ export default function Home() {
       {/* ==================================================================
           COMPETITIONS — split panels, each linking out to the organiser.
           ================================================================== */}
-      <section className="snap-section border-t border-white/10">
+      <section className="border-t border-white/10">
         <div className="mx-auto max-w-[1600px] px-5 py-24 sm:px-8 sm:py-28">
           <Reveal>
             <p className="text-eyebrow">Where we prove it</p>
@@ -279,7 +294,7 @@ export default function Home() {
       {/* ==================================================================
           SPONSORS — logo wall.
           ================================================================== */}
-      <section className="snap-section bg-navy-900 border-t border-white/10">
+      <section className="bg-navy-900 border-t border-white/10">
         <div className="mx-auto max-w-[1600px] px-5 py-20 sm:px-8 sm:py-24">
           <Reveal>
             <div className="flex flex-wrap items-end justify-between gap-6">
@@ -331,7 +346,7 @@ export default function Home() {
           one viewport so the final snap position shows the whole recruitment
           message AND the footer together, with nothing cut off.
           ================================================================== */}
-      <section className="snap-section relative isolate overflow-hidden border-t border-white/10">
+      <section className="relative isolate overflow-hidden border-t border-white/10">
         <div
           aria-hidden
           className="via-navy-850 to-navy-950 absolute inset-0 -z-10 bg-gradient-to-br from-indigo-600"

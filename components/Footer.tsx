@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { NAV, SITE, SOCIALS } from "@/lib/content";
+import { ALL_NAV, SITE, SOCIALS } from "@/lib/content";
 
 /**
  * Deliberately compact.
@@ -18,7 +18,7 @@ export default function Footer() {
   const columns = [
     {
       heading: "Explore",
-      links: [...NAV, { label: "Join Us", href: "/join" }].map((item) => ({
+      links: ALL_NAV.map((item) => ({
         label: item.label,
         href: item.href,
         external: false,
@@ -27,7 +27,11 @@ export default function Footer() {
     {
       heading: "Follow",
       links: [
-        ...SOCIALS.map((s) => ({ label: s.label, href: s.href, external: true })),
+        ...SOCIALS.map((s) => ({
+          label: `${s.label} — ${s.handle}`,
+          href: s.href,
+          external: true,
+        })),
         { label: "GitHub", href: "https://github.com/ubcrover", external: true },
       ],
     },
@@ -99,6 +103,10 @@ export default function Footer() {
               /
             </span>
             {SITE.address}
+            <span aria-hidden className="text-chalk-dim/35 mx-2">
+              /
+            </span>
+            {SITE.domain}
           </p>
           <p className="font-mono tracking-[0.12em] uppercase">
             &copy; {new Date().getFullYear()} UBC Rover
