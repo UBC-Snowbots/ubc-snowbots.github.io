@@ -46,12 +46,18 @@ export const APPLY = {
 
 export const applyHref = (): string => APPLY.formUrl ?? APPLY.fallbackHref;
 
-/** Recruitment state — flip `open` when the cycle opens. */
-export const RECRUITMENT = {
-  open: false,
-  status: "Closed",
-  detail:
-    "Our main recruitment cycle runs every Fall (September). Watch our socials for the announcement.",
+/**
+ * The overall joining package — the equivalent of UBC Formula Electric's
+ * "Hiring Package" button at the top of their Join Us page.
+ *
+ * TODO(team): set `url` to the package (PDF, Drive link or Notion page) when it
+ * exists. While it is null the button renders as a visibly disabled placeholder
+ * rather than a link to nowhere.
+ */
+export const JOINING_PACKAGE = {
+  url: null as string | null,
+  label: "Joining Package",
+  pending: "Joining Package — coming soon",
 } as const;
 
 /* -------------------------------------------------------------------------- */
@@ -534,6 +540,19 @@ export const SUBTEAMS: Subteam[] = [
 ];
 
 export const getSubteam = (slug: string) => SUBTEAMS.find((t) => t.slug === slug);
+
+/**
+ * The leads for a given sub-team, derived from LEADS[].role (e.g. "Chassis
+ * Lead"). Derived rather than duplicated so a role change in one place cannot
+ * leave the two lists disagreeing. Business currently has no lead listed on the
+ * source site, so it correctly returns an empty array.
+ */
+export const leadsForSubteam = (slug: string) => {
+  const team = getSubteam(slug);
+  if (!team) return [];
+  const name = team.name.toLowerCase();
+  return LEADS.filter((l) => l.role.toLowerCase().replace(/ lead$/, "") === name);
+};
 
 /* -------------------------------------------------------------------------- */
 /* Leadership                                                                  */
