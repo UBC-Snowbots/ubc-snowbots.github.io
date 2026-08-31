@@ -47,7 +47,7 @@ export default function SubteamsPage() {
                     />
                     <div
                       aria-hidden
-                      className="from-navy-900 absolute inset-0 bg-gradient-to-r via-transparent to-transparent md:bg-gradient-to-l"
+                      className="from-navy-900/85 absolute inset-0 bg-gradient-to-r via-transparent to-transparent md:bg-gradient-to-l"
                     />
                   </div>
 

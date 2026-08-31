@@ -117,7 +117,7 @@ export default function JoinPage() {
                       />
                       <div
                         aria-hidden
-                        className="from-navy-950/70 absolute inset-0 bg-gradient-to-t to-transparent"
+                        className="from-navy-950/48 absolute inset-0 bg-gradient-to-t to-transparent"
                       />
                     </div>
                     {leads.length ? (

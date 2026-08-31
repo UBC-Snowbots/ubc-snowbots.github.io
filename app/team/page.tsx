@@ -42,15 +42,15 @@ export default function TeamPage() {
 
       {/* Captains */}
       <TeamBanner title="Our Captains" />
-      <section className="mx-auto max-w-[1600px] px-5 py-12 sm:px-8 sm:py-16">
+      <section className="mx-auto max-w-[1600px] px-5 pt-7 pb-12 sm:px-8 sm:pt-9 sm:pb-16">
         <MemberGrid people={captains} />
       </section>
 
       {/* Leads */}
       <TeamBanner title="Our Leads" />
-      <section className="mx-auto max-w-[1600px] px-5 py-12 sm:px-8 sm:py-16">
+      <section className="mx-auto max-w-[1600px] px-5 pt-7 pb-12 sm:px-8 sm:pt-9 sm:pb-16">
         <Reveal>
-          <p className="text-chalk-dim/70 mb-2 max-w-2xl text-sm leading-relaxed">
+          <p className="text-chalk-dim/70 mx-auto mb-6 max-w-2xl text-center text-sm leading-relaxed">
             {/* TODO(team): role titles — taskmaster, systems lead and so on —
                 still to be decided. Update LEADS[].role in lib/content.ts. */}
             Role titles are still being finalised.
@@ -67,7 +67,7 @@ export default function TeamPage() {
             eyebrow={team.discipline}
             image={team.photo ?? TEAM_PHOTO}
           />
-          <section className="mx-auto max-w-[1600px] px-5 py-12 sm:px-8 sm:py-16">
+          <section className="mx-auto max-w-[1600px] px-5 pt-7 pb-12 sm:px-8 sm:pt-9 sm:pb-16">
             <MemberGrid
               people={leadsForSubteam(team.slug)}
               emptyNote={`The ${team.name} roster has not been added yet.`}

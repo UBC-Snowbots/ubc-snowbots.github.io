@@ -81,7 +81,7 @@ export default function CompetePage() {
                   />
                   <div
                     aria-hidden
-                    className="from-navy-950/60 absolute inset-0 bg-gradient-to-t to-transparent"
+                    className="from-navy-950/40 absolute inset-0 bg-gradient-to-t to-transparent"
                   />
                   <StripeRule className="absolute right-0 bottom-0 left-0 opacity-90" />
                 </div>

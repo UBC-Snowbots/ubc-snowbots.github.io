@@ -30,11 +30,11 @@ export default function Home() {
         />
         <div
           aria-hidden
-          className="from-navy-950 via-navy-950/55 to-navy-950/20 absolute inset-0 -z-10 bg-gradient-to-t"
+          className="from-navy-950/92 via-navy-950/38 to-navy-950/8 absolute inset-0 -z-10 bg-gradient-to-t"
         />
         <div
           aria-hidden
-          className="from-navy-950/85 via-navy-950/30 absolute inset-0 -z-10 bg-gradient-to-r to-transparent"
+          className="from-navy-950/82 via-navy-950/28 absolute inset-0 -z-10 bg-gradient-to-r to-transparent"
         />
 
         {/* pt clears the fixed header stack (banner 36px + bar 64/80px + 3px
@@ -42,7 +42,12 @@ export default function Home() {
             slides under the header on short viewports. */}
         <div className="mx-auto w-full max-w-[1600px] px-5 pt-28 pb-12 sm:px-8 sm:pt-32 sm:pb-20 [@media(max-height:820px)]:pt-24 [@media(max-height:820px)]:pb-10">
           <Reveal initiallyVisible>
-            <p className="text-eyebrow">University of British Columbia</p>
+            {/* White, not the amber .text-eyebrow: at 11px this needs 4.5:1, and
+              amber over a photographic sky cannot reach that without darkening
+              the hero so heavily the image is lost. */}
+            <p className="text-chalk font-mono text-[11px] tracking-[0.18em] uppercase">
+              University of British Columbia
+            </p>
           </Reveal>
 
           <Reveal delay={80} initiallyVisible>
@@ -240,7 +245,7 @@ export default function Home() {
                     />
                     <div
                       aria-hidden
-                      className="from-navy-900 via-navy-900/40 absolute inset-0 bg-gradient-to-t to-transparent"
+                      className="from-navy-900/88 via-navy-900/22 absolute inset-0 bg-gradient-to-t to-transparent"
                     />
                     <span className="font-display text-chalk/95 absolute bottom-4 left-5 text-6xl font-extrabold tracking-[-0.04em] sm:text-7xl">
                       {comp.abbr}

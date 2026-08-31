@@ -50,7 +50,7 @@ export default function MemberGrid({
 }) {
   if (!people.length) {
     return (
-      <div className="bg-navy-900 mt-8 border border-dashed border-amber-500/40 p-8 text-center">
+      <div className="bg-navy-900 border border-dashed border-amber-500/40 p-8 text-center">
         <p className="font-mono text-[11px] tracking-[0.2em] text-amber-500 uppercase">
           Placeholder
         </p>
@@ -62,9 +62,16 @@ export default function MemberGrid({
   }
 
   return (
-    <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-5">
+    /* Widths are calc((100% - (n-1) * gap) / n) for 2 / 3 / 5 columns, so the
+       rows match the old grid exactly while a short final row stays centred. */
+    <div className="flex flex-wrap justify-center gap-4 sm:gap-5">
       {people.map((person, i) => (
-        <MemberCard key={person.name} person={person} delay={(i % 5) * 60} />
+        <div
+          key={person.name}
+          className="w-[calc(50%-0.5rem)] sm:w-[calc(50%-0.625rem)] md:w-[calc(33.333%-0.834rem)] lg:w-[calc(20%-1rem)]"
+        >
+          <MemberCard person={person} delay={(i % 5) * 60} />
+        </div>
       ))}
     </div>
   );

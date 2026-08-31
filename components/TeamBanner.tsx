@@ -30,10 +30,10 @@ export default function TeamBanner({
       />
       {/* Two scrims: a flat wash for overall legibility, plus a vertical fade so
           the band reads as part of the dark page rather than a pasted-in photo. */}
-      <div aria-hidden className="bg-navy-950/55 absolute inset-0 -z-10" />
+      <div aria-hidden className="bg-navy-950/40 absolute inset-0 -z-10" />
       <div
         aria-hidden
-        className="from-navy-950/80 via-navy-950/25 to-navy-950/80 absolute inset-0 -z-10 bg-gradient-to-b"
+        className="from-navy-950/65 via-navy-950/12 to-navy-950/65 absolute inset-0 -z-10 bg-gradient-to-b"
       />
 
       <div className="px-5 text-center">

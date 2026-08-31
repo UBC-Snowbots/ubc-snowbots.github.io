@@ -126,7 +126,7 @@ export default function Header() {
           {!scrolled && !open ? (
             <div
               aria-hidden
-              className="from-navy-950/70 pointer-events-none absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b to-transparent"
+              className="from-navy-950/92 via-navy-950/55 pointer-events-none absolute inset-x-0 top-0 -z-10 h-36 bg-gradient-to-b to-transparent"
             />
           ) : null}
           <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-5 sm:h-20 sm:px-8">
@@ -162,7 +162,7 @@ export default function Header() {
                   className={`hover:text-chalk relative py-1 font-mono text-[11px] tracking-[0.16em] uppercase transition-colors duration-200 after:absolute after:-bottom-0.5 after:left-0 after:h-px after:bg-amber-500 after:transition-[width] after:duration-300 ${
                     isActive(item.href)
                       ? "text-chalk after:w-full"
-                      : "text-chalk-dim/70 after:w-0 hover:after:w-full"
+                      : "text-chalk-dim/90 after:w-0 hover:after:w-full"
                   }`}
                 >
                   {item.label}

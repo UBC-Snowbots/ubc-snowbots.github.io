@@ -46,11 +46,11 @@ export default function SectionTile({
             so the copy gains contrast exactly when it's being read. */}
         <div
           aria-hidden
-          className="from-navy-950 via-navy-950/75 to-navy-950/45 absolute inset-0 bg-gradient-to-t transition-opacity duration-500 group-hover:opacity-90"
+          className="from-navy-950/95 via-navy-950/58 to-navy-950/22 absolute inset-0 bg-gradient-to-t transition-opacity duration-500 group-hover:opacity-90"
         />
         <div
           aria-hidden
-          className="bg-navy-950/20 absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          className="bg-navy-950/12 absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         />
       </div>
 

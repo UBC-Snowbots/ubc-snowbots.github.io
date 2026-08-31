@@ -109,7 +109,7 @@ export default async function SubteamPage({ params }: Params) {
                         />
                         <div
                           aria-hidden
-                          className="from-navy-950/70 absolute inset-0 bg-gradient-to-t to-transparent"
+                          className="from-navy-950/48 absolute inset-0 bg-gradient-to-t to-transparent"
                         />
                       </div>
                       <figcaption className="text-chalk-dim/60 mt-3 font-mono text-[11px] tracking-[0.1em]">
@@ -234,7 +234,7 @@ export default async function SubteamPage({ params }: Params) {
                   />
                   <div
                     aria-hidden
-                    className="from-navy-950 via-navy-950/75 to-navy-950/45 absolute inset-0 bg-gradient-to-t transition-opacity duration-500 group-hover:opacity-90"
+                    className="from-navy-950/95 via-navy-950/58 to-navy-950/22 absolute inset-0 bg-gradient-to-t transition-opacity duration-500 group-hover:opacity-90"
                   />
                 </div>
 

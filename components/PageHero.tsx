@@ -33,7 +33,7 @@ export default function PageHero({
           />
           <div
             aria-hidden
-            className="from-navy-950 via-navy-950/85 to-navy-950/70 absolute inset-0 -z-10 bg-gradient-to-t"
+            className="from-navy-950/95 via-navy-950/65 to-navy-950/40 absolute inset-0 -z-10 bg-gradient-to-t"
           />
         </>
       ) : (
