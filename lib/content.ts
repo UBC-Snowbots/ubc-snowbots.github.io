@@ -1,24 +1,54 @@
 /**
  * Single source of truth for site copy.
  *
- * Every factual claim here (member counts, names, roles, sub-team charters,
- * competitions, sponsor tiers, contact details) was carried over from the
- * existing ubcrover.github.io site. Nothing is invented. Update this file and
- * every page follows.
+ * FACT DISCIPLINE: anything presented as a statement about the team must come
+ * from ubcrover.github.io or the recruitment flyer. Where real content is not
+ * yet available it is marked `PLACEHOLDER` in the value itself, so it is
+ * obvious on the rendered page that it still needs the team's input. Do not
+ * quietly replace a placeholder with a plausible-sounding invention.
  */
 
 export const SITE = {
   name: "UBC Rover",
   domain: "www.ubcrover.com",
   url: "https://www.ubcrover.com",
-  tagline: "Engineering the future of autonomy.",
-  triad: ["Design.", "Code.", "Compete."],
+  tagline: "Design. Build. Compete.",
+  slogan: ["Design", "Build", "Compete"],
   blurb:
     "UBC Rover designs and builds advanced semi-autonomous rovers for international competition.",
   email: "rover.ubc@gmail.com",
   address: "2345 East Mall, Vancouver, BC, Canada, V6T 1Z4",
   memberCount: 64,
   subteamCount: 7,
+} as const;
+
+/* -------------------------------------------------------------------------- */
+/* Applications                                                                */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * The top banner and every "Apply" button point here.
+ *
+ * TODO(team): replace `formUrl` with the real application form when the Fall
+ * cycle opens. While it is null every Apply control routes to /join, which
+ * carries the current status — that is deliberate, so nothing ever links to a
+ * dead or wrong form.
+ */
+export const APPLY = {
+  formUrl: null as string | null,
+  fallbackHref: "/join",
+  bannerText: "Applications open every Fall",
+  cta: "Apply Now",
+} as const;
+
+export const applyHref = (): string => APPLY.formUrl ?? APPLY.fallbackHref;
+
+/** Recruitment state — flip `open` when the cycle opens. */
+export const RECRUITMENT = {
+  open: false,
+  status: "Closed",
+  detail:
+    "Our main recruitment cycle runs every Fall (September). Watch our socials for the announcement.",
 } as const;
 
 /* -------------------------------------------------------------------------- */
@@ -32,7 +62,7 @@ export type SectionTile = {
   eyebrow: string;
   blurb: string;
   image: string;
-  /** Tailwind column span at lg. Creates the Anduril-style uneven mosaic. */
+  /** Column span at lg. Creates the Anduril-style uneven mosaic. */
   span: "wide" | "narrow";
 };
 
@@ -43,12 +73,22 @@ export const SECTIONS: SectionTile[] = [
     href: "/rover",
     eyebrow: "The machine",
     blurb:
-      "Seven sub-teams, one vehicle. Chassis to end-effector, power rail to perception stack — how the rover is actually put together.",
+      "Drivetrain to end effector, power rail to comms link — every subsystem on the vehicle and what it has to survive.",
     image: "/media/rover-mog.jpg",
     span: "wide",
   },
   {
     index: "02",
+    title: "Sub-teams",
+    href: "/subteams",
+    eyebrow: "How we're organised",
+    blurb:
+      "Seven sub-teams across mechanical, electrical, software, science and business. Each owns a system.",
+    image: "/media/team/software.jpg",
+    span: "narrow",
+  },
+  {
+    index: "03",
     title: "Competition",
     href: "/compete",
     eyebrow: "Where we prove it",
@@ -58,23 +98,13 @@ export const SECTIONS: SectionTile[] = [
     span: "narrow",
   },
   {
-    index: "03",
+    index: "04",
     title: "The Team",
     href: "/team",
     eyebrow: "Who builds it",
     blurb:
       "64 students across engineering, science, and business. Meet the leads and the sub-teams they run.",
-    image: "/media/team/software.jpg",
-    span: "narrow",
-  },
-  {
-    index: "04",
-    title: "Join Us",
-    href: "/join",
-    eyebrow: "Get on the team",
-    blurb:
-      "Hands-on experience in robotics, software and mechanical design. Recruitment opens every Fall.",
-    image: "/media/team/electrical.jpg",
+    image: "/media/team/arm.jpg",
     span: "narrow",
   },
   {
@@ -84,25 +114,294 @@ export const SECTIONS: SectionTile[] = [
     eyebrow: "Who makes it possible",
     blurb:
       "External support is the engine behind our innovation. Put your brand on the chassis.",
-    image: "/media/team/arm.jpg",
-    // Narrow, so the five tiles resolve as 1 wide + 2 full rows of 2. Making
-    // this one wide leaves tile 04 stranded beside an empty cell at lg.
+    image: "/media/team/electrical.jpg",
     span: "narrow",
   },
 ];
 
 /* -------------------------------------------------------------------------- */
+/* THE ROVER — subsystems                                                      */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Modelled on NASA's Perseverance "Rover Components" page: an anchor list at
+ * the top, then one section per subsystem with body copy, a labelled image and
+ * a Tech Specs table.
+ *
+ * TODO(team): every `specs` value and every `detail` paragraph below is a
+ * PLACEHOLDER. These need the real numbers from the current rover — motor
+ * counts, reduction ratios, payload, reach, bus voltages, radio band and link
+ * budget, and so on. The layout is final; the data is not.
+ */
+export type Subsystem = {
+  slug: string;
+  name: string;
+  /** One-line "main job", the way NASA leads each component. */
+  role: string;
+  summary: string;
+  detail: string[];
+  image: string;
+  imageCaption: string;
+  specs: { label: string; value: string }[];
+  /** Which sub-team owns this subsystem. */
+  ownedBy: string;
+};
+
+export const SUBSYSTEMS: Subsystem[] = [
+  {
+    slug: "chassis",
+    name: "Chassis",
+    role: "Carries every other subsystem and keeps it alive over the terrain.",
+    summary:
+      "The structural backbone. Everything else on the rover mounts to it, so its geometry sets the packaging constraints for the whole vehicle.",
+    detail: [
+      "PLACEHOLDER — describe the frame architecture: material and stock used, how the warm/protected electronics volume is enclosed, and how the deck is laid out for subsystem mounting.",
+      "PLACEHOLDER — describe the weather and dust sealing approach, and what the chassis has to tolerate at URC and CIRC.",
+    ],
+    image: "/media/team/chassis.jpg",
+    imageCaption: "PLACEHOLDER — chassis callout diagram.",
+    specs: [
+      { label: "Main job", value: "Structural platform for all subsystems" },
+      { label: "Material", value: "PLACEHOLDER" },
+      { label: "Dimensions", value: "PLACEHOLDER (L × W × H)" },
+      { label: "Mass", value: "PLACEHOLDER" },
+      { label: "Sealing", value: "PLACEHOLDER" },
+    ],
+    ownedBy: "chassis",
+  },
+  {
+    slug: "drivetrain",
+    name: "Drivetrain",
+    role: "Turns power into motion across loose, broken and steep ground.",
+    summary:
+      "Wheels, suspension, steering and the motors that drive them. This is what decides whether the rover finishes a traverse or gets stuck halfway.",
+    detail: [
+      "PLACEHOLDER — describe the suspension architecture (rocker-bogie or otherwise), how load is distributed, and the maximum tilt and obstacle height the design targets.",
+      "PLACEHOLDER — describe the steering scheme, wheel construction and tread design, and the drive motor and gearbox selection.",
+    ],
+    image: "/media/rover-mog.jpg",
+    imageCaption: "PLACEHOLDER — drivetrain and suspension callout diagram.",
+    specs: [
+      { label: "Main job", value: "Mobility over Mars-analogue terrain" },
+      { label: "Configuration", value: "PLACEHOLDER (wheel count, steering type)" },
+      { label: "Suspension", value: "PLACEHOLDER" },
+      { label: "Wheel diameter", value: "PLACEHOLDER" },
+      { label: "Drive motors", value: "PLACEHOLDER" },
+      { label: "Top speed", value: "PLACEHOLDER" },
+      { label: "Max grade", value: "PLACEHOLDER" },
+    ],
+    ownedBy: "chassis",
+  },
+  {
+    slug: "arm",
+    name: "Robotic Arm",
+    role: "Reaches, positions and applies force away from the rover body.",
+    summary:
+      "A multi-axis arm with high payload capacity, long reach, and fast end-effector swapping — the subsystem that does the servicing and equipment tasks at competition.",
+    detail: [
+      "PLACEHOLDER — describe the joint layout and degrees of freedom, the actuator and reduction choices at each joint, and how the arm is controlled from the base station.",
+      "PLACEHOLDER — describe the reach envelope and payload at full extension, and how the arm is stowed for driving.",
+    ],
+    image: "/media/team/arm.jpg",
+    imageCaption: "PLACEHOLDER — arm joint callout diagram.",
+    specs: [
+      { label: "Main job", value: "Manipulation, servicing and equipment tasks" },
+      { label: "Degrees of freedom", value: "PLACEHOLDER" },
+      { label: "Reach", value: "PLACEHOLDER" },
+      { label: "Payload at full extension", value: "PLACEHOLDER" },
+      { label: "Actuation", value: "PLACEHOLDER" },
+    ],
+    ownedBy: "arm",
+  },
+  {
+    slug: "end-effector",
+    name: "End Effector",
+    role: "The tool at the tip of the arm — swapped to suit the task.",
+    summary:
+      "Interchangeable tooling on a quick-change interface, so one arm can cover gripping, actuation and sample tasks without a redesign between them.",
+    detail: [
+      "PLACEHOLDER — describe the quick-change interface: mechanical coupling, how power and signal cross the joint, and how long a swap takes in the field.",
+      "PLACEHOLDER — list the tools in the current set and what competition task each one exists for.",
+    ],
+    image: "/media/team/arm.jpg",
+    imageCaption: "PLACEHOLDER — end effector and tool set.",
+    specs: [
+      { label: "Main job", value: "Task-specific manipulation at the arm tip" },
+      { label: "Interface", value: "PLACEHOLDER (quick-change type)" },
+      { label: "Tool set", value: "PLACEHOLDER" },
+      { label: "Grip force", value: "PLACEHOLDER" },
+      { label: "Swap time", value: "PLACEHOLDER" },
+    ],
+    ownedBy: "arm",
+  },
+  {
+    slug: "rover-lab",
+    name: "Rover Lab",
+    role: "Collects samples and runs the science onboard.",
+    summary:
+      "Automated onboard lab systems that collect soil samples, run chemical analyses, and search for signs of life — bringing autonomous science capability to a mobile platform.",
+    detail: [
+      "PLACEHOLDER — describe the sample acquisition path: how material is collected, transported, and staged for analysis.",
+      "PLACEHOLDER — describe the assays and instruments carried, including the microfluidic lab-on-a-chip work and how results are reported to the base station.",
+    ],
+    image: "/media/team/rover-lab.png",
+    imageCaption: "PLACEHOLDER — rover lab internal layout.",
+    specs: [
+      { label: "Main job", value: "Onboard sample handling and life detection" },
+      { label: "Sample intake", value: "PLACEHOLDER" },
+      { label: "Assays", value: "PLACEHOLDER" },
+      { label: "Instruments", value: "PLACEHOLDER" },
+      { label: "Sample capacity", value: "PLACEHOLDER" },
+    ],
+    ownedBy: "rover-lab",
+  },
+  {
+    slug: "power",
+    name: "Power & Electronics",
+    role: "Generates, distributes and protects the rover's electrical supply.",
+    summary:
+      "Battery, power distribution, motor control, lighting and the emergency stop chain — designed safety-first, because an uncommanded motor at competition is a disqualification at best.",
+    detail: [
+      "PLACEHOLDER — describe the battery chemistry and pack configuration, the distribution topology, and the protection scheme.",
+      "PLACEHOLDER — describe the emergency stop architecture and how it satisfies the URC and CIRC safety rules.",
+    ],
+    image: "/media/team/electrical.jpg",
+    imageCaption: "PLACEHOLDER — power distribution board.",
+    specs: [
+      { label: "Main job", value: "Power generation, distribution and protection" },
+      { label: "Battery", value: "PLACEHOLDER (chemistry, capacity)" },
+      { label: "Bus voltage", value: "PLACEHOLDER" },
+      { label: "Runtime", value: "PLACEHOLDER" },
+      { label: "E-stop", value: "PLACEHOLDER" },
+    ],
+    ownedBy: "electrical",
+  },
+  {
+    slug: "comms",
+    name: "Communications",
+    role: "Carries commands out to the rover and telemetry back.",
+    summary:
+      "The radio link between the rover and the control base. Range and reliability set how far the rover can be driven out of line of sight.",
+    detail: [
+      "PLACEHOLDER — describe the radio hardware, frequency band and antenna configuration on both ends of the link.",
+      "PLACEHOLDER — describe the link budget, achieved range at competition, and the behaviour on link loss.",
+    ],
+    image: "/media/team/electrical.jpg",
+    imageCaption: "PLACEHOLDER — antenna and radio callout.",
+    specs: [
+      { label: "Main job", value: "Command uplink and telemetry downlink" },
+      { label: "Band", value: "PLACEHOLDER" },
+      { label: "Antennas", value: "PLACEHOLDER" },
+      { label: "Range", value: "PLACEHOLDER" },
+      { label: "Link loss behaviour", value: "PLACEHOLDER" },
+    ],
+    ownedBy: "electrical",
+  },
+  {
+    slug: "control-base",
+    name: "Control Base",
+    role: "Where the operators sit and how they see what the rover sees.",
+    summary:
+      "The ground station: operator console, camera feeds, telemetry display and the software that runs and monitors the vehicle — including the Unity simulation used for testing and operator training.",
+    detail: [
+      "PLACEHOLDER — describe the base station hardware, the operator interface, and what the crew sees during a run.",
+      "PLACEHOLDER — describe the control and autonomy stack, the safety alerting, and how the Unity simulation is used to train operators before competition.",
+    ],
+    image: "/media/team/software.jpg",
+    imageCaption: "PLACEHOLDER — control base during a run.",
+    specs: [
+      { label: "Main job", value: "Operator control, telemetry and autonomy" },
+      { label: "Console", value: "PLACEHOLDER" },
+      { label: "Camera feeds", value: "PLACEHOLDER" },
+      { label: "Autonomy", value: "PLACEHOLDER" },
+      { label: "Simulation", value: "Unity — used for testing and operator training" },
+    ],
+    ownedBy: "software",
+  },
+];
+
+/**
+ * CAD viewer placeholder.
+ *
+ * TODO(team): drop a web-friendly export (GLB/GLTF preferred, or STEP for
+ * download) into public/media/cad/ and set `modelUrl`. While it is null the
+ * page renders a labelled placeholder frame instead of a broken viewer.
+ */
+export const CAD = {
+  modelUrl: null as string | null,
+  downloadUrl: null as string | null,
+  note: "PLACEHOLDER — interactive CAD model of the current rover.",
+} as const;
+
+/* -------------------------------------------------------------------------- */
 /* Sub-teams                                                                   */
 /* -------------------------------------------------------------------------- */
+
+export type Project = {
+  index: string;
+  title: string;
+  eyebrow: string;
+  blurb: string;
+  image: string;
+};
+
+export type OpenRole = {
+  title: string;
+  /** What you would actually be doing — NOT what the sub-team does. */
+  doing: string;
+  skills: string[];
+};
 
 export type Subteam = {
   slug: string;
   name: string;
   discipline: string;
+  /** TODO(team): sub-team leads to rewrite. Carried over from the old site. */
   blurb: string;
   image: string;
   capabilities: string[];
+  /** Rendered as Explore-style tiles on the sub-team's own page. */
+  projects: Project[];
+  /** Rendered on /join. Strictly roles and responsibilities. */
+  openRoles: OpenRole[];
 };
+
+const placeholderProjects = (name: string, image: string): Project[] => [
+  {
+    index: "01",
+    title: "Project One",
+    eyebrow: "PLACEHOLDER",
+    blurb: `PLACEHOLDER — a project the ${name} sub-team delivered. Replace with a real one: what was built, what problem it solved, and what came out of it at competition.`,
+    image,
+  },
+  {
+    index: "02",
+    title: "Project Two",
+    eyebrow: "PLACEHOLDER",
+    blurb: `PLACEHOLDER — a second ${name} project. Two to four of these per sub-team reads best in this grid.`,
+    image,
+  },
+  {
+    index: "03",
+    title: "Project Three",
+    eyebrow: "PLACEHOLDER",
+    blurb: `PLACEHOLDER — a third ${name} project.`,
+    image,
+  },
+];
+
+const placeholderRoles = (name: string): OpenRole[] => [
+  {
+    title: "PLACEHOLDER — Role One",
+    doing: `PLACEHOLDER — what a new member on ${name} would actually be handed in their first term. Describe the work, not the sub-team.`,
+    skills: ["PLACEHOLDER", "PLACEHOLDER"],
+  },
+  {
+    title: "PLACEHOLDER — Role Two",
+    doing: "PLACEHOLDER — a second role, with the concrete deliverable attached to it.",
+    skills: ["PLACEHOLDER", "PLACEHOLDER"],
+  },
+];
 
 export const SUBTEAMS: Subteam[] = [
   {
@@ -118,6 +417,8 @@ export const SUBTEAMS: Subteam[] = [
       "Waterproofing",
       "Systems integration",
     ],
+    projects: placeholderProjects("Chassis", "/media/team/chassis.jpg"),
+    openRoles: placeholderRoles("Chassis"),
   },
   {
     slug: "arm",
@@ -132,6 +433,8 @@ export const SUBTEAMS: Subteam[] = [
       "Swappable end-effectors",
       "Long reach",
     ],
+    projects: placeholderProjects("Arm", "/media/team/arm.jpg"),
+    openRoles: placeholderRoles("Arm"),
   },
   {
     slug: "rover-lab",
@@ -146,6 +449,8 @@ export const SUBTEAMS: Subteam[] = [
       "Life detection",
       "Autonomous lab systems",
     ],
+    projects: placeholderProjects("Rover Lab", "/media/team/rover-lab.png"),
+    openRoles: placeholderRoles("Rover Lab"),
   },
   {
     slug: "electrical",
@@ -160,6 +465,8 @@ export const SUBTEAMS: Subteam[] = [
       "Emergency stop systems",
       "Competition-ready PCBs",
     ],
+    projects: placeholderProjects("Electrical", "/media/team/electrical.jpg"),
+    openRoles: placeholderRoles("Electrical"),
   },
   {
     slug: "software",
@@ -174,6 +481,8 @@ export const SUBTEAMS: Subteam[] = [
       "Unity simulation",
       "Operator training",
     ],
+    projects: placeholderProjects("Software", "/media/team/software.jpg"),
+    openRoles: placeholderRoles("Software"),
   },
   {
     slug: "science",
@@ -188,6 +497,8 @@ export const SUBTEAMS: Subteam[] = [
       "Computer vision",
       "Habitability analysis",
     ],
+    projects: placeholderProjects("Science", "/media/team/science.png"),
+    openRoles: placeholderRoles("Science"),
   },
   {
     slug: "business",
@@ -197,32 +508,86 @@ export const SUBTEAMS: Subteam[] = [
       "We keep the team running and growing by managing finances, sponsorships, and outreach, while promoting our work through marketing, events, and community engagement.",
     image: "/media/team/business.jpeg",
     capabilities: ["Finance", "Sponsorship", "Outreach & events", "Marketing"],
+    projects: placeholderProjects("Business", "/media/team/business.jpeg"),
+    openRoles: placeholderRoles("Business"),
   },
 ];
+
+export const getSubteam = (slug: string) => SUBTEAMS.find((t) => t.slug === slug);
 
 /* -------------------------------------------------------------------------- */
 /* Leadership                                                                  */
 /* -------------------------------------------------------------------------- */
 
+export type LeadLink = { kind: "github" | "linkedin" | "website"; href: string };
+
 /**
- * `focal` is the CSS object-position for the portrait crop. These are candid
- * photos rather than studio headshots, so heads sit at wildly different heights
- * in the frame; without a focal point the 3:4 crop cuts some faces off and
- * leaves others tiny. Default is "50% 30%", which suits most upper-body shots.
+ * `focal` is the CSS object-position for the portrait crop — these are candid
+ * photos, so heads sit at different heights in frame.
+ *
+ * TODO(team): `links` is empty for everyone. Each lead opts in individually by
+ * adding their own entries; nothing is published without them adding it.
+ * TODO(team): role titles (taskmaster, systems lead, …) still to be decided.
  */
-export type Lead = { name: string; role: string; image: string; focal?: string };
+export type Lead = {
+  name: string;
+  role: string;
+  image: string;
+  focal?: string;
+  links?: LeadLink[];
+};
 
 export const LEADS: Lead[] = [
-  { name: "Conor O'Neill", role: "Co-Captain", image: "/media/people/conor.jpg" },
-  { name: "Myra Wei", role: "Co-Captain", image: "/media/people/myra.jpg" },
-  { name: "Andres Fleet", role: "Chassis Lead", image: "/media/people/andres.jpg" },
-  { name: "Eric Kondor", role: "Arm Lead", image: "/media/people/eric.jpg" },
-  { name: "Lochy Rode", role: "Electrical Lead", image: "/media/people/lochy.JPG" },
-  { name: "Danyaal Abbas", role: "Science Lead", image: "/media/people/danyaal.jpg" },
-  { name: "Michael Day", role: "Rover Lab Lead", image: "/media/people/mike.jpg" },
-  { name: "Rowan Zawadzki", role: "Software Lead", image: "/media/people/rowan.jpg" },
-  { name: "Riddhima Gupta", role: "Software Lead", image: "/media/people/riddhima.jpg" },
-  { name: "Cameron Basara", role: "Software Lead", image: "/media/people/cameron.jpg" },
+  {
+    name: "Conor O'Neill",
+    role: "Co-Captain",
+    image: "/media/people/conor.jpg",
+    links: [],
+  },
+  { name: "Myra Wei", role: "Co-Captain", image: "/media/people/myra.jpg", links: [] },
+  {
+    name: "Andres Fleet",
+    role: "Chassis Lead",
+    image: "/media/people/andres.jpg",
+    links: [],
+  },
+  { name: "Eric Kondor", role: "Arm Lead", image: "/media/people/eric.jpg", links: [] },
+  {
+    name: "Lochy Rode",
+    role: "Electrical Lead",
+    image: "/media/people/lochy.JPG",
+    links: [],
+  },
+  {
+    name: "Danyaal Abbas",
+    role: "Science Lead",
+    image: "/media/people/danyaal.jpg",
+    links: [],
+  },
+  {
+    name: "Michael Day",
+    role: "Rover Lab Lead",
+    image: "/media/people/mike.jpg",
+    links: [],
+  },
+  {
+    name: "Rowan Zawadzki",
+    role: "Software Lead",
+    image: "/media/people/rowan.jpg",
+    links: [],
+  },
+  {
+    name: "Riddhima Gupta",
+    role: "Software Lead",
+    image: "/media/people/riddhima.jpg",
+    links: [],
+  },
+  {
+    name: "Cameron Basara",
+    role: "Software Lead",
+    image: "/media/people/cameron.jpg",
+    links: [],
+  },
 ];
 
 /* -------------------------------------------------------------------------- */
@@ -235,6 +600,8 @@ export type Competition = {
   location: string;
   blurb: string;
   image: string;
+  url: string;
+  host: string;
   facts: { label: string; value: string }[];
 };
 
@@ -246,6 +613,8 @@ export const COMPETITIONS: Competition[] = [
     blurb:
       "The world's premier robotics competition, held at the Mars Desert Research Station in Utah. Teams from around the globe push their rovers to the limit in extreme heat and difficult terrain.",
     image: "/media/rover-mog.jpg",
+    url: "https://urc.marssociety.org/",
+    host: "The Mars Society",
     facts: [
       { label: "Terrain", value: "Mars-analogue desert" },
       { label: "Field", value: "International" },
@@ -259,6 +628,8 @@ export const COMPETITIONS: Competition[] = [
     blurb:
       "Held in the badlands of Drumheller, Alberta. We compete in tasks simulating a disaster at an early Martian colony, requiring search and rescue, equipment servicing, and night operations.",
     image: "/media/team/chassis.jpg",
+    url: "https://circ.cstag.ca/",
+    host: "CSTAG",
     facts: [
       { label: "Terrain", value: "Alberta badlands" },
       { label: "Scenario", value: "Martian colony disaster" },
@@ -278,11 +649,6 @@ export type SponsorTier = { tier: string; logos: Sponsor[] };
  * Tier membership is copied EXACTLY from ubcrover.github.io/index.html. Do not
  * reshuffle these — which tier a sponsor sits in is a commitment the team made
  * to that sponsor.
- *
- * There is deliberately no per-tier "benefits" copy here. The source site
- * promises one undifferentiated thing (brand on competition apparel, digital
- * platforms and the rover chassis) and does not tier those benefits, so
- * inventing a ladder would be making contractual claims on the team's behalf.
  */
 export const SPONSOR_TIERS: SponsorTier[] = [
   {
@@ -332,6 +698,43 @@ export const SPONSOR_TIERS: SponsorTier[] = [
 export const SPONSOR_OFFER =
   "In appreciation of your partnership, we feature your brand on our competition apparel, our digital platforms, and directly on the rover chassis as it tackles the toughest terrains.";
 
+/**
+ * What sponsorship actually bought.
+ *
+ * TODO(team): these are PLACEHOLDERS. Replace each with the real story —
+ * "thank you Thermo Fisher for the reagents, which let us run X assays at
+ * CIRC" — one entry per sponsor you want to call out. Delete any you cannot
+ * substantiate rather than leaving the placeholder text live.
+ */
+export type SponsorImpact = {
+  sponsor: string;
+  logo: string;
+  contribution: string;
+  outcome: string;
+};
+
+export const SPONSOR_IMPACT: SponsorImpact[] = [
+  {
+    sponsor: "Thermo Fisher Scientific",
+    logo: "/media/sponsors/Thermo_Fisher_Scientific_Logo.png",
+    contribution: "PLACEHOLDER — what they provided (e.g. reagents, consumables).",
+    outcome:
+      "PLACEHOLDER — what that made possible: which assays ran, on which subsystem, at which competition, and what the result was.",
+  },
+  {
+    sponsor: "maxon",
+    logo: "/media/sponsors/maxon.png",
+    contribution: "PLACEHOLDER — what they provided (e.g. motors, gearheads).",
+    outcome: "PLACEHOLDER — which subsystem it went into and what it enabled.",
+  },
+  {
+    sponsor: "Protocase",
+    logo: "/media/sponsors/protocase.png",
+    contribution: "PLACEHOLDER — what they provided (e.g. fabricated enclosures).",
+    outcome: "PLACEHOLDER — what that made possible on the rover.",
+  },
+];
+
 /* -------------------------------------------------------------------------- */
 /* Social channels — exactly the three linked from the source site.            */
 /* -------------------------------------------------------------------------- */
@@ -359,16 +762,9 @@ export const INQUIRY_TYPES = [
 
 export const NAV = [
   { label: "The Rover", href: "/rover" },
+  { label: "Sub-teams", href: "/subteams" },
   { label: "Competition", href: "/compete" },
   { label: "Team", href: "/team" },
   { label: "Sponsors", href: "/sponsors" },
   { label: "Contact", href: "/contact" },
 ] as const;
-
-/** Recruitment state — flip this one flag when the cycle opens. */
-export const RECRUITMENT = {
-  open: false,
-  status: "Closed",
-  detail:
-    "Our main recruitment cycle runs every Fall (September). Watch our socials for the announcement.",
-} as const;

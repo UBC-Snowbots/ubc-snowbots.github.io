@@ -64,8 +64,15 @@
        client-side navigation, and Next 16 only suppresses smooth behaviour when
        the document opts in via data-scroll-behavior. With smooth set globally,
        each route change drops you mid-page and animates to the top for up to a
-       second and a half. Instant scroll is what makes navigation feel snappy. */
-    scroll-padding-top: 5rem; /* keeps anchored sections clear of the header */
+       second and a half. Instant scroll is what makes navigation feel snappy.
+
+       Also deliberately NOT `scroll-snap-type`. Section snapping is driven by
+       components/SectionSnap.tsx instead: CSS proximity snapping recaptured
+       every slow wheel notch and stopped the home page scrolling at all. The
+       component carries the measurements. */
+
+    /* Clears the fixed header stack (apply banner + nav bar + rule). */
+    scroll-padding-top: 7.5rem;
     -webkit-tap-highlight-color: transparent;
   }
 
@@ -154,6 +161,56 @@
         transparent 1px
       );
     background-size: 72px 72px;
+  }
+
+  /* Marker class only — SectionSnap reads these to find section boundaries.
+     Deliberately carries no scroll-snap-align: the browser must not capture
+     scrolling, or slow wheel input gets pulled back to the previous section. */
+  .snap-section {
+    scroll-margin-top: 7.5rem;
+  }
+
+  /**
+   * Detail that eases open when its `.group` ancestor is hovered or focused.
+   *
+   * Gated on hover CAPABILITY, not on a width breakpoint. An earlier version
+   * used `sm:` to decide whether to collapse, which meant any touch device at
+   * 640px or wider — every tablet — got the collapsed state with no way to ever
+   * trigger hover, permanently hiding the content. Keying off
+   * `(hover: hover) and (pointer: fine)` means touch and stylus users simply
+   * see the detail inline, which is the correct fallback.
+   *
+   * The collapse is `grid-template-rows` rather than `max-height` so the open
+   * state is the content's natural height: a max-height ceiling either clips
+   * long content or makes the easing curve wrong for short content.
+   */
+  .reveal-on-hover {
+    display: grid;
+    grid-template-rows: 1fr;
+  }
+
+  .reveal-on-hover > * {
+    min-height: 0;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .reveal-on-hover {
+      grid-template-rows: 0fr;
+      opacity: 0;
+      transition:
+        grid-template-rows 0.5s var(--ease-out-expo),
+        opacity 0.4s var(--ease-out-quart);
+    }
+
+    .reveal-on-hover > * {
+      overflow: hidden;
+    }
+
+    .group:hover .reveal-on-hover,
+    .group:focus-within .reveal-on-hover {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
   }
 
   .text-eyebrow {

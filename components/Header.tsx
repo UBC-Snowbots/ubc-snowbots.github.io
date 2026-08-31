@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { NAV } from "@/lib/content";
+import ApplyBanner from "./ApplyBanner";
+import { NAV, applyHref } from "@/lib/content";
 
 const MOBILE_LINKS = [...NAV, { label: "Join Us", href: "/join" }];
 
@@ -107,87 +108,102 @@ export default function Header() {
     <>
       <div ref={sentinel} aria-hidden className="absolute top-0 h-px w-full" />
 
-      <header
-        className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
-          scrolled || open
-            ? "bg-navy-950/85 border-b border-white/10 backdrop-blur-md"
-            : "border-b border-transparent bg-transparent"
-        }`}
-      >
-        <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-5 sm:h-20 sm:px-8">
-          <Link
-            href="/"
-            onClick={() => setOpen(false)}
-            className="group flex items-center gap-3"
-            aria-label="UBC Rover — home"
-          >
-            {/* The white-on-transparent mark — the other export in the media
-                folder is dark artwork and disappears against the navy bar. */}
-            <img
-              src="/media/brand/rover-wordmark-white.png"
-              alt=""
-              width={40}
-              height={40}
-              className="h-9 w-auto sm:h-10"
-            />
-            <span className="font-display text-chalk text-lg leading-none font-extrabold tracking-[-0.02em] sm:text-xl">
-              UBC <span className="text-amber-500">ROVER</span>
-            </span>
-          </Link>
+      <header className="fixed inset-x-0 top-0 z-50">
+        {/* Always visible, above the nav — this is the primary recruitment
+            call to action and it should never scroll out of reach. */}
+        <ApplyBanner />
 
-          {/* Desktop nav */}
-          <nav aria-label="Primary" className="hidden items-center gap-9 lg:flex">
-            {NAV.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                aria-current={isActive(item.href) ? "page" : undefined}
-                className={`hover:text-chalk relative py-1 font-mono text-[11px] tracking-[0.16em] uppercase transition-colors duration-200 after:absolute after:-bottom-0.5 after:left-0 after:h-px after:bg-amber-500 after:transition-[width] after:duration-300 ${
-                  isActive(item.href)
-                    ? "text-chalk after:w-full"
-                    : "text-chalk-dim/70 after:w-0 hover:after:w-full"
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
+        <div
+          className={`relative transition-colors duration-500 ${
+            scrolled || open
+              ? "bg-navy-950/85 border-b border-white/10 backdrop-blur-md"
+              : "border-b border-transparent bg-transparent"
+          }`}
+        >
+          {/* Legibility scrim for the transparent state. Over a bright hero sky
+              the nav labels drop to roughly 2:1 against the photo; this keeps
+              them readable without making the bar look solid. */}
+          {!scrolled && !open ? (
+            <div
+              aria-hidden
+              className="from-navy-950/70 pointer-events-none absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b to-transparent"
+            />
+          ) : null}
+          <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-5 sm:h-20 sm:px-8">
             <Link
-              href="/join"
-              className="hover:text-navy-950 border border-amber-500 px-5 py-2.5 font-mono text-[11px] tracking-[0.16em] text-amber-500 uppercase transition-colors duration-200 hover:bg-amber-500"
+              href="/"
+              onClick={() => setOpen(false)}
+              className="group flex items-center gap-3"
+              aria-label="UBC Rover — home"
             >
-              Join Us
+              {/* The white-on-transparent mark — the other export in the media
+                folder is dark artwork and disappears against the navy bar. */}
+              <img
+                src="/media/brand/rover-wordmark-white.png"
+                alt=""
+                width={40}
+                height={40}
+                className="h-9 w-auto sm:h-10"
+              />
+              <span className="font-display text-chalk text-lg leading-none font-extrabold tracking-[-0.02em] sm:text-xl">
+                UBC <span className="text-amber-500">ROVER</span>
+              </span>
             </Link>
-          </nav>
 
-          {/* Mobile trigger */}
-          <button
-            ref={triggerRef}
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            aria-expanded={open}
-            aria-controls="mobile-nav"
-            aria-label={open ? "Close menu" : "Open menu"}
-            className="-mr-2 flex h-11 w-11 flex-col items-center justify-center gap-[5px] lg:hidden"
-          >
-            <span
-              className={`bg-chalk h-px w-6 transition-transform duration-300 ${
-                open ? "translate-y-[6px] rotate-45" : ""
-              }`}
-            />
-            <span
-              className={`bg-chalk h-px w-6 transition-opacity duration-200 ${
-                open ? "opacity-0" : "opacity-100"
-              }`}
-            />
-            <span
-              className={`bg-chalk h-px w-6 transition-transform duration-300 ${
-                open ? "-translate-y-[6px] -rotate-45" : ""
-              }`}
-            />
-          </button>
+            {/* Desktop nav */}
+            <nav aria-label="Primary" className="hidden items-center gap-9 lg:flex">
+              {NAV.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={isActive(item.href) ? "page" : undefined}
+                  className={`hover:text-chalk relative py-1 font-mono text-[11px] tracking-[0.16em] uppercase transition-colors duration-200 after:absolute after:-bottom-0.5 after:left-0 after:h-px after:bg-amber-500 after:transition-[width] after:duration-300 ${
+                    isActive(item.href)
+                      ? "text-chalk after:w-full"
+                      : "text-chalk-dim/70 after:w-0 hover:after:w-full"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              ))}
+              <Link
+                href={applyHref()}
+                className="hover:text-navy-950 border border-amber-500 px-5 py-2.5 font-mono text-[11px] tracking-[0.16em] text-amber-500 uppercase transition-colors duration-200 hover:bg-amber-500"
+              >
+                Apply Now
+              </Link>
+            </nav>
+
+            {/* Mobile trigger */}
+            <button
+              ref={triggerRef}
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              aria-expanded={open}
+              aria-controls="mobile-nav"
+              aria-label={open ? "Close menu" : "Open menu"}
+              className="-mr-2 flex h-11 w-11 flex-col items-center justify-center gap-[5px] lg:hidden"
+            >
+              <span
+                className={`bg-chalk h-px w-6 transition-transform duration-300 ${
+                  open ? "translate-y-[6px] rotate-45" : ""
+                }`}
+              />
+              <span
+                className={`bg-chalk h-px w-6 transition-opacity duration-200 ${
+                  open ? "opacity-0" : "opacity-100"
+                }`}
+              />
+              <span
+                className={`bg-chalk h-px w-6 transition-transform duration-300 ${
+                  open ? "-translate-y-[6px] -rotate-45" : ""
+                }`}
+              />
+            </button>
+          </div>
+
+          <div className="stripe-rule-thin h-[3px] w-full" aria-hidden />
         </div>
-
-        <div className="stripe-rule-thin h-[3px] w-full" aria-hidden />
       </header>
 
       {/* Mobile panel.
@@ -201,7 +217,7 @@ export default function Header() {
         role="dialog"
         aria-modal="true"
         aria-label="Menu"
-        className="bg-navy-950/98 fixed inset-0 z-40 overflow-y-auto overscroll-contain pt-24 pb-12 backdrop-blur-lg lg:hidden"
+        className="bg-navy-950/98 fixed inset-0 z-40 overflow-y-auto overscroll-contain pt-32 pb-12 backdrop-blur-lg lg:hidden"
       >
         <nav aria-label="Mobile" className="flex flex-col px-5">
           {MOBILE_LINKS.map((item, i) => (

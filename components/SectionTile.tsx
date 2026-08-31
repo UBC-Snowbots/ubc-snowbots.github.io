@@ -80,11 +80,16 @@ export default function SectionTile({
           </span>
         </div>
 
-        {/* Blurb: always present in the DOM for screen readers and for touch
-            devices (which have no hover); on pointer screens it eases open. */}
-        <p className="text-chalk-dim/85 mt-3 max-w-xl text-sm leading-relaxed sm:mt-0 sm:max-h-0 sm:overflow-hidden sm:opacity-0 sm:transition-all sm:duration-500 sm:ease-[cubic-bezier(0.16,1,0.3,1)] sm:group-hover:mt-4 sm:group-hover:max-h-32 sm:group-hover:opacity-100 sm:group-focus-visible:mt-4 sm:group-focus-visible:max-h-32 sm:group-focus-visible:opacity-100">
-          {tile.blurb}
-        </p>
+        {/* Blurb. `.reveal-on-hover` gates on hover CAPABILITY, not viewport
+            width — a width-gated version hid this permanently on every touch
+            tablet, which has no hover to open it with. */}
+        <div className="reveal-on-hover">
+          <div>
+            <p className="text-chalk-dim/85 mt-3 max-w-xl text-sm leading-relaxed">
+              {tile.blurb}
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Amber rule that draws in along the bottom edge on hover. */}

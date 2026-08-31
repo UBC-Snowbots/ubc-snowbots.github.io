@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
-import { RECRUITMENT, SITE, SOCIALS, SUBTEAMS } from "@/lib/content";
+import RoleTile from "@/components/RoleTile";
+import { RECRUITMENT, SITE, SOCIALS, SUBTEAMS, applyHref } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Join Us",
@@ -32,6 +33,17 @@ const REASONS = [
     title: "Compete internationally",
     body: "The work goes to the University Rover Challenge in Utah and the Canadian International Rover Challenge in Alberta.",
   },
+];
+
+/** Column spans for the role mosaic — 6+6+6 over three rows for seven tiles. */
+const SPANS = [
+  "lg:col-span-3",
+  "lg:col-span-3",
+  "lg:col-span-2",
+  "lg:col-span-2",
+  "lg:col-span-2",
+  "lg:col-span-3",
+  "lg:col-span-3",
 ];
 
 export default function JoinPage() {
@@ -87,22 +99,39 @@ export default function JoinPage() {
           ))}
         </div>
 
-        {/* Where you could land */}
+        {/* ------------------------------------------------------------
+            Where you could land — an uneven Anduril-style mosaic.
+
+            Spans are [3,3, 2,2,2, 3,3] on a 6-column grid: 6+6+6 across three
+            full rows for exactly seven tiles, so the grid never leaves an
+            orphaned cell the way an even 3- or 4-column layout would.
+
+            This section is strictly about OPEN ROLES and what you would be
+            doing. What each sub-team builds lives on /subteams.
+            ------------------------------------------------------------ */}
         <Reveal>
-          <h2 className="font-display text-chalk mt-24 text-3xl leading-[0.95] font-extrabold tracking-[-0.03em] sm:text-5xl">
-            Where you could land
-          </h2>
+          <div className="mt-24 flex flex-wrap items-end justify-between gap-6 border-b border-white/10 pb-8">
+            <div>
+              <p className="text-eyebrow">Open roles</p>
+              <h2 className="font-display text-chalk mt-4 text-3xl leading-[0.95] font-extrabold tracking-[-0.03em] sm:text-5xl">
+                Where you could land
+              </h2>
+            </div>
+            <p className="text-chalk-dim/70 max-w-sm text-sm leading-relaxed">
+              What each sub-team is recruiting for, and what you would actually be handed
+              in your first term. Hover a tile for the detail.
+            </p>
+          </div>
         </Reveal>
 
-        <div className="mt-10 flex flex-wrap gap-3">
+        <div className="mt-10 grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-6">
           {SUBTEAMS.map((team, i) => (
-            <Reveal key={team.slug} delay={i * 45}>
-              <Link
-                href={`/rover#${team.slug}`}
-                className="text-chalk-dim/85 inline-block border border-white/15 px-6 py-3 font-mono text-[11px] tracking-[0.14em] uppercase transition-colors duration-200 hover:border-amber-500 hover:text-amber-500"
-              >
-                {team.name}
-              </Link>
+            <Reveal
+              key={team.slug}
+              delay={(i % 3) * 80}
+              className={SPANS[i] ?? "lg:col-span-2"}
+            >
+              <RoleTile team={team} />
             </Reveal>
           ))}
         </div>
@@ -119,9 +148,15 @@ export default function JoinPage() {
             </p>
 
             <div className="mt-9 flex flex-wrap justify-center gap-4">
+              <Link
+                href={applyHref()}
+                className="text-navy-950 inline-block bg-amber-500 px-8 py-4 font-mono text-[11px] tracking-[0.18em] uppercase transition-colors duration-200 hover:bg-amber-400"
+              >
+                Apply Now
+              </Link>
               <a
                 href={`mailto:${SITE.email}`}
-                className="text-navy-950 inline-block bg-amber-500 px-8 py-4 font-mono text-[11px] tracking-[0.18em] uppercase transition-colors duration-200 hover:bg-amber-400"
+                className="text-chalk inline-block border border-white/25 px-8 py-4 font-mono text-[11px] tracking-[0.18em] uppercase transition-colors duration-200 hover:border-amber-500 hover:text-amber-500"
               >
                 Email the team
               </a>

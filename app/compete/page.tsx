@@ -54,6 +54,19 @@ export default function CompetePage() {
                     </div>
                   ))}
                 </dl>
+
+                {/* Out to the organiser's own site — the same links the home
+                    page carries, so /compete is not a dead end. */}
+                <a
+                  href={comp.url}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="mt-8 inline-flex w-fit items-center gap-2 border-b border-amber-500/40 pb-1 font-mono text-[11px] tracking-[0.16em] text-amber-500 uppercase transition-colors hover:border-amber-500"
+                >
+                  {comp.abbr} official site &mdash; {comp.host}
+                  <span aria-hidden>&#8599;</span>
+                  <span className="sr-only">(opens in a new tab)</span>
+                </a>
               </Reveal>
 
               <Reveal delay={120}>

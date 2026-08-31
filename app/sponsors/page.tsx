@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
-import { SITE, SPONSOR_OFFER, SPONSOR_TIERS } from "@/lib/content";
+import { SITE, SPONSOR_IMPACT, SPONSOR_OFFER, SPONSOR_TIERS } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Sponsors",
@@ -31,6 +31,79 @@ export default function SponsorsPage() {
             </p>
           </div>
         </Reveal>
+
+        {/* ------------------------------------------------------------
+            What sponsorship actually bought. Every entry is a placeholder
+            until the team supplies the real story — see SPONSOR_IMPACT in
+            lib/content.ts. Concrete outcomes are what convince the next
+            sponsor, so this section is worth filling in properly.
+            ------------------------------------------------------------ */}
+        <Reveal>
+          <div className="mt-24 flex flex-wrap items-end justify-between gap-6 border-b border-white/10 pb-8">
+            <div>
+              <p className="text-eyebrow">Impact</p>
+              <h2 className="font-display text-chalk mt-4 text-3xl leading-[0.95] font-extrabold tracking-[-0.03em] sm:text-5xl">
+                What your support built
+              </h2>
+            </div>
+            <p className="text-chalk-dim/70 max-w-sm text-sm leading-relaxed">
+              Sponsorship does not disappear into a budget line. Here is where it went.
+            </p>
+          </div>
+        </Reveal>
+
+        <div className="mt-10 grid gap-4 sm:gap-5 lg:grid-cols-3">
+          {SPONSOR_IMPACT.map((item, i) => (
+            <Reveal key={item.sponsor} delay={i * 90}>
+              <article className="bg-navy-900 flex h-full flex-col border border-white/10 p-7 sm:p-8">
+                <div className="bg-chalk/92 flex h-16 w-fit items-center justify-center rounded-sm px-5">
+                  <img
+                    src={item.logo}
+                    alt={item.sponsor}
+                    loading="lazy"
+                    decoding="async"
+                    className="max-h-10 max-w-[9rem] object-contain"
+                  />
+                </div>
+
+                <h3 className="font-display text-chalk mt-6 text-xl font-bold tracking-[-0.015em]">
+                  {item.sponsor}
+                </h3>
+
+                <dl className="mt-5 space-y-4 text-sm leading-relaxed">
+                  <div>
+                    <dt className="text-chalk-dim/60 font-mono text-[10px] tracking-[0.16em] uppercase">
+                      Contributed
+                    </dt>
+                    <dd
+                      className={
+                        item.contribution.startsWith("PLACEHOLDER")
+                          ? "mt-1.5 font-mono text-xs text-amber-500/70"
+                          : "text-chalk-dim/85 mt-1.5"
+                      }
+                    >
+                      {item.contribution}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="text-chalk-dim/60 font-mono text-[10px] tracking-[0.16em] uppercase">
+                      What it made possible
+                    </dt>
+                    <dd
+                      className={
+                        item.outcome.startsWith("PLACEHOLDER")
+                          ? "mt-1.5 font-mono text-xs text-amber-500/70"
+                          : "text-chalk-dim/85 mt-1.5"
+                      }
+                    >
+                      {item.outcome}
+                    </dd>
+                  </div>
+                </dl>
+              </article>
+            </Reveal>
+          ))}
+        </div>
 
         {/* Tiers */}
         <div className="mt-24 space-y-16">
