@@ -85,10 +85,10 @@ export default function Home() {
                 Apply Now
               </Link>
               <Link
-                href="/rover"
+                href="/subteams"
                 className="text-chalk border border-white/25 px-8 py-4 font-mono text-[11px] tracking-[0.18em] uppercase transition-colors duration-200 hover:border-amber-500 hover:text-amber-500"
               >
-                See the Rover
+                See What We Build
               </Link>
             </div>
           </Reveal>

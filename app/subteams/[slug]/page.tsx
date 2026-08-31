@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
-import { SUBSYSTEMS, SUBTEAMS, applyHref, getSubteam } from "@/lib/content";
+import { SUBTEAMS, applyHref, getSubteam, subsystemsForSubteam } from "@/lib/content";
 
 /** Static export needs every route enumerated at build time. */
 export function generateStaticParams() {
@@ -30,8 +30,9 @@ export default async function SubteamPage({ params }: Params) {
   const team = getSubteam(slug);
   if (!team) notFound();
 
-  // Which parts of the rover this sub-team owns — links across to /rover.
-  const owned = SUBSYSTEMS.filter((s) => s.ownedBy === team.slug);
+  // The rover subsystems this sub-team owns. These used to live on a separate
+  // /rover page; they belong here, next to the people who actually build them.
+  const owned = subsystemsForSubteam(team.slug);
 
   return (
     <>
@@ -69,50 +70,127 @@ export default async function SubteamPage({ params }: Params) {
           </div>
         </Reveal>
 
-        {/* What we do */}
+        {/* ------------------------------------------------------------
+            What we do.
+
+            For sub-teams that own hardware this is the full subsystem
+            breakdown — main job, description and a Tech Specs table each,
+            in the style of NASA's Perseverance components page. Science and
+            Business own no subsystem, so they fall back to their capability
+            list rather than rendering an empty section.
+            ------------------------------------------------------------ */}
         <Reveal>
-          <h2 className="font-display text-chalk mt-20 text-3xl leading-[0.95] font-extrabold tracking-[-0.03em] sm:text-5xl">
-            What we do
-          </h2>
+          <div className="mt-20 border-b border-white/10 pb-6">
+            <p className="text-eyebrow">What we do</p>
+            <h2 className="font-display text-chalk mt-3 text-3xl leading-[0.95] font-extrabold tracking-[-0.03em] sm:text-5xl">
+              {owned.length ? "The systems we build" : "What we handle"}
+            </h2>
+          </div>
         </Reveal>
 
-        <div className="mt-10 grid gap-px border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
-          {team.capabilities.map((cap, i) => (
-            <Reveal key={cap} delay={i * 60} className="bg-navy-950">
-              <div className="h-full p-7">
-                <p className="font-mono text-[11px] tracking-[0.2em] text-amber-500">
-                  {String(i + 1).padStart(2, "0")}
-                </p>
-                <p className="font-display text-chalk mt-4 text-lg leading-snug font-bold tracking-[-0.01em]">
-                  {cap}
-                </p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-
-        {/* Systems owned — the bridge to /rover */}
         {owned.length ? (
-          <>
-            <Reveal>
-              <h2 className="font-display text-chalk mt-20 text-3xl leading-[0.95] font-extrabold tracking-[-0.03em] sm:text-5xl">
-                Systems we own
-              </h2>
-            </Reveal>
-            <div className="mt-8 flex flex-wrap gap-3">
-              {owned.map((sub, i) => (
-                <Reveal key={sub.slug} delay={i * 50}>
-                  <Link
-                    href={`/rover#${sub.slug}`}
-                    className="text-chalk-dim/85 inline-block border border-white/15 px-6 py-3 font-mono text-[11px] tracking-[0.14em] uppercase transition-colors duration-200 hover:border-amber-500 hover:text-amber-500"
-                  >
-                    {sub.name}
-                  </Link>
-                </Reveal>
-              ))}
-            </div>
-          </>
-        ) : null}
+          <div className="mt-12 space-y-20 sm:space-y-28">
+            {owned.map((sub, i) => (
+              <article key={sub.slug} id={sub.slug} className="scroll-mt-32">
+                <div
+                  className={`grid gap-10 lg:grid-cols-2 lg:gap-14 ${
+                    i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
+                  }`}
+                >
+                  <Reveal>
+                    <figure>
+                      <div className="relative aspect-[4/3] overflow-hidden border border-white/10">
+                        <img
+                          src={sub.image}
+                          alt={`${sub.name} on the UBC Rover.`}
+                          loading="lazy"
+                          decoding="async"
+                          className="absolute inset-0 h-full w-full object-cover"
+                        />
+                        <div
+                          aria-hidden
+                          className="from-navy-950/70 absolute inset-0 bg-gradient-to-t to-transparent"
+                        />
+                      </div>
+                      <figcaption className="text-chalk-dim/60 mt-3 font-mono text-[11px] tracking-[0.1em]">
+                        {sub.imageCaption}
+                      </figcaption>
+                    </figure>
+                  </Reveal>
+
+                  <Reveal delay={110}>
+                    <p className="text-eyebrow">
+                      {String(i + 1).padStart(2, "0")} &nbsp;/&nbsp; Subsystem
+                    </p>
+                    <h3 className="font-display text-chalk mt-3 text-3xl font-extrabold tracking-[-0.03em] sm:text-4xl">
+                      {sub.name}
+                    </h3>
+                    <p className="font-display text-chalk mt-4 text-lg leading-snug font-bold tracking-[-0.01em]">
+                      {sub.role}
+                    </p>
+                    <p className="text-chalk-dim/85 mt-5 text-base leading-relaxed">
+                      {sub.summary}
+                    </p>
+                    {sub.detail.map((para) => (
+                      <p
+                        key={para.slice(0, 40)}
+                        className={
+                          para.startsWith("PLACEHOLDER")
+                            ? "mt-4 font-mono text-xs leading-relaxed text-amber-500/60"
+                            : "text-chalk-dim/70 mt-4 text-base leading-relaxed"
+                        }
+                      >
+                        {para}
+                      </p>
+                    ))}
+
+                    <div className="mt-7 border border-white/10">
+                      <p className="text-chalk-dim/70 border-b border-white/10 px-5 py-3 font-mono text-[11px] tracking-[0.18em] uppercase">
+                        Tech Specs
+                      </p>
+                      <dl>
+                        {sub.specs.map((spec) => (
+                          <div
+                            key={spec.label}
+                            className="grid grid-cols-[9rem_1fr] gap-4 border-b border-white/10 px-5 py-3 last:border-b-0"
+                          >
+                            <dt className="text-chalk-dim/60 font-mono text-[11px] tracking-[0.12em] uppercase">
+                              {spec.label}
+                            </dt>
+                            <dd
+                              className={
+                                spec.value.startsWith("PLACEHOLDER")
+                                  ? "font-mono text-xs text-amber-500/70"
+                                  : "text-chalk-dim/90 text-sm"
+                              }
+                            >
+                              {spec.value}
+                            </dd>
+                          </div>
+                        ))}
+                      </dl>
+                    </div>
+                  </Reveal>
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="mt-12 grid gap-px border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
+            {team.capabilities.map((cap, i) => (
+              <Reveal key={cap} delay={i * 60} className="bg-navy-950">
+                <div className="h-full p-7">
+                  <p className="font-mono text-[11px] tracking-[0.2em] text-amber-500">
+                    {String(i + 1).padStart(2, "0")}
+                  </p>
+                  <p className="font-display text-chalk mt-4 text-lg leading-snug font-bold tracking-[-0.01em]">
+                    {cap}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        )}
 
         {/* Projects — same tile treatment as the home page Explore grid. */}
         <Reveal>

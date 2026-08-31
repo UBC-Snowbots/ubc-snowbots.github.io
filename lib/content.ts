@@ -88,33 +88,23 @@ export type SectionTile = {
   eyebrow: string;
   blurb: string;
   image: string;
-  /** Column span at lg. Creates the Anduril-style uneven mosaic. */
+  /** Column span at lg. Four narrow tiles give two clean rows of two. */
   span: "wide" | "narrow";
 };
 
 export const SECTIONS: SectionTile[] = [
   {
     index: "01",
-    title: "The Rover",
-    href: "/rover",
-    eyebrow: "The machine",
-    blurb:
-      "Drivetrain to end effector, power rail to comms link — every subsystem on the vehicle and what it has to survive.",
-    image: "/media/rover-mog.jpg",
-    span: "wide",
-  },
-  {
-    index: "02",
     title: "Sub-teams",
     href: "/subteams",
     eyebrow: "How we're organised",
     blurb:
-      "Seven sub-teams across mechanical, electrical, software, science and business. Each owns a system.",
+      "Seven sub-teams across mechanical, electrical, software, science and business. Each owns part of the rover \u2014 drivetrain, arm, end effector, comms, control base and the onboard lab.",
     image: "/media/team/software.jpg",
     span: "narrow",
   },
   {
-    index: "03",
+    index: "02",
     title: "Competition",
     href: "/compete",
     eyebrow: "Where we prove it",
@@ -124,7 +114,7 @@ export const SECTIONS: SectionTile[] = [
     span: "narrow",
   },
   {
-    index: "04",
+    index: "03",
     title: "The Team",
     href: "/team",
     eyebrow: "Who builds it",
@@ -134,7 +124,7 @@ export const SECTIONS: SectionTile[] = [
     span: "narrow",
   },
   {
-    index: "05",
+    index: "04",
     title: "Sponsors",
     href: "/sponsors",
     eyebrow: "Who makes it possible",
@@ -547,6 +537,14 @@ export const getSubteam = (slug: string) => SUBTEAMS.find((t) => t.slug === slug
  * leave the two lists disagreeing. Business currently has no lead listed on the
  * source site, so it correctly returns an empty array.
  */
+/**
+ * The rover subsystems a given sub-team owns. These render inside the sub-team's
+ * own "What we do" section — there is no separate rover page for them to live
+ * on. Science and Business own no hardware subsystem and correctly return [].
+ */
+export const subsystemsForSubteam = (slug: string) =>
+  SUBSYSTEMS.filter((sub) => sub.ownedBy === slug);
+
 export const leadsForSubteam = (slug: string) => {
   const team = getSubteam(slug);
   if (!team) return [];
@@ -808,7 +806,6 @@ export const INQUIRY_TYPES = [
 /* -------------------------------------------------------------------------- */
 
 export const NAV = [
-  { label: "The Rover", href: "/rover" },
   { label: "Sub-Teams", href: "/subteams" },
   { label: "Competition", href: "/compete" },
   { label: "Team", href: "/team" },
