@@ -65,17 +65,18 @@ export const JOINING_PACKAGE = {
 /* -------------------------------------------------------------------------- */
 
 /**
- * TODO(team): `780m` and the screw count need confirming against a real source
- * before this ships — the rest are established figures. The screw count is a
- * deliberate placeholder until someone actually counts them.
+ * TODO(team): `780m` still wants a source; the rest are confirmed figures.
  */
-export const STATS = [
+/* Typed rather than `as const`: the home page renders a value of "PLACEHOLDER"
+   in a smaller placeholder style, and a literal union would make that check
+   provably false and fail the build the moment every stat has a real value. */
+export const STATS: { value: string; label: string }[] = [
   { value: "18", label: "Years active" },
   { value: "64", label: "Students on the team" },
   { value: "780m", label: "Effective operational radius" },
   { value: "02", label: "International competitions" },
-  { value: "PLACEHOLDER", label: "Screws in the rover" },
-] as const;
+  { value: "120", label: "Screws in the rover" },
+];
 
 /* -------------------------------------------------------------------------- */
 /* Home page section tiles — the "click and enter" grid                        */
@@ -468,20 +469,20 @@ export const SUBTEAMS: Subteam[] = [
     openRoles: placeholderRoles("Arm"),
   },
   {
-    slug: "rover-lab",
-    name: "Rover Lab",
-    discipline: "Mechatronics",
+    slug: "software",
+    name: "Software",
+    discipline: "Software",
     blurb:
-      "We create and assemble automated onboard lab systems that collect soil samples, run chemical analyses, and search for signs of life — bringing fully autonomous science capabilities to a mobile rover.",
-    image: "/media/team/rover-lab.png",
+      "We build the software that runs and monitors the rover, focusing on reliable control systems, safety alerts, and advancing our Unity simulation used for testing and operator training.",
+    image: "/media/team/software.jpg",
     capabilities: [
-      "Soil sample collection",
-      "Onboard chemical analysis",
-      "Life detection",
-      "Autonomous lab systems",
+      "Control systems",
+      "Safety & telemetry alerts",
+      "Unity simulation",
+      "Operator training",
     ],
-    projects: placeholderProjects("Rover Lab", "/media/team/rover-lab.png"),
-    openRoles: placeholderRoles("Rover Lab"),
+    projects: placeholderProjects("Software", "/media/team/software.jpg"),
+    openRoles: placeholderRoles("Software"),
   },
   {
     slug: "electrical",
@@ -500,20 +501,20 @@ export const SUBTEAMS: Subteam[] = [
     openRoles: placeholderRoles("Electrical"),
   },
   {
-    slug: "software",
-    name: "Software",
-    discipline: "Software",
+    slug: "rover-lab",
+    name: "Rover Lab",
+    discipline: "Mechatronics",
     blurb:
-      "We build the software that runs and monitors the rover, focusing on reliable control systems, safety alerts, and advancing our Unity simulation used for testing and operator training.",
-    image: "/media/team/software.jpg",
+      "We create and assemble automated onboard lab systems that collect soil samples, run chemical analyses, and search for signs of life — bringing fully autonomous science capabilities to a mobile rover.",
+    image: "/media/team/rover-lab.png",
     capabilities: [
-      "Control systems",
-      "Safety & telemetry alerts",
-      "Unity simulation",
-      "Operator training",
+      "Soil sample collection",
+      "Onboard chemical analysis",
+      "Life detection",
+      "Autonomous lab systems",
     ],
-    projects: placeholderProjects("Software", "/media/team/software.jpg"),
-    openRoles: placeholderRoles("Software"),
+    projects: placeholderProjects("Rover Lab", "/media/team/rover-lab.png"),
+    openRoles: placeholderRoles("Rover Lab"),
   },
   {
     slug: "science",
