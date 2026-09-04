@@ -100,10 +100,11 @@ export default async function SubteamPage({ params }: Params) {
                 >
                   <Reveal>
                     <PhotoSlot
-                      src={sub.image}
+                      photos={sub.photos}
                       alt={`${sub.name} on the UBC Rover.`}
                       slot={sub.photoSlot}
                       caption={sub.imageCaption}
+                      expects={sub.expects}
                     />
                   </Reveal>
 

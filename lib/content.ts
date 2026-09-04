@@ -151,6 +151,12 @@ export const SECTIONS: SectionTile[] = [
  * counts, reduction ratios, payload, reach, bus voltages, radio band and link
  * budget, and so on. The layout is final; the data is not.
  */
+/**
+ * One item in a photo slot. `kind: "video"` renders a <video> slide — the
+ * Software team supplied an RL demo as MP4, not a still.
+ */
+export type Photo = { src: string; caption?: string; kind?: "image" | "video" };
+
 export type Subsystem = {
   slug: string;
   name: string;
@@ -167,14 +173,20 @@ export type Subsystem = {
    */
   techSpecs?: string;
   /**
-   * Photo. Absent until the team supplies labelled images — the page then
-   * renders a labelled placeholder frame carrying `photoSlot`, so a photo can
-   * be matched to its slot without guesswork.
+   * Photos for this subsystem. More than one renders a gallery with prev/next
+   * controls along the bottom of the frame. Absent until the files arrive, at
+   * which point the placeholder frame is replaced with no reflow.
    */
-  image?: string;
+  photos?: Photo[];
   imageCaption?: string;
   /** Human-readable slot id shown in the placeholder, e.g. "CHASSIS-01". */
   photoSlot: string;
+  /**
+   * Source filenames from the team Drive earmarked for this slot, listed in the
+   * placeholder. Recorded so the intended mapping is visible and correctable
+   * before the files are converted and dropped in.
+   */
+  expects?: string[];
   /** Which sub-team owns this subsystem. */
   ownedBy: string;
 };
@@ -194,6 +206,11 @@ export const SUBSYSTEMS: Subsystem[] = [
     techSpecs:
       "The frame is manufactured using sheet metal bending using Aluminum 5052-T6 to allow for good bending. The high magnesium content of the alloy allows for high strength and corrosion resistance while still retaining good bending manufacturability. The frame has 400+ attachment points to allow for flexibility.",
     photoSlot: "CHASSIS-01",
+    expects: [
+      "2025 frame.heic",
+      "2025 chassis glorious.HEIC",
+      "2025 chassis from the back.HEIC",
+    ],
     ownedBy: "chassis",
   },
   {
@@ -224,6 +241,7 @@ export const SUBSYSTEMS: Subsystem[] = [
     techSpecs:
       "The comms relay extends the rover's range by 1 km. It is 3D-printed and weighs 5 lbs.",
     photoSlot: "CHASSIS-03",
+    expects: ["2026 comms relay components.HEIC"],
     ownedBy: "chassis",
   },
 
@@ -283,6 +301,7 @@ export const SUBSYSTEMS: Subsystem[] = [
     techSpecs:
       "98.7% task completion accuracy using RL with domain randomization (excluding observation module).",
     photoSlot: "SOFTWARE-02",
+    expects: ["Software RL.mp4 — video"],
     ownedBy: "software",
   },
   {
@@ -297,6 +316,7 @@ export const SUBSYSTEMS: Subsystem[] = [
     ],
     techSpecs: "1000 nit monitors, 2 analog joysticks, 10 buttons.",
     photoSlot: "SOFTWARE-03",
+    expects: ["Software Control Base.HEIC"],
     ownedBy: "software",
   },
   {
@@ -327,6 +347,7 @@ export const SUBSYSTEMS: Subsystem[] = [
     techSpecs:
       "The input voltage for our power distribution boards ranges from 19–21 V. Its output voltages include 5 V, 12 V, 18 V and 24 V rails. Each output has an XT30 connector and a fuse holder for easy access and rotations. These feed all onboard systems including the drivetrain, the robotic arm and end effector, onboard computer, communications and a science testing module.",
     photoSlot: "ELECTRICAL-01",
+    expects: ["Elec PDB.HEIC"],
     ownedBy: "electrical",
   },
   {
@@ -342,6 +363,7 @@ export const SUBSYSTEMS: Subsystem[] = [
     techSpecs:
       "Powered by the 18 V rail, the lighting system uses an LED driver to ensure constant current. This improves brightness consistency across all four LEDs. Our design also powers a floodlight mounted on top of the PTZ camera for maximum coverage.",
     photoSlot: "ELECTRICAL-02",
+    expects: ["Elec General.HEIC — mapping unconfirmed"],
     ownedBy: "electrical",
   },
   {
@@ -357,6 +379,7 @@ export const SUBSYSTEMS: Subsystem[] = [
     techSpecs:
       "The driver system is composed of Phidget VINT motor drivers at 24 V with a 20 A current rating. Each of the six motors has an isolated driver to improve system resiliency and allow for more complicated maneuvers.",
     photoSlot: "ELECTRICAL-03",
+    expects: ["Elec Motor Drivers.HEIC"],
     ownedBy: "electrical",
   },
 
@@ -371,6 +394,12 @@ export const SUBSYSTEMS: Subsystem[] = [
       "PLACEHOLDER — what this subsystem has to survive.",
     ],
     photoSlot: "ROVERLAB-01",
+    expects: [
+      "2026 rover lab from above.HEIC",
+      "2026 rover lab from front left.HEIC",
+      "2026 rover lab from rear left.HEIC",
+      "2026 rover lab from behind.HEIC",
+    ],
     ownedBy: "rover-lab",
   },
 ];

@@ -182,6 +182,16 @@
     }
   }
 
+  /* Native scroll strip without the scrollbar chrome — the gallery supplies
+     its own controls, and the bar would sit over the image. */
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
   .text-eyebrow {
     font-family: var(--font-mono);
     font-size: 0.6875rem;
