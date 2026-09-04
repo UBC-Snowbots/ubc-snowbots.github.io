@@ -991,6 +991,17 @@ export const SOCIALS = [
   },
 ] as const;
 
+/**
+ * Google Analytics 4 measurement ID.
+ *
+ * Typed as `string` rather than left to infer a literal: a literal type would
+ * let TypeScript prove the `GA_MEASUREMENT_ID &&` guard in app/layout.tsx is
+ * always truthy, and narrowing like that has already broken a build in this
+ * repo (see STATS). Widening keeps the guard meaningful, so blanking this
+ * string is all it takes to turn analytics off.
+ */
+export const GA_MEASUREMENT_ID: string = "G-FL983GJFMG";
+
 /** The contact form on the source site posts here. Same endpoint, new styling. */
 export const FORMSPREE_ENDPOINT = "https://formspree.io/f/mojkoall";
 

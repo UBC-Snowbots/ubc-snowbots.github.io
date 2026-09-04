@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Inter, JetBrains_Mono } from "next/font/google";
+import Script from "next/script";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { SITE } from "@/lib/content";
+import { GA_MEASUREMENT_ID, SITE } from "@/lib/content";
 import "./globals.css";
 
 /**
@@ -108,6 +109,42 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <Footer />
+
+        {/* Google Analytics 4 — the one Google tag for the whole site.
+
+            Lives in the root layout so every route carries it exactly once,
+            which is what Google's "don't add more than one tag per page" rule
+            is really asking for. Written with next/script rather than a raw
+            <script> because Next needs to own script scheduling: a hand-written
+            tag inside <head> would block the first render, and one in <body>
+            would be re-executed on every client-side navigation.
+            `afterInteractive` loads it once, after hydration.
+
+            Production-only, so `next dev` never sends hits. Note this is a
+            NODE_ENV check, and a static export is built in production mode —
+            so serving `out/` locally WILL report as a real visit. Exclude
+            localhost in GA under Admin → Data Streams → Configure tag settings
+            → Define internal traffic if that becomes noisy.
+
+            No manual page_view call on route change: App Router navigations go
+            through the History API, and GA4's Enhanced Measurement tracks
+            those under "Page changes based on browser history events", which is
+            on by default. Worth confirming it is still enabled for this stream
+            before assuming per-page numbers are right. */}
+        {GA_MEASUREMENT_ID && process.env.NODE_ENV === "production" ? (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GA_MEASUREMENT_ID}');`}
+            </Script>
+          </>
+        ) : null}
       </body>
     </html>
   );
