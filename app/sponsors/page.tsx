@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
-import { SITE, SPONSOR_IMPACT, SPONSOR_OFFER, SPONSOR_TIERS } from "@/lib/content";
+import SponsorLogo from "@/components/SponsorLogo";
+import { SITE, SPONSOR_OFFER, SPONSOR_TIERS, sponsorBlurbFor } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Sponsors",
@@ -32,66 +33,8 @@ export default function SponsorsPage() {
           </div>
         </Reveal>
 
-        {/* ------------------------------------------------------------
-            What sponsorship actually bought, in the team's own words. These
-            are the specific, checkable claims that convince the next sponsor,
-            so they are reproduced verbatim from SPONSOR_IMPACT rather than
-            summarised here.
-            ------------------------------------------------------------ */}
-        <Reveal>
-          <div className="mt-16 flex flex-wrap items-end justify-between gap-6 border-b border-white/10 pb-8">
-            <div>
-              <p className="text-eyebrow">Impact</p>
-              <h2 className="font-display text-chalk mt-4 text-3xl leading-[0.95] font-extrabold tracking-[-0.03em] sm:text-5xl">
-                What your support built
-              </h2>
-            </div>
-            <p className="text-chalk-dim/70 max-w-sm text-sm leading-relaxed">
-              Sponsorship does not disappear into a budget line. Here is where it went.
-            </p>
-          </div>
-        </Reveal>
-
-        {/* Five write-ups against a 3-col grid leaves a 3+2 last row, so this
-            goes to 2 columns at lg. Each blurb is a full paragraph and reads
-            better in a wider measure than a third of 1600px allows. */}
-        <div className="mt-10 grid gap-4 sm:gap-5 lg:grid-cols-2">
-          {SPONSOR_IMPACT.map((item, i) => (
-            <Reveal key={item.sponsor} delay={i * 90}>
-              <article className="bg-navy-900 flex h-full flex-col border border-white/10 p-7 sm:p-8">
-                <div className="flex items-center justify-between gap-4">
-                  <div className="bg-chalk/92 flex h-16 w-fit items-center justify-center rounded-sm px-5">
-                    <img
-                      src={item.logo}
-                      alt={item.sponsor}
-                      loading="lazy"
-                      decoding="async"
-                      className="max-h-10 max-w-[9rem] object-contain"
-                    />
-                  </div>
-                  <p className="text-eyebrow shrink-0">{item.tier}</p>
-                </div>
-
-                <h3 className="font-display text-chalk mt-6 text-xl font-bold tracking-[-0.015em]">
-                  {item.sponsor}
-                </h3>
-
-                <p
-                  className={
-                    item.blurb.startsWith("PLACEHOLDER")
-                      ? "mt-4 font-mono text-xs text-amber-500/70"
-                      : "text-chalk-dim/85 mt-4 text-sm leading-relaxed"
-                  }
-                >
-                  {item.blurb}
-                </p>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-
         {/* Tiers */}
-        <div className="mt-16 space-y-12">
+        <div className="mt-14 space-y-12">
           {SPONSOR_TIERS.map((tier) => (
             <Reveal key={tier.tier}>
               <h2 className="font-display text-chalk border-b border-white/10 pb-6 text-3xl font-extrabold tracking-[-0.03em] sm:text-4xl">
@@ -101,20 +44,7 @@ export default function SponsorsPage() {
               <ul className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
                 {tier.logos.map((logo) => (
                   <li key={logo.src}>
-                    {/* Light chip. These marks are a mix of transparent PNGs
-                        and opaque JPEGs drawn on white, so a knockout filter
-                        cannot work across the set — it flattens the opaque ones
-                        into solid slabs. Giving every logo the light ground it
-                        was designed for is what keeps all fifteen legible. */}
-                    <div className="bg-chalk/92 flex aspect-[3/2] items-center justify-center rounded-sm p-5">
-                      <img
-                        src={logo.src}
-                        alt={logo.name}
-                        loading="lazy"
-                        decoding="async"
-                        className="max-h-full max-w-full object-contain"
-                      />
-                    </div>
+                    <SponsorLogo logo={logo} blurb={sponsorBlurbFor(logo.name)} />
                   </li>
                 ))}
               </ul>
