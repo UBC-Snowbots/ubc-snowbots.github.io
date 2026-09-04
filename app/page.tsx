@@ -365,7 +365,7 @@ export default function Home() {
               Recruitment opens every September
             </p>
             <h2 className="font-display text-chalk mx-auto mt-3 max-w-4xl text-2xl leading-[0.95] font-extrabold tracking-[-0.04em] sm:text-4xl [@media(max-height:760px)]:mt-0 [@media(max-height:760px)]:text-xl">
-              Come build the thing that drives itself.
+              Build a rover with us.
             </h2>
             <div className="mt-6 flex flex-wrap justify-center gap-3 [@media(max-height:760px)]:mt-4">
               <Link
