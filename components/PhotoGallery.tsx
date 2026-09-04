@@ -20,6 +20,21 @@ export default function PhotoGallery({ photos, alt }: { photos: Photo[]; alt: st
   const trackRef = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
 
+  /**
+   * Slides after the first sit outside a clipped horizontal track, so a plain
+   * `loading="lazy"` defers them until the click that scrolls them in — you get
+   * an empty frame for as long as the fetch takes. But eager-loading every
+   * slide up front would pull several megabytes for galleries that are still
+   * far below the fold.
+   *
+   * So: stay lazy until the gallery itself reaches the vertical viewport, then
+   * flip the rest to eager. Promoting a pending lazy image to eager starts its
+   * load immediately (HTML spec: the lazy load resumes when the attribute
+   * changes), so by the time the first next-click lands the images are already
+   * in flight or done.
+   */
+  const [warm, setWarm] = useState(false);
+
   useEffect(() => {
     const track = trackRef.current;
     if (!track || photos.length < 2) return;
@@ -39,6 +54,24 @@ export default function PhotoGallery({ photos, alt }: { photos: Photo[]; alt: st
     for (const slide of track.querySelectorAll("[data-slide]")) io.observe(slide);
     return () => io.disconnect();
   }, [photos.length]);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track || photos.length < 2 || warm) return;
+
+    // Against the document viewport (root: null), not the track — this asks
+    // "has the gallery scrolled into the page yet", a different question from
+    // "which slide is showing".
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setWarm(true);
+      },
+      { rootMargin: "400px" },
+    );
+
+    io.observe(track);
+    return () => io.disconnect();
+  }, [photos.length, warm]);
 
   const go = useCallback(
     (delta: number) => {
@@ -85,7 +118,7 @@ export default function PhotoGallery({ photos, alt }: { photos: Photo[]; alt: st
               <img
                 src={photo.src}
                 alt={photo.caption ?? alt}
-                loading="lazy"
+                loading={warm ? "eager" : "lazy"}
                 decoding="async"
                 className="absolute inset-0 h-full w-full object-cover"
               />
