@@ -763,7 +763,7 @@ export const PEOPLE: Person[] = [
   },
   {
     name: "Aaron Rhim",
-    image: "/media/people/aaron.png",
+    image: "/media/people/aaron.jpg",
     links: li("https://www.linkedin.com/in/aaronrhim/"),
   },
   {
