@@ -884,9 +884,14 @@ export type Sponsor = { src: string; name: string };
 export type SponsorTier = { tier: string; logos: Sponsor[] };
 
 /**
- * Tier membership is copied EXACTLY from ubcrover.github.io/index.html. Do not
- * reshuffle these — which tier a sponsor sits in is a commitment the team made
- * to that sponsor.
+ * Which tier a sponsor sits in is a commitment the team made to that sponsor,
+ * so never reshuffle these on your own judgement — only on the team's word.
+ *
+ * Base list came from ubcrover.github.io/index.html. Since then, Aaron moved
+ * maxon (was Friends) and Protospace (was Supporters) up to Champion. The other
+ * Champions were left where they were: the instruction named the sponsors being
+ * given write-ups, which is not the same as a new Champion roster, and demoting
+ * someone on an inference is not a thing to get wrong.
  */
 export const SPONSOR_TIERS: SponsorTier[] = [
   {
@@ -902,13 +907,15 @@ export const SPONSOR_TIERS: SponsorTier[] = [
   {
     tier: "Champion",
     logos: [
+      { src: "/media/sponsors/maxon.png", name: "maxon" },
+      { src: "/media/sponsors/protospace.png", name: "Protospace" },
+      { src: "/media/sponsors/EDENTECH_logo.jpg", name: "Eden Tech" },
       {
         src: "/media/sponsors/AARC-WEST-Industrial-logo.png",
         name: "AARC-WEST Industrial",
       },
       { src: "/media/sponsors/Northstar-Access.png", name: "Northstar Access" },
       { src: "/media/sponsors/ubcengglogo.png", name: "UBC Engineering" },
-      { src: "/media/sponsors/EDENTECH_logo.jpg", name: "EDENTECH" },
     ],
   },
   {
@@ -918,7 +925,6 @@ export const SPONSOR_TIERS: SponsorTier[] = [
       { src: "/media/sponsors/tradecomm.jpg", name: "Tradecomm" },
       { src: "/media/sponsors/ubcmec.png", name: "UBC MEC" },
       { src: "/media/sponsors/petrokleen.jpg", name: "Petrokleen" },
-      { src: "/media/sponsors/protospace.png", name: "Protospace" },
     ],
   },
   {
@@ -926,7 +932,6 @@ export const SPONSOR_TIERS: SponsorTier[] = [
     logos: [
       { src: "/media/sponsors/gct.jpg", name: "GCT" },
       { src: "/media/sponsors/electromate.jpg", name: "Electromate" },
-      { src: "/media/sponsors/maxon.png", name: "maxon" },
       { src: "/media/sponsors/MistyWest.png", name: "MistyWest" },
     ],
   },
@@ -937,39 +942,60 @@ export const SPONSOR_OFFER =
   "In appreciation of your partnership, we feature your brand on our competition apparel, our digital platforms, and directly on the rover chassis as it tackles the toughest terrains.";
 
 /**
- * What sponsorship actually bought.
+ * What sponsorship actually bought — the team's own words.
  *
- * TODO(team): these are PLACEHOLDERS. Replace each with the real story —
- * "thank you Thermo Fisher for the reagents, which let us run X assays at
- * CIRC" — one entry per sponsor you want to call out. Delete any you cannot
- * substantiate rather than leaving the placeholder text live.
+ * Written by the sponsorship leads, reproduced verbatim. Two edits only, both
+ * mechanical: "protoype" -> "prototype", and "ThermoFisher" -> "Thermo Fisher",
+ * which is how the company writes its own name and how it appears in
+ * SPONSOR_TIERS. Do not tighten or re-voice these — they are commitments made
+ * to sponsors, and the specifics (66% weight, 90% assembly time) are claims the
+ * team is standing behind.
+ *
+ * Ordered Partners first, then Champions, matching the tier list below.
  */
 export type SponsorImpact = {
   sponsor: string;
   logo: string;
-  contribution: string;
-  outcome: string;
+  tier: string;
+  /** One paragraph. Prose, not a contribution/outcome split — see the git history. */
+  blurb: string;
 };
 
 export const SPONSOR_IMPACT: SponsorImpact[] = [
   {
     sponsor: "Thermo Fisher Scientific",
     logo: "/media/sponsors/Thermo_Fisher_Scientific_Logo.png",
-    contribution: "PLACEHOLDER — what they provided (e.g. reagents, consumables).",
-    outcome:
-      "PLACEHOLDER — what that made possible: which assays ran, on which subsystem, at which competition, and what the result was.",
+    tier: "Partner",
+    blurb:
+      "Our partnership with Thermo Fisher Scientific allows us to procure lab-grade chemicals and equipment to develop, test, and perform our suite of biochemical assays at a price suitable for a student design team. Their generous support has permitted the science subteam to rapidly prototype and iterate on complex lab-on-a-chip systems without needing to ration reagents, supporting our mission to be the first university engineering team to apply microfluidics in Martian life-detection systems.",
+  },
+  {
+    sponsor: "Ember Prototypes",
+    logo: "/media/sponsors/Ember_Prototypes_Logo.jpg",
+    tier: "Partner",
+    blurb:
+      "Ember Prototypes has unlocked entirely new rapid manufacturing avenues for us through their generous sponsorship of a Form 3B+ printer, a resin starter package, and the Ember Prototypes Toolkit. Crucially, this setup drives our initiative to become the first student robotics team to develop functional microfluidic lab-on-a-chip systems for Martian life detection. Beyond bio-assay chips, we leverage this technology across the entire rover. We use Clear resin to produce optically transparent, waterproof enclosures for our main floodlights and status indicators, and engineering resins to print intricate, high-strength geometries for our robotic arm's end effector.",
   },
   {
     sponsor: "maxon",
     logo: "/media/sponsors/maxon.png",
-    contribution: "PLACEHOLDER — what they provided (e.g. motors, gearheads).",
-    outcome: "PLACEHOLDER — which subsystem it went into and what it enabled.",
+    tier: "Champion",
+    blurb:
+      "Support from Maxon has enabled a ground-up redesign of our mobility platform through a complete drivetrain upgrade. Integrating their high-efficiency motors allowed us to significantly increase output torque and speed without drawing additional electrical power, all while slashing overall drivetrain weight by 66%. This critical reduction unlocked the available mass to develop our new individual wheel steering system, drastically improving the rover's maneuverability across harsh, complex terrain.",
   },
   {
     sponsor: "Protospace",
     logo: "/media/sponsors/protospace.png",
-    contribution: "PLACEHOLDER — what they provided (e.g. fabricated enclosures).",
-    outcome: "PLACEHOLDER — what that made possible on the rover.",
+    tier: "Champion",
+    blurb:
+      "Support from Protospace Mfg has been central to the structural overhaul of our rover. Leveraging their generous machining credit, we remanufactured our full suspension assembly to interface with our upgraded drivetrain and fabricated an all-new modular frame system that cuts assembly/disassembly time by 90%. On top of fabrication, Protospace provided powder-coating in UBC blue, ensuring our chassis is as sharp as it is rugged at competition.",
+  },
+  {
+    sponsor: "Eden Tech",
+    logo: "/media/sponsors/EDENTECH_logo.jpg",
+    tier: "Champion",
+    blurb:
+      "Eden Tech supported our science subteam by providing full access to FLUI'DEVICE, their specialized microfluidic design and simulation platform. We utilized the software to model intricate internal channel networks and validate fluid dynamics before manufacturing. This capability streamlined our lab-on-a-chip prototyping cycle, bringing us closer to fielding an autonomous microfluidics assay system on the rover.",
   },
 ];
 

@@ -33,10 +33,10 @@ export default function SponsorsPage() {
         </Reveal>
 
         {/* ------------------------------------------------------------
-            What sponsorship actually bought. Every entry is a placeholder
-            until the team supplies the real story — see SPONSOR_IMPACT in
-            lib/content.ts. Concrete outcomes are what convince the next
-            sponsor, so this section is worth filling in properly.
+            What sponsorship actually bought, in the team's own words. These
+            are the specific, checkable claims that convince the next sponsor,
+            so they are reproduced verbatim from SPONSOR_IMPACT rather than
+            summarised here.
             ------------------------------------------------------------ */}
         <Reveal>
           <div className="mt-16 flex flex-wrap items-end justify-between gap-6 border-b border-white/10 pb-8">
@@ -52,54 +52,39 @@ export default function SponsorsPage() {
           </div>
         </Reveal>
 
-        <div className="mt-10 grid gap-4 sm:gap-5 lg:grid-cols-3">
+        {/* Five write-ups against a 3-col grid leaves a 3+2 last row, so this
+            goes to 2 columns at lg. Each blurb is a full paragraph and reads
+            better in a wider measure than a third of 1600px allows. */}
+        <div className="mt-10 grid gap-4 sm:gap-5 lg:grid-cols-2">
           {SPONSOR_IMPACT.map((item, i) => (
             <Reveal key={item.sponsor} delay={i * 90}>
               <article className="bg-navy-900 flex h-full flex-col border border-white/10 p-7 sm:p-8">
-                <div className="bg-chalk/92 flex h-16 w-fit items-center justify-center rounded-sm px-5">
-                  <img
-                    src={item.logo}
-                    alt={item.sponsor}
-                    loading="lazy"
-                    decoding="async"
-                    className="max-h-10 max-w-[9rem] object-contain"
-                  />
+                <div className="flex items-center justify-between gap-4">
+                  <div className="bg-chalk/92 flex h-16 w-fit items-center justify-center rounded-sm px-5">
+                    <img
+                      src={item.logo}
+                      alt={item.sponsor}
+                      loading="lazy"
+                      decoding="async"
+                      className="max-h-10 max-w-[9rem] object-contain"
+                    />
+                  </div>
+                  <p className="text-eyebrow shrink-0">{item.tier}</p>
                 </div>
 
                 <h3 className="font-display text-chalk mt-6 text-xl font-bold tracking-[-0.015em]">
                   {item.sponsor}
                 </h3>
 
-                <dl className="mt-5 space-y-4 text-sm leading-relaxed">
-                  <div>
-                    <dt className="text-chalk-dim/60 font-mono text-[10px] tracking-[0.16em] uppercase">
-                      Contributed
-                    </dt>
-                    <dd
-                      className={
-                        item.contribution.startsWith("PLACEHOLDER")
-                          ? "mt-1.5 font-mono text-xs text-amber-500/70"
-                          : "text-chalk-dim/85 mt-1.5"
-                      }
-                    >
-                      {item.contribution}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="text-chalk-dim/60 font-mono text-[10px] tracking-[0.16em] uppercase">
-                      What it made possible
-                    </dt>
-                    <dd
-                      className={
-                        item.outcome.startsWith("PLACEHOLDER")
-                          ? "mt-1.5 font-mono text-xs text-amber-500/70"
-                          : "text-chalk-dim/85 mt-1.5"
-                      }
-                    >
-                      {item.outcome}
-                    </dd>
-                  </div>
-                </dl>
+                <p
+                  className={
+                    item.blurb.startsWith("PLACEHOLDER")
+                      ? "mt-4 font-mono text-xs text-amber-500/70"
+                      : "text-chalk-dim/85 mt-4 text-sm leading-relaxed"
+                  }
+                >
+                  {item.blurb}
+                </p>
               </article>
             </Reveal>
           ))}
