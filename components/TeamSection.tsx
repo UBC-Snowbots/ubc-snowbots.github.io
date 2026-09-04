@@ -1,5 +1,5 @@
 import Link from "next/link";
-import MemberGrid, { MemberCard } from "./MemberCard";
+import { MemberCard, PlaceholderCard } from "./MemberCard";
 import Reveal from "./Reveal";
 import TeamBanner from "./TeamBanner";
 import { TEAM_PHOTO, type Person } from "@/lib/content";
@@ -54,22 +54,13 @@ export default function TeamSection({
       </Reveal>
     ) : null;
 
-  // No one on record — keep the full-width band and say so plainly.
-  if (people.length === 0) {
-    return (
-      <div>
-        <TeamBanner title={title} image={image} />
-        <section className="mx-auto max-w-[1600px] px-5 pt-7 pb-12 sm:px-8 sm:pt-9 sm:pb-16">
-          <MemberGrid people={people} role={role} emptyNote={emptyNote} />
-          {footer}
-        </section>
-      </div>
-    );
-  }
-
+  // Nobody on record: keep the band layout and put a card-shaped placeholder
+  // where the lead card goes. The previous full-width-band-plus-note version
+  // read as a separate section rather than an unfilled team band.
   const half = Math.ceil(people.length / 2);
-  const left = people.length === 1 ? [] : people.slice(0, half);
-  const right = people.length === 1 ? people : people.slice(half);
+  const split = people.length > 1;
+  const left = split ? people.slice(0, half) : [];
+  const right = split ? people.slice(half) : people;
 
   return (
     <section className="mx-auto max-w-[1600px] px-5 py-8 sm:px-8 sm:py-10">
@@ -80,20 +71,31 @@ export default function TeamSection({
             : "lg:grid-cols-[minmax(0,1fr)_20rem]"
         }`}
       >
+        {/* `order` matters. In DOM order the left-hand cards come first, which
+            on a single-column phone layout stacks them ABOVE the band heading —
+            so Software's leads appeared to belong to the sub-team named above
+            them. On mobile the banner is forced first and every card follows it;
+            the left/banner/right arrangement is restored at lg. */}
         {left.length ? (
-          <div className="flex flex-col gap-5">
+          <div className="order-2 flex flex-col gap-5 lg:order-1">
             {left.map((p, i) => (
               <MemberCard key={p.name} person={p} role={role} delay={i * 60} />
             ))}
           </div>
         ) : null}
 
-        <TeamBanner title={title} image={image} inline />
+        <div className="order-1 lg:order-2">
+          <TeamBanner title={title} image={image} inline />
+        </div>
 
-        <div className="flex flex-col gap-5">
-          {right.map((p, i) => (
-            <MemberCard key={p.name} person={p} role={role} delay={i * 60} />
-          ))}
+        <div className="order-3 flex flex-col gap-5">
+          {right.length ? (
+            right.map((p, i) => (
+              <MemberCard key={p.name} person={p} role={role} delay={i * 60} />
+            ))
+          ) : (
+            <PlaceholderCard note={emptyNote ?? "Lead to be announced."} />
+          )}
         </div>
       </div>
 

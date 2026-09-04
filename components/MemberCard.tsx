@@ -76,6 +76,31 @@ export function MemberCard({
 }
 
 /**
+ * A card-shaped "no lead yet" placeholder. Same footprint as MemberCard so a
+ * band with nobody on record keeps the band layout instead of collapsing into a
+ * full-width note that reads as a separate section.
+ */
+export function PlaceholderCard({ note }: { note: string }) {
+  return (
+    <Reveal>
+      <figure className="bg-navy-900 h-full border border-dashed border-amber-500/40">
+        <div className="grid-wash bg-navy-950 relative flex aspect-[3/4] items-center justify-center">
+          <span className="font-display text-4xl font-extrabold tracking-[-0.03em] text-amber-500/35 sm:text-5xl">
+            ?
+          </span>
+        </div>
+        <figcaption className="p-4 sm:p-5">
+          <p className="font-mono text-[10px] tracking-[0.2em] text-amber-500 uppercase">
+            Placeholder
+          </p>
+          <p className="text-chalk-dim/75 mt-2 text-xs leading-relaxed">{note}</p>
+        </figcaption>
+      </figure>
+    </Reveal>
+  );
+}
+
+/**
  * Grid of member cards. Widths are calc((100% - (n-1) * gap) / n) for 2 / 3 / 5
  * columns, so full rows tile exactly while a short final row stays centred — a
  * CSS grid would pin that row to the left.

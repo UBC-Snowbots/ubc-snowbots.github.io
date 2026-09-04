@@ -737,8 +737,9 @@ export const CAPTAIN_NAMES = ["Andres Fleet", "Rowan Zawadzki"] as const;
 /**
  * Leads per sub-team.
  *
- * TODO(team): Business has no lead on record. Its band shows a placeholder
- * until someone supplies a name — an obvious gap beats a stale one.
+ * TODO(team): Science and Business have no lead on record. Their bands show a
+ * card-shaped placeholder until someone supplies a name — an obvious gap beats
+ * a stale one.
  */
 export const SUBTEAM_LEAD_NAMES: Record<string, string[]> = {
   chassis: ["Andres Fleet"],
@@ -746,7 +747,7 @@ export const SUBTEAM_LEAD_NAMES: Record<string, string[]> = {
   "rover-lab": ["Jennifer Phung"],
   electrical: ["Darwyn M"],
   software: ["Rowan Zawadzki", "Aaron Rhim", "Ben Newington", "Riddhima Gupta"],
-  science: ["Jennifer Phung"],
+  science: [],
   business: [],
 };
 
