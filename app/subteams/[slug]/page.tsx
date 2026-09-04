@@ -121,6 +121,12 @@ export default async function SubteamPage({ params }: Params) {
                     <p className="text-chalk-dim/85 mt-5 text-base leading-relaxed">
                       {sub.summary}
                     </p>
+                    {/* A line the lead marked for emphasis in the content doc. */}
+                    {sub.callout ? (
+                      <p className="text-chalk mt-4 text-base leading-relaxed font-semibold">
+                        {sub.callout}
+                      </p>
+                    ) : null}
                     {sub.detail.map((para) => (
                       <p
                         key={para.slice(0, 40)}

@@ -167,6 +167,12 @@ export type Subsystem = {
   /** [design decisions and philosophy, what it has to survive] */
   detail: string[];
   /**
+   * A single line the lead explicitly marked "Bolded:" in the content doc.
+   * Kept as its own field rather than folded into `summary` so the emphasis
+   * they asked for actually survives onto the page.
+   */
+  callout?: string;
+  /**
    * Tech specs as prose. The leads wrote these as paragraphs, not label/value
    * pairs, so the model matches what they actually submitted rather than
    * forcing their sentences into a table they were never written for.
@@ -439,6 +445,37 @@ export const SUBSYSTEMS: Subsystem[] = [
     photoSlot: "ROVERLAB-01",
     ownedBy: "rover-lab",
   },
+
+  /* ---- Business ------------------------------------------------------ */
+  {
+    slug: "sponsor-outreach",
+    name: "Sponsor Outreach",
+    role: "We secure additional funding for the team.",
+    summary:
+      "No money means no Rover. We reach out to local and national companies to ask for discounts, free equipment, and in the best case, cold hard cash.",
+    detail: [
+      "We understand nothing is ever free. Part of the challenge is explaining the benefits of sponsorship to companies. By working closely with our marketing subteam, we offer tailored posts highlighting sponsors and show that we can expand brand outreach.",
+    ],
+    techSpecs:
+      "2025–26 sponsorship value: $12,500, across 14 sponsors. Highest all-time single donation: $9,860. Chassis real-estate: 70% unbranded.",
+    photoSlot: "BUSINESS-01",
+    ownedBy: "business",
+  },
+  {
+    slug: "social-media",
+    name: "Social Media",
+    role: "We put UBC Rover on the map.",
+    summary:
+      "Our job is to capture and tell UBC Rover's story to the world. We follow the team on testing days and milestones to capture the moment in photos and videos. Then, we post on Instagram, LinkedIn, etc. to show major technical milestones, as well as our people and culture.",
+    callout:
+      "Our most important job is to help create the System Acceptance Review, our make or break submission to qualify for competition.",
+    detail: [
+      "Having a strong social media presence provides many benefits. Most notably, more incentive for companies to sponsor us, and a larger pool to recruit from. With thoughtful, sustained activity on our platforms, we can gain more influence and present ourselves as a professional, passionate, and real team.",
+      "One year Tesla came to recruit from UBC design teams. A recruiter told us: \u201cYou are one of the coolest robotics teams at UBC, why have we never heard of you?\u201d That interaction sparked us to prioritize our social media presence and take our public image more seriously.",
+    ],
+    photoSlot: "BUSINESS-02",
+    ownedBy: "business",
+  },
 ];
 
 /**
@@ -697,9 +734,9 @@ export const SUBTEAMS: Subteam[] = [
     name: "Business",
     discipline: "Operations",
     blurb:
-      "We keep the team running and growing by managing finances, sponsorships, and outreach, while promoting our work through marketing, events, and community engagement.",
+      "The technical subteams might build the brain and skeleton of the rover, but Business is the blood that keeps the entire team pumping. We secure the corporate sponsorships, capital, and resources required to turn our ideas into a highly competitive Rover. By directing our digital brand, managing the treasury, and producing critical media like the SAR video, we build the operational foundation that makes UBC Rover possible.",
     image: "/media/team/business.jpeg",
-    capabilities: ["Finance", "Sponsorship", "Outreach & events", "Marketing"],
+    capabilities: ["Sponsor outreach", "Treasury", "Digital brand", "Media production"],
     projects: placeholderProjects("Business", "business"),
     openRoles: placeholderRoles("Business"),
   },
