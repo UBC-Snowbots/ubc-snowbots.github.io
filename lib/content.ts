@@ -65,7 +65,8 @@ export const JOINING_PACKAGE = {
 /* -------------------------------------------------------------------------- */
 
 /**
- * TODO(team): `780m` still wants a source; the rest are confirmed figures.
+ * `780m` is the Software team's measured network range (see the
+ * comms-perception subsystem). All figures here are now confirmed.
  */
 /* Typed rather than `as const`: the home page renders a value of "PLACEHOLDER"
    in a smaller placeholder style, and a literal union would make that check
@@ -153,187 +154,224 @@ export const SECTIONS: SectionTile[] = [
 export type Subsystem = {
   slug: string;
   name: string;
-  /** One-line "main job", the way NASA leads each component. */
+  /** One-line "main job" — the lead's own one-sentence answer. */
   role: string;
+  /** 2–3 sentences describing the subsystem. */
   summary: string;
+  /** [design decisions and philosophy, what it has to survive] */
   detail: string[];
-  image: string;
-  imageCaption: string;
-  specs: { label: string; value: string }[];
+  /**
+   * Tech specs as prose. The leads wrote these as paragraphs, not label/value
+   * pairs, so the model matches what they actually submitted rather than
+   * forcing their sentences into a table they were never written for.
+   */
+  techSpecs?: string;
+  /**
+   * Photo. Absent until the team supplies labelled images — the page then
+   * renders a labelled placeholder frame carrying `photoSlot`, so a photo can
+   * be matched to its slot without guesswork.
+   */
+  image?: string;
+  imageCaption?: string;
+  /** Human-readable slot id shown in the placeholder, e.g. "CHASSIS-01". */
+  photoSlot: string;
   /** Which sub-team owns this subsystem. */
   ownedBy: string;
 };
 
 export const SUBSYSTEMS: Subsystem[] = [
+  /* ---- Chassis ------------------------------------------------------- */
   {
-    slug: "chassis",
-    name: "Chassis",
-    role: "Carries every other subsystem and keeps it alive over the terrain.",
+    slug: "frame",
+    name: "Frame",
+    role: "Carry the rest of the rover's components safely.",
     summary:
-      "The structural backbone. Everything else on the rover mounts to it, so its geometry sets the packaging constraints for the whole vehicle.",
+      "The frame is a modular foundation of the chassis. It allows for flexibility in attachment location, and is designed for easy assembly in the field. The frame allows the rover to be a test and competition vehicle.",
     detail: [
-      "PLACEHOLDER — describe the frame architecture: material and stock used, how the warm/protected electronics volume is enclosed, and how the deck is laid out for subsystem mounting.",
-      "PLACEHOLDER — describe the weather and dust sealing approach, and what the chassis has to tolerate at URC and CIRC.",
+      "The design philosophy was to make the frame as flexible as possible. To minimize assembly, the frame was bent to reduce the number of components, and the number of fasteners was minimized. PEM nuts are used for screwing attachments into the frame. Simply put, the frame is an electrical enclosure that is designed for modularity, flexibility, and reliability.",
+      "The frame has to survive thousands of cycles of assembly and disassembly, bumps while traversing over rough terrain, and unexpected weather, if need be. The frame allows for the rover to function as a device in a stable, predictable manner.",
     ],
-    image: "/media/team/chassis.jpg",
-    imageCaption: "PLACEHOLDER — chassis callout diagram.",
-    specs: [
-      { label: "Main job", value: "Structural platform for all subsystems" },
-      { label: "Material", value: "PLACEHOLDER" },
-      { label: "Dimensions", value: "PLACEHOLDER (L × W × H)" },
-      { label: "Mass", value: "PLACEHOLDER" },
-      { label: "Sealing", value: "PLACEHOLDER" },
-    ],
+    techSpecs:
+      "The frame is manufactured using sheet metal bending using Aluminum 5052-T6 to allow for good bending. The high magnesium content of the alloy allows for high strength and corrosion resistance while still retaining good bending manufacturability. The frame has 400+ attachment points to allow for flexibility.",
+    photoSlot: "CHASSIS-01",
     ownedBy: "chassis",
   },
   {
     slug: "drivetrain",
     name: "Drivetrain",
-    role: "Turns power into motion across loose, broken and steep ground.",
+    role: "Allow traversal over rough terrain while keeping the chassis and components from moving.",
     summary:
-      "Wheels, suspension, steering and the motors that drive them. This is what decides whether the rover finishes a traverse or gets stuck halfway.",
+      "The rocker-bogie suspension system allows for traversal over uneven terrain while still maintaining the vehicle more or less level. Six wheels follow the tried-and-tested NASA design that has been used for three generations of rover.",
     detail: [
-      "PLACEHOLDER — describe the suspension architecture (rocker-bogie or otherwise), how load is distributed, and the maximum tilt and obstacle height the design targets.",
-      "PLACEHOLDER — describe the steering scheme, wheel construction and tread design, and the drive motor and gearbox selection.",
+      "The design philosophy of the rocker-bogie suspension system is weight minimization. Topology optimization was performed on the differential and the rocker-bogie legs. The differential links are made of brass and are self-lubricating. The rocker-bogie system has a greater moment of inertia due to the use of struts that increase the second moment of area while minimizing added weight, similar to a plane wing.",
+      "Uneven terrain can range up to obstacles 20 cm in height, such as a rock. The suspension system must be able to endure forces that include the weight of the rover, arm, and any added components while handling rough terrain.",
     ],
-    image: "/media/rover-mog.jpg",
-    imageCaption: "PLACEHOLDER — drivetrain and suspension callout diagram.",
-    specs: [
-      { label: "Main job", value: "Mobility over Mars-analogue terrain" },
-      { label: "Configuration", value: "PLACEHOLDER (wheel count, steering type)" },
-      { label: "Suspension", value: "PLACEHOLDER" },
-      { label: "Wheel diameter", value: "PLACEHOLDER" },
-      { label: "Drive motors", value: "PLACEHOLDER" },
-      { label: "Top speed", value: "PLACEHOLDER" },
-      { label: "Max grade", value: "PLACEHOLDER" },
-    ],
+    techSpecs:
+      "The drivetrain has six wheels, is constructed out of Aluminum-6061, and is manufactured mainly using the waterjet.",
+    photoSlot: "CHASSIS-02",
     ownedBy: "chassis",
   },
   {
+    slug: "comms-relay",
+    name: "Comms Relay",
+    role: "Extends the communication range and driving range of the rover.",
+    summary:
+      "The comms relay allows for the rover to communicate over longer distances or around structures that block the signal from the comms base antenna. The comms relay can deploy from the rover automatically, and allows for the absence of human intervention in extending the rover's range.",
+    detail: [
+      "The comms relay is designed around deploying the most stable and reliable relay while still ensuring portability. Still in the developmental and testing phases, the comms relay relies on a gear mechanism that prioritizes reliability.",
+      "The comms relay has to survive inclement weather, harsh terrain, and unpredictable landing spots.",
+    ],
+    techSpecs:
+      "The comms relay extends the rover's range by 1 km. It is 3D-printed and weighs 5 lbs.",
+    photoSlot: "CHASSIS-03",
+    ownedBy: "chassis",
+  },
+
+  /* ---- Arm ----------------------------------------------------------- */
+  {
     slug: "arm",
     name: "Robotic Arm",
-    role: "Reaches, positions and applies force away from the rover body.",
-    summary:
-      "A multi-axis arm with high payload capacity, long reach, and fast end-effector swapping — the subsystem that does the servicing and equipment tasks at competition.",
+    role: "PLACEHOLDER — the Arm lead has not filled in the content doc yet.",
+    summary: "PLACEHOLDER — awaiting the Arm sub-team's submission.",
     detail: [
-      "PLACEHOLDER — describe the joint layout and degrees of freedom, the actuator and reduction choices at each joint, and how the arm is controlled from the base station.",
-      "PLACEHOLDER — describe the reach envelope and payload at full extension, and how the arm is stowed for driving.",
+      "PLACEHOLDER — design decisions and philosophy.",
+      "PLACEHOLDER — what this subsystem has to survive.",
     ],
-    image: "/media/team/arm.jpg",
-    imageCaption: "PLACEHOLDER — arm joint callout diagram.",
-    specs: [
-      { label: "Main job", value: "Manipulation, servicing and equipment tasks" },
-      { label: "Degrees of freedom", value: "PLACEHOLDER" },
-      { label: "Reach", value: "PLACEHOLDER" },
-      { label: "Payload at full extension", value: "PLACEHOLDER" },
-      { label: "Actuation", value: "PLACEHOLDER" },
-    ],
+    photoSlot: "ARM-01",
     ownedBy: "arm",
   },
   {
     slug: "end-effector",
     name: "End Effector",
-    role: "The tool at the tip of the arm — swapped to suit the task.",
-    summary:
-      "Interchangeable tooling on a quick-change interface, so one arm can cover gripping, actuation and sample tasks without a redesign between them.",
+    role: "PLACEHOLDER — the Arm lead has not filled in the content doc yet.",
+    summary: "PLACEHOLDER — awaiting the Arm sub-team's submission.",
     detail: [
-      "PLACEHOLDER — describe the quick-change interface: mechanical coupling, how power and signal cross the joint, and how long a swap takes in the field.",
-      "PLACEHOLDER — list the tools in the current set and what competition task each one exists for.",
+      "PLACEHOLDER — design decisions and philosophy.",
+      "PLACEHOLDER — what this subsystem has to survive.",
     ],
-    image: "/media/team/arm.jpg",
-    imageCaption: "PLACEHOLDER — end effector and tool set.",
-    specs: [
-      { label: "Main job", value: "Task-specific manipulation at the arm tip" },
-      { label: "Interface", value: "PLACEHOLDER (quick-change type)" },
-      { label: "Tool set", value: "PLACEHOLDER" },
-      { label: "Grip force", value: "PLACEHOLDER" },
-      { label: "Swap time", value: "PLACEHOLDER" },
-    ],
+    photoSlot: "ARM-02",
     ownedBy: "arm",
   },
+
+  /* ---- Software ------------------------------------------------------ */
   {
-    slug: "rover-lab",
-    name: "Rover Lab",
-    role: "Collects samples and runs the science onboard.",
+    slug: "comms-perception",
+    name: "Communications & Perception",
+    role: "This critical subsystem allows the operator to control and see our rover in real time.",
     summary:
-      "Automated onboard lab systems that collect soil samples, run chemical analyses, and search for signs of life — bringing autonomous science capability to a mobile platform.",
+      "Our communications system is a 5 GHz point-to-point network, optimized for range and throughput. Using H.265 compression, we can stream multiple camera feeds at the same time over our network.",
     detail: [
-      "PLACEHOLDER — describe the sample acquisition path: how material is collected, transported, and staged for analysis.",
-      "PLACEHOLDER — describe the assays and instruments carried, including the microfluidic lab-on-a-chip work and how results are reported to the base station.",
+      // TODO(team): the submitted sentence ends mid-thought — "…rotate towards
+      // the rover. This allows us to ". Kept the complete sentence; the rest
+      // needs finishing by the Software lead rather than guessing at it.
+      "Many teams use two omnidirectional antennas, however we use a dish to manually or automatically rotate towards the rover.",
+      "Our network has an effective range of 780 m with an average latency of under 3 ms. It can also stream up to 5 camera feeds simultaneously.",
     ],
-    image: "/media/team/rover-lab.png",
-    imageCaption: "PLACEHOLDER — rover lab internal layout.",
-    specs: [
-      { label: "Main job", value: "Onboard sample handling and life detection" },
-      { label: "Sample intake", value: "PLACEHOLDER" },
-      { label: "Assays", value: "PLACEHOLDER" },
-      { label: "Instruments", value: "PLACEHOLDER" },
-      { label: "Sample capacity", value: "PLACEHOLDER" },
-    ],
-    ownedBy: "rover-lab",
+    photoSlot: "SOFTWARE-01",
+    ownedBy: "software",
   },
   {
-    slug: "power",
-    name: "Power & Electronics",
-    role: "Generates, distributes and protects the rover's electrical supply.",
+    slug: "autonomy",
+    name: "Autonomy",
+    role: "Enables the rover to navigate, perceive, and manipulate its environment without direct human control.",
     summary:
-      "Battery, power distribution, motor control, lighting and the emergency stop chain — designed safety-first, because an uncommanded motor at competition is a disqualification at best.",
+      "The Autonomy subsystem gives the rover the ability to independently traverse unknown terrain and perform manipulation tasks with the robotic arm. It combines Visual SLAM (VSLAM) for localization and path planning with computer vision for object and marker detection, allowing the rover to complete GNSS-only navigation, AR tag post-finding, and object-retrieval missions autonomously.",
     detail: [
-      "PLACEHOLDER — describe the battery chemistry and pack configuration, the distribution topology, and the protection scheme.",
-      "PLACEHOLDER — describe the emergency stop architecture and how it satisfies the URC and CIRC safety rules.",
+      "We chose a VSLAM based approach over relying solely on GNSS because GPS accuracy alone isn't sufficient for precise final-approach navigation to posts and objects, especially in terrain with signal degradation. VSLAM lets the rover build a local map in real time and correct its position using visual features. For the arm, our only supported autonomy stack involves RL — which is still in development. Using behavior trees and excluding an observation module, we trained a hierarchical reinforcement learning model to dynamically press keys on a keyboard in simulation. Overall, we prioritized modularity between the navigation stack and the manipulation stack so each can be tested and tuned independently before integration.",
+      "The subsystem has to operate over unstructured, uneven outdoor Mars-like terrain without reliable GPS lock at every point along the course, using onboard cameras as the primary sensing source. It must reliably detect AR tags, and small ground objects under variable outdoor lighting. The arm's vision-guided keypress task demands sub-centimeter positioning accuracy despite vibration and imperfect stopping position from the drive system.",
     ],
-    image: "/media/team/electrical.jpg",
-    imageCaption: "PLACEHOLDER — power distribution board.",
-    specs: [
-      { label: "Main job", value: "Power generation, distribution and protection" },
-      { label: "Battery", value: "PLACEHOLDER (chemistry, capacity)" },
-      { label: "Bus voltage", value: "PLACEHOLDER" },
-      { label: "Runtime", value: "PLACEHOLDER" },
-      { label: "E-stop", value: "PLACEHOLDER" },
-    ],
-    ownedBy: "electrical",
-  },
-  {
-    slug: "comms",
-    name: "Communications",
-    role: "Carries commands out to the rover and telemetry back.",
-    summary:
-      "The radio link between the rover and the control base. Range and reliability set how far the rover can be driven out of line of sight.",
-    detail: [
-      "PLACEHOLDER — describe the radio hardware, frequency band and antenna configuration on both ends of the link.",
-      "PLACEHOLDER — describe the link budget, achieved range at competition, and the behaviour on link loss.",
-    ],
-    image: "/media/team/electrical.jpg",
-    imageCaption: "PLACEHOLDER — antenna and radio callout.",
-    specs: [
-      { label: "Main job", value: "Command uplink and telemetry downlink" },
-      { label: "Band", value: "PLACEHOLDER" },
-      { label: "Antennas", value: "PLACEHOLDER" },
-      { label: "Range", value: "PLACEHOLDER" },
-      { label: "Link loss behaviour", value: "PLACEHOLDER" },
-    ],
-    ownedBy: "electrical",
+    techSpecs:
+      "98.7% task completion accuracy using RL with domain randomization (excluding observation module).",
+    photoSlot: "SOFTWARE-02",
+    ownedBy: "software",
   },
   {
     slug: "control-base",
     name: "Control Base",
-    role: "Where the operators sit and how they see what the rover sees.",
+    role: "The control base serves to control the rover and all its subsystems in one place during the competition.",
     summary:
-      "The ground station: operator console, camera feeds, telemetry display and the software that runs and monitors the vehicle — including the Unity simulation used for testing and operator training.",
+      "This system has two parts. The human-machine interface (HMI) is a high-level layer that provides an intuitive visualization of the rover. Beneath it, the control stack is a low-level layer that translates joystick movements and button presses on the control base into the signals that operate the rover itself.",
     detail: [
-      "PLACEHOLDER — describe the base station hardware, the operator interface, and what the crew sees during a run.",
-      "PLACEHOLDER — describe the control and autonomy stack, the safety alerting, and how the Unity simulation is used to train operators before competition.",
+      "One important feature on our control base is having cleanly split roles. The HMI serves only as the frontend of the control base and we use many ROS nodes to provide a trustworthy backend for this system. This also allows for a modular codebase which is integral for collaboration across multiple projects and the addition of new features depending on what the other subteams require.",
+      "This subsystem operates under highly illuminated spaces. For efficient operator control, our monitors require especially high nits so that even in the brightest conditions, the operator can see everything happening easily. Our existing setup has 3 monitors, however we are considering adding additional monitors to have more room for telemetry and operation panels.",
     ],
-    image: "/media/team/software.jpg",
-    imageCaption: "PLACEHOLDER — control base during a run.",
-    specs: [
-      { label: "Main job", value: "Operator control, telemetry and autonomy" },
-      { label: "Console", value: "PLACEHOLDER" },
-      { label: "Camera feeds", value: "PLACEHOLDER" },
-      { label: "Autonomy", value: "PLACEHOLDER" },
-      { label: "Simulation", value: "Unity — used for testing and operator training" },
-    ],
+    techSpecs: "1000 nit monitors, 2 analog joysticks, 10 buttons.",
+    photoSlot: "SOFTWARE-03",
     ownedBy: "software",
+  },
+  {
+    slug: "firmware",
+    name: "Firmware & Embedded Systems",
+    role: "Firmware is the glue connecting our software to our sensors and actuators.",
+    summary:
+      "While our on-board computers handle more general tasks, our firmware is built for specific applications. It is the final layer of code that will translate a raw voltage into a temperature reading, or a software command into motor movement.",
+    detail: [
+      "Firmware is a joint team between Electrical and Software.",
+      "PLACEHOLDER — operating conditions not yet supplied for this subsystem.",
+    ],
+    photoSlot: "SOFTWARE-04",
+    ownedBy: "software",
+  },
+
+  /* ---- Electrical ---------------------------------------------------- */
+  {
+    slug: "power-distribution",
+    name: "Power Distribution",
+    role: "Provides electrical power to all the rover's loads.",
+    summary:
+      "The power distribution system takes the battery's input voltage and regulates it into our desired output voltages. The main loads we drive are the motors, the robotic arm and the science module. These all have specific power needs that our power distribution system is there to support.",
+    detail: [
+      "Due to the nature of our competitions, we prioritise efficiency when interchanging the many loads our rover hosts. Our system makes this possible with its durable XT30 connectors and fuse holders. This way, we simply need to plug in and fuse the required power lines for a specific task — it is a flexible and intuitive design.",
+      "Our power distribution boards are built to withstand 90 A of continuous current. It can supply power on four different voltage rails, totalling 22 individual channels. All of this operates under 1000 W+ loads in high heat conditions to keep the rover's heart beating.",
+    ],
+    techSpecs:
+      "The input voltage for our power distribution boards ranges from 19–21 V. Its output voltages include 5 V, 12 V, 18 V and 24 V rails. Each output has an XT30 connector and a fuse holder for easy access and rotations. These feed all onboard systems including the drivetrain, the robotic arm and end effector, onboard computer, communications and a science testing module.",
+    photoSlot: "ELECTRICAL-01",
+    ownedBy: "electrical",
+  },
+  {
+    slug: "lighting",
+    name: "Lighting System",
+    role: "Allows visibility during night tasks.",
+    summary:
+      "We use four separate high efficiency LED lights in our system. This allows better peripheral views, leading to a smoother and safer ride.",
+    detail: [
+      "Competition night tasks require a lighting system that can be controlled remotely from the operations base. We have on/off as well as dimming controls, as some competition tasks have specific no-light zones. Our system allows for this flexibility, thanks to software integration.",
+      "The lighting system's water-resistant protection and brightness controls allow us to see in clear skies and rainstorms alike. We not only perform in turbulent weather, but we also perform in style thanks to the colour changing feature that allows our lights to range any HEX value.",
+    ],
+    techSpecs:
+      "Powered by the 18 V rail, the lighting system uses an LED driver to ensure constant current. This improves brightness consistency across all four LEDs. Our design also powers a floodlight mounted on top of the PTZ camera for maximum coverage.",
+    photoSlot: "ELECTRICAL-02",
+    ownedBy: "electrical",
+  },
+  {
+    slug: "motor-drivers",
+    name: "Motor Drivers",
+    role: "Powers the drivetrain motors.",
+    summary:
+      "The motor drivers receive software communications and send commands and power to the motors. They also deal with feedback, allowing the control base to access position, velocity and acceleration data to better understand the unique Mars-like terrains.",
+    detail: [
+      "As the wheels and top plate of the chassis frequently need to be removed, we decided to use aviator connectors to attach the drivers to the motors. These are durable and easy to use, so assembly can happen in a timely manner — which is extremely important in a competition environment. Wiring therefore plays an important and often overlooked role in the drivetrain system's success.",
+      "The motor drivers can provide over 1000 W of power to our drivetrain. This allows masterful maneuvering of rocky terrain, loose gravel and steep cliffs. This is all operating with over 40 kg of weight from the battery, chassis and arm module.",
+    ],
+    techSpecs:
+      "The driver system is composed of Phidget VINT motor drivers at 24 V with a 20 A current rating. Each of the six motors has an isolated driver to improve system resiliency and allow for more complicated maneuvers.",
+    photoSlot: "ELECTRICAL-03",
+    ownedBy: "electrical",
+  },
+
+  /* ---- Rover Lab ----------------------------------------------------- */
+  {
+    slug: "rover-lab",
+    name: "Rover Lab",
+    role: "PLACEHOLDER — the Rover Lab lead has not filled in the content doc yet.",
+    summary: "PLACEHOLDER — awaiting the Rover Lab sub-team's submission.",
+    detail: [
+      "PLACEHOLDER — design decisions and philosophy.",
+      "PLACEHOLDER — what this subsystem has to survive.",
+    ],
+    photoSlot: "ROVERLAB-01",
+    ownedBy: "rover-lab",
   },
 ];
 
@@ -370,9 +408,11 @@ export const TEAM_INTRO =
 export type Project = {
   index: string;
   title: string;
-  eyebrow: string;
+  eyebrow?: string;
   blurb: string;
-  image: string;
+  image?: string;
+  /** Human-readable slot id shown in the placeholder, e.g. "CHASSIS-P1". */
+  photoSlot: string;
 };
 
 export type OpenRole = {
@@ -398,27 +438,27 @@ export type Subteam = {
   openRoles: OpenRole[];
 };
 
-const placeholderProjects = (name: string, image: string): Project[] => [
+const placeholderProjects = (name: string, slug: string): Project[] => [
   {
     index: "01",
     title: "Project One",
     eyebrow: "PLACEHOLDER",
     blurb: `PLACEHOLDER — an R&D project the ${name} sub-team took on. Replace with a real one: the question it set out to answer, what was tried, and what came of it.`,
-    image,
+    photoSlot: `${slug.toUpperCase()}-P1`,
   },
   {
     index: "02",
     title: "Project Two",
     eyebrow: "PLACEHOLDER",
     blurb: `PLACEHOLDER — a second ${name} R&D project. Two to four per sub-team reads best in this grid.`,
-    image,
+    photoSlot: `${slug.toUpperCase()}-P2`,
   },
   {
     index: "03",
     title: "Project Three",
     eyebrow: "PLACEHOLDER",
     blurb: `PLACEHOLDER — a third ${name} R&D project.`,
-    image,
+    photoSlot: `${slug.toUpperCase()}-P3`,
   },
 ];
 
@@ -441,7 +481,7 @@ export const SUBTEAMS: Subteam[] = [
     name: "Chassis",
     discipline: "Mechanical",
     blurb:
-      "We shape the rover's mechanical backbone, creating a strong, lightweight platform for Mars-like terrains while integrating all subteams, and advancing mobility innovations, such as steerable wheels and waterproofing.",
+      "The Chassis team does hands-on, in-person assembly while learning and practicing mechanical design. We get our hands dirty, which is exactly why we can explain and stand behind every design decision we make. We are the main driver of integration, pulling the work of every other subteam together into a traversal-ready vehicle. Our job is to carry those components on a foundation that is reliable, debuggable, and clean.",
     image: "/media/team/chassis.jpg",
     capabilities: [
       "Suspension & drivetrain",
@@ -449,7 +489,36 @@ export const SUBTEAMS: Subteam[] = [
       "Waterproofing",
       "Systems integration",
     ],
-    projects: placeholderProjects("Chassis", "/media/team/chassis.jpg"),
+    projects: [
+      {
+        index: "01",
+        title: "Drivetrain design",
+        blurb:
+          "Motor selection and integration so that all six wheels are securely held and easy to install. Includes R&D into steerable wheels.",
+        photoSlot: "CHASSIS-P1",
+      },
+      {
+        index: "02",
+        title: "Rebuilt baseplate layout",
+        blurb:
+          "Apply competition learnings from last year's baseplate to build a better layout: a more accessible and debuggable rover.",
+        photoSlot: "CHASSIS-P2",
+      },
+      {
+        index: "03",
+        title: "Mini-rover",
+        blurb:
+          "Build a mini-rover so the software team can test autonomous navigation at a smaller scale that is easier to debug and carry.",
+        photoSlot: "CHASSIS-P3",
+      },
+      {
+        index: "04",
+        title: "Comms relay",
+        blurb:
+          "Design and implement a comms relay for reliable long-range communication.",
+        photoSlot: "CHASSIS-P4",
+      },
+    ],
     openRoles: placeholderRoles("Chassis"),
   },
   {
@@ -465,7 +534,7 @@ export const SUBTEAMS: Subteam[] = [
       "Swappable end-effectors",
       "Long reach",
     ],
-    projects: placeholderProjects("Arm", "/media/team/arm.jpg"),
+    projects: placeholderProjects("Arm", "arm"),
     openRoles: placeholderRoles("Arm"),
   },
   {
@@ -473,7 +542,7 @@ export const SUBTEAMS: Subteam[] = [
     name: "Software",
     discipline: "Software",
     blurb:
-      "We build the software that runs and monitors the rover, focusing on reliable control systems, safety alerts, and advancing our Unity simulation used for testing and operator training.",
+      "Software makes sure we can control, communicate, automate, and see the rover. We utilize the full potential of our hardware with tuned control loops, thorough testing, and streamlined communication between each subsystem. Our expertise includes blowing up motors, and kindly asking the mechanical teams for unscheduled maintenance.",
     image: "/media/team/software.jpg",
     capabilities: [
       "Control systems",
@@ -481,7 +550,12 @@ export const SUBTEAMS: Subteam[] = [
       "Unity simulation",
       "Operator training",
     ],
-    projects: placeholderProjects("Software", "/media/team/software.jpg"),
+    // TODO(team): the four items the Software lead listed under "subteam
+    // projects" are the four subsystems already documented above
+    // (Communications & Perception, Autonomy, Control Base, Firmware), so
+    // rendering them here would duplicate that section verbatim. Needs real
+    // R&D projects: the question investigated and what came of it.
+    projects: placeholderProjects("Software", "software"),
     openRoles: placeholderRoles("Software"),
   },
   {
@@ -489,7 +563,7 @@ export const SUBTEAMS: Subteam[] = [
     name: "Electrical",
     discipline: "Electrical",
     blurb:
-      "We power the rover's performance by designing reliable, safety-focused electronics — from motor control and power distribution to lighting and emergency systems — while building competition-ready PCBs for both the rover lab and Mini Rover.",
+      "Here in the Electrical team, we do everything from high-level design and PCB manufacturing to testing and integration. We put in the hours to ensure the safety of the rover and everyone around it. And in a high stakes competition environment, when the rover loses its heartbeat, Electrical is ready — multimeters in hand — to bring it back to life.",
     image: "/media/team/electrical.jpg",
     capabilities: [
       "Motor control",
@@ -497,7 +571,27 @@ export const SUBTEAMS: Subteam[] = [
       "Emergency stop systems",
       "Competition-ready PCBs",
     ],
-    projects: placeholderProjects("Electrical", "/media/team/electrical.jpg"),
+    projects: [
+      {
+        index: "01",
+        title: "Battery speccing",
+        blurb: "Collecting power consumption data on our loads to spec our main battery.",
+        photoSlot: "ELECTRICAL-P1",
+      },
+      {
+        index: "02",
+        title: "Performance feedback",
+        blurb:
+          "Using sensors to relay current and voltage readings to our control base in real time.",
+        photoSlot: "ELECTRICAL-P2",
+      },
+      {
+        index: "03",
+        title: "Remote stop",
+        blurb: "A software-operated emergency kill switch for the rover.",
+        photoSlot: "ELECTRICAL-P3",
+      },
+    ],
     openRoles: placeholderRoles("Electrical"),
   },
   {
@@ -513,7 +607,7 @@ export const SUBTEAMS: Subteam[] = [
       "Life detection",
       "Autonomous lab systems",
     ],
-    projects: placeholderProjects("Rover Lab", "/media/team/rover-lab.png"),
+    projects: placeholderProjects("Rover Lab", "roverlab"),
     openRoles: placeholderRoles("Rover Lab"),
   },
   {
@@ -529,7 +623,7 @@ export const SUBTEAMS: Subteam[] = [
       "Computer vision",
       "Habitability analysis",
     ],
-    projects: placeholderProjects("Science", "/media/team/science.png"),
+    projects: placeholderProjects("Science", "science"),
     openRoles: placeholderRoles("Science"),
   },
   {
@@ -540,7 +634,7 @@ export const SUBTEAMS: Subteam[] = [
       "We keep the team running and growing by managing finances, sponsorships, and outreach, while promoting our work through marketing, events, and community engagement.",
     image: "/media/team/business.jpeg",
     capabilities: ["Finance", "Sponsorship", "Outreach & events", "Marketing"],
-    projects: placeholderProjects("Business", "/media/team/business.jpeg"),
+    projects: placeholderProjects("Business", "business"),
     openRoles: placeholderRoles("Business"),
   },
 ];

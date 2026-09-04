@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import PageHero from "@/components/PageHero";
+import PhotoSlot from "@/components/PhotoSlot";
 import Reveal from "@/components/Reveal";
 import { SUBTEAMS, applyHref, getSubteam, subsystemsForSubteam } from "@/lib/content";
 
@@ -98,24 +99,12 @@ export default async function SubteamPage({ params }: Params) {
                   }`}
                 >
                   <Reveal>
-                    <figure>
-                      <div className="relative aspect-[4/3] overflow-hidden border border-white/10">
-                        <img
-                          src={sub.image}
-                          alt={`${sub.name} on the UBC Rover.`}
-                          loading="lazy"
-                          decoding="async"
-                          className="absolute inset-0 h-full w-full object-cover"
-                        />
-                        <div
-                          aria-hidden
-                          className="from-navy-950/48 absolute inset-0 bg-gradient-to-t to-transparent"
-                        />
-                      </div>
-                      <figcaption className="text-chalk-dim/60 mt-3 font-mono text-[11px] tracking-[0.1em]">
-                        {sub.imageCaption}
-                      </figcaption>
-                    </figure>
+                    <PhotoSlot
+                      src={sub.image}
+                      alt={`${sub.name} on the UBC Rover.`}
+                      slot={sub.photoSlot}
+                      caption={sub.imageCaption}
+                    />
                   </Reveal>
 
                   <Reveal delay={110}>
@@ -144,32 +133,16 @@ export default async function SubteamPage({ params }: Params) {
                       </p>
                     ))}
 
-                    <div className="mt-7 border border-white/10">
-                      <p className="text-chalk-dim/70 border-b border-white/10 px-5 py-3 font-mono text-[11px] tracking-[0.18em] uppercase">
-                        Tech Specs
-                      </p>
-                      <dl>
-                        {sub.specs.map((spec) => (
-                          <div
-                            key={spec.label}
-                            className="grid grid-cols-[9rem_1fr] gap-4 border-b border-white/10 px-5 py-3 last:border-b-0"
-                          >
-                            <dt className="text-chalk-dim/60 font-mono text-[11px] tracking-[0.12em] uppercase">
-                              {spec.label}
-                            </dt>
-                            <dd
-                              className={
-                                spec.value.startsWith("PLACEHOLDER")
-                                  ? "font-mono text-xs text-amber-500/70"
-                                  : "text-chalk-dim/90 text-sm"
-                              }
-                            >
-                              {spec.value}
-                            </dd>
-                          </div>
-                        ))}
-                      </dl>
-                    </div>
+                    {sub.techSpecs ? (
+                      <div className="mt-7 border border-white/10">
+                        <p className="text-chalk-dim/70 border-b border-white/10 px-5 py-3 font-mono text-[11px] tracking-[0.18em] uppercase">
+                          Tech Specs
+                        </p>
+                        <p className="text-chalk-dim/90 px-5 py-4 text-sm leading-relaxed">
+                          {sub.techSpecs}
+                        </p>
+                      </div>
+                    ) : null}
                   </Reveal>
                 </div>
               </article>
@@ -225,13 +198,24 @@ export default async function SubteamPage({ params }: Params) {
                       : "aspect-[4/3] sm:aspect-[3/2]"
                   }`}
                 >
-                  <img
-                    src={project.image}
-                    alt=""
-                    loading="lazy"
-                    decoding="async"
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.045]"
-                  />
+                  {project.image ? (
+                    <img
+                      src={project.image}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.045]"
+                    />
+                  ) : (
+                    <div
+                      aria-hidden
+                      className="grid-wash bg-navy-950 absolute inset-0 flex items-center justify-center border border-dashed border-amber-500/25"
+                    >
+                      <span className="font-mono text-[11px] tracking-[0.22em] text-amber-500/45 uppercase">
+                        Photo slot {project.photoSlot}
+                      </span>
+                    </div>
+                  )}
                   <div
                     aria-hidden
                     className="from-navy-950/95 via-navy-950/58 to-navy-950/22 absolute inset-0 bg-gradient-to-t transition-opacity duration-500 group-hover:opacity-90"
@@ -246,7 +230,9 @@ export default async function SubteamPage({ params }: Params) {
                 </span>
 
                 <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
-                  <p className="text-eyebrow mb-2">{project.eyebrow}</p>
+                  {project.eyebrow ? (
+                    <p className="text-eyebrow mb-2">{project.eyebrow}</p>
+                  ) : null}
                   <h3 className="font-display text-chalk text-2xl leading-[0.95] font-extrabold tracking-[-0.03em] sm:text-4xl">
                     {project.title}
                   </h3>
