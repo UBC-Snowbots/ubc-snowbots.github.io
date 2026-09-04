@@ -205,12 +205,10 @@ export const SUBSYSTEMS: Subsystem[] = [
     ],
     techSpecs:
       "The frame is manufactured using sheet metal bending using Aluminum 5052-T6 to allow for good bending. The high magnesium content of the alloy allows for high strength and corrosion resistance while still retaining good bending manufacturability. The frame has 400+ attachment points to allow for flexibility.",
-    photoSlot: "CHASSIS-01",
-    expects: [
-      "2025 frame.heic",
-      "2025 chassis glorious.HEIC",
-      "2025 chassis from the back.HEIC",
+    photos: [
+      { src: "/media/subsystems/frame.jpg", caption: "The bare frame during assembly." },
     ],
+    photoSlot: "CHASSIS-01",
     ownedBy: "chassis",
   },
   {
@@ -225,6 +223,19 @@ export const SUBSYSTEMS: Subsystem[] = [
     ],
     techSpecs:
       "The drivetrain has six wheels, is constructed out of Aluminum-6061, and is manufactured mainly using the waterjet.",
+    // The two "chassis" shots from Drive live here rather than under Frame:
+    // both foreground the six wheels and the rocker-bogie, which is drivetrain,
+    // not the frame. Filenames alone would have put them in the wrong slot.
+    photos: [
+      {
+        src: "/media/subsystems/drivetrain-badlands.jpg",
+        caption: "Six-wheel rocker-bogie in the Drumheller badlands.",
+      },
+      {
+        src: "/media/subsystems/drivetrain-rear.jpg",
+        caption: "Rear three-quarter view.",
+      },
+    ],
     photoSlot: "CHASSIS-02",
     ownedBy: "chassis",
   },
@@ -240,8 +251,13 @@ export const SUBSYSTEMS: Subsystem[] = [
     ],
     techSpecs:
       "The comms relay extends the rover's range by 1 km. It is 3D-printed and weighs 5 lbs.",
+    photos: [
+      {
+        src: "/media/subsystems/comms-relay.jpg",
+        caption: "Relay components: antenna, battery, single-board computer.",
+      },
+    ],
     photoSlot: "CHASSIS-03",
-    expects: ["2026 comms relay components.HEIC"],
     ownedBy: "chassis",
   },
 
@@ -315,8 +331,13 @@ export const SUBSYSTEMS: Subsystem[] = [
       "This subsystem operates under highly illuminated spaces. For efficient operator control, our monitors require especially high nits so that even in the brightest conditions, the operator can see everything happening easily. Our existing setup has 3 monitors, however we are considering adding additional monitors to have more room for telemetry and operation panels.",
     ],
     techSpecs: "1000 nit monitors, 2 analog joysticks, 10 buttons.",
+    photos: [
+      {
+        src: "/media/subsystems/control-base.jpg",
+        caption: "The control base set up in the field.",
+      },
+    ],
     photoSlot: "SOFTWARE-03",
-    expects: ["Software Control Base.HEIC"],
     ownedBy: "software",
   },
   {
@@ -346,8 +367,17 @@ export const SUBSYSTEMS: Subsystem[] = [
     ],
     techSpecs:
       "The input voltage for our power distribution boards ranges from 19–21 V. Its output voltages include 5 V, 12 V, 18 V and 24 V rails. Each output has an XT30 connector and a fuse holder for easy access and rotations. These feed all onboard systems including the drivetrain, the robotic arm and end effector, onboard computer, communications and a science testing module.",
+    photos: [
+      {
+        src: "/media/subsystems/power-distribution.jpg",
+        caption: "Distribution boards with XT30 connectors.",
+      },
+      {
+        src: "/media/subsystems/power-distribution-bench.jpg",
+        caption: "A board on the bench during build.",
+      },
+    ],
     photoSlot: "ELECTRICAL-01",
-    expects: ["Elec PDB.HEIC"],
     ownedBy: "electrical",
   },
   {
@@ -363,7 +393,6 @@ export const SUBSYSTEMS: Subsystem[] = [
     techSpecs:
       "Powered by the 18 V rail, the lighting system uses an LED driver to ensure constant current. This improves brightness consistency across all four LEDs. Our design also powers a floodlight mounted on top of the PTZ camera for maximum coverage.",
     photoSlot: "ELECTRICAL-02",
-    expects: ["Elec General.HEIC — mapping unconfirmed"],
     ownedBy: "electrical",
   },
   {
@@ -378,8 +407,10 @@ export const SUBSYSTEMS: Subsystem[] = [
     ],
     techSpecs:
       "The driver system is composed of Phidget VINT motor drivers at 24 V with a 20 A current rating. Each of the six motors has an isolated driver to improve system resiliency and allow for more complicated maneuvers.",
+    photos: [
+      { src: "/media/subsystems/motor-drivers.jpg", caption: "Driver board detail." },
+    ],
     photoSlot: "ELECTRICAL-03",
-    expects: ["Elec Motor Drivers.HEIC"],
     ownedBy: "electrical",
   },
 
@@ -393,13 +424,19 @@ export const SUBSYSTEMS: Subsystem[] = [
       "PLACEHOLDER — design decisions and philosophy.",
       "PLACEHOLDER — what this subsystem has to survive.",
     ],
-    photoSlot: "ROVERLAB-01",
-    expects: [
-      "2026 rover lab from above.HEIC",
-      "2026 rover lab from front left.HEIC",
-      "2026 rover lab from rear left.HEIC",
-      "2026 rover lab from behind.HEIC",
+    photos: [
+      { src: "/media/subsystems/rover-lab-above.jpg", caption: "From above." },
+      {
+        src: "/media/subsystems/rover-lab-front-left.jpg",
+        caption: "From the front left.",
+      },
+      {
+        src: "/media/subsystems/rover-lab-rear-left.jpg",
+        caption: "From the rear left.",
+      },
+      { src: "/media/subsystems/rover-lab-behind.jpg", caption: "From behind." },
     ],
+    photoSlot: "ROVERLAB-01",
     ownedBy: "rover-lab",
   },
 ];
