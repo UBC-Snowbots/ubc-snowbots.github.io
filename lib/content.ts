@@ -341,12 +341,11 @@ export const SUBSYSTEMS: Subsystem[] = [
     summary:
       "Our communications system is a 5 GHz point-to-point network, optimized for range and throughput. Using H.265 compression, we can stream multiple camera feeds at the same time over our network.",
     detail: [
-      // TODO(team): the submitted sentence ends mid-thought — "…rotate towards
-      // the rover. This allows us to ". Kept the complete sentence; the rest
-      // needs finishing by the Software lead rather than guessing at it.
-      "Many teams use two omnidirectional antennas, however we use a dish to manually or automatically rotate towards the rover.",
+      "Many teams use two omnidirectional antennas, however we use a dish to manually or automatically rotate towards the rover. This allows us to communicate with our rover at large distances with a high throughput.",
       "Our network has an effective range of 780 m with an average latency of under 3 ms. It can also stream up to 5 camera feeds simultaneously.",
     ],
+    techSpecs:
+      "20-80 MHz bandwidth, 2 omni directional antennas, 5 GHz powerbeam antenna, 5 cameras",
     photos: [
       {
         src: "/media/subsystems/comms-dish.jpg",

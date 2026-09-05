@@ -42,3 +42,4 @@ next-env.d.ts
 
 # Full-resolution originals kept by scripts/optimize-media.sh --apply
 /assets-src
+.vscode
