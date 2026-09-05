@@ -270,12 +270,21 @@ export const SUBSYSTEMS: Subsystem[] = [
   /* ---- Arm ----------------------------------------------------------- */
   {
     slug: "arm",
-    name: "Robotic Arm",
-    role: "PLACEHOLDER — the Arm lead has not filled in the content doc yet.",
-    summary: "PLACEHOLDER — awaiting the Arm sub-team's submission.",
+    name: "6 DOF Arm",
+    role: "Starting from the chassis and ending with a differential, this 6 degree of freedom one meter long arm performs all payload manipulation and movement for the rover.",
+    summary:
+      "The one meter long arm goes from our moving chassis to our high precision end effector; mounted on a differential. The six degrees of freedom allows us to impact and perform every task as needed.",
     detail: [
-      "PLACEHOLDER — design decisions and philosophy.",
-      "PLACEHOLDER — what this subsystem has to survive.",
+      "The primary design focus was precision through survival — specifically within our competitions we have to carry heavy items and deal with vibrations. Our main goals for design are to be both fail-safe and fail-proof. The way to do that, we found is through simplifying our designs and building them for both assembly and debugging.",
+      "The desert is dusty and warm and sometimes wet. The arm needs to survive all of that. It also needs to function as protection and mounting for wires, cameras — all in the hot desert sun. But all while surviving we also need to be at high precision at our end effector.",
+    ],
+    techSpecs:
+      "1 meter long, 6 degrees of freedom, 5 kg payload at millimeter precision.",
+    photos: [
+      {
+        src: "/media/subsystems/arm-6dof.jpg",
+        caption: "The arm mounted on the rover.",
+      },
     ],
     photoSlot: "ARM-01",
     ownedBy: "arm",
@@ -283,13 +292,44 @@ export const SUBSYSTEMS: Subsystem[] = [
   {
     slug: "end-effector",
     name: "End Effector",
-    role: "PLACEHOLDER — the Arm lead has not filled in the content doc yet.",
-    summary: "PLACEHOLDER — awaiting the Arm sub-team's submission.",
+    role: "The end effector performs manipulations involving tool use and object manipulation.",
+    summary:
+      "Past the differential we have our hot swappable end effector system. Attached to that is our end effector. It takes the high precision given from the arm and converts it into usable manipulations. It acts as our interface to the real world.",
     detail: [
-      "PLACEHOLDER — design decisions and philosophy.",
-      "PLACEHOLDER — what this subsystem has to survive.",
+      "Part of the main motivation for our design on the end effector ties closely to material analysis. As the end effector is so close to the payload we were able to utilize more additively manufactured plastics thus allowing for tighter iteration cycles for those parts, from this we allowed part complexity to increase to really build out non-traditional solutions and to find new paradigms with respect to how we combine plastic and metal parts on the solution.",
+      "We also have a swappable end effector system, which uses a custom spring locking mechanism combined with spring loaded magnetic pogo pin connectors to attach all wiring instruments to the rest of the system.",
+      "The end effector has all the same heat / dust / wet requirements as the arm. Really hot day's dust always attacking it, we also need to monitor vibrations as anything from the system gets amplified as it comes all the way up to the end effector. We had to design it with that in mind.",
+    ],
+    techSpecs:
+      "Over 5 kg payload. Tool use — wire cutters, screwdrivers. Hot swappable system.",
+    photos: [
+      {
+        src: "/media/subsystems/arm-end-effector.png",
+        caption: "The end effector gripping a payload.",
+      },
     ],
     photoSlot: "ARM-02",
+    ownedBy: "arm",
+  },
+  {
+    slug: "arm-electrical",
+    name: "Electrical and Hardware Integration",
+    role: "PCBs, motors and wires, combining the moving parts and the electrical parts and the static parts.",
+    summary:
+      "The arm contains six PCB boards, 7 high current motors all with high fidelity position encoding and 2 cameras. The arm must be able to move quick, be built fast all while connecting to the rest of the rover with a few wires.",
+    detail: [
+      "Our motor system uses an arm wide CAN bus. To make termination and wire management simpler we utilize custom printed circuit boards that handle can organization, high power organization, sensor wire management. The fundamental goal with these decisions and other decisions with the subsystem were: how can we design to be fail-safe in both production and debugging while still letting us iterate quickly.",
+      "PCBs and electrical circuits (especially high current high voltage ones like what we have) must be protected properly to function in high heat, high dust deserts. Alongside that everything needs to be spec'd perfectly as a failure with respect to any high current system could result in literal flames.",
+    ],
+    techSpecs:
+      "6 PCBs. 7 motors with encoders, some with over 100 amp stall current. 2 cameras. 1 end-effector-mounted microcontroller.",
+    photos: [
+      {
+        src: "/media/subsystems/arm-electrical.png",
+        caption: "A custom CAN board mounted on the arm.",
+      },
+    ],
+    photoSlot: "ARM-03",
     ownedBy: "arm",
   },
 
@@ -306,6 +346,12 @@ export const SUBSYSTEMS: Subsystem[] = [
       // needs finishing by the Software lead rather than guessing at it.
       "Many teams use two omnidirectional antennas, however we use a dish to manually or automatically rotate towards the rover.",
       "Our network has an effective range of 780 m with an average latency of under 3 ms. It can also stream up to 5 camera feeds simultaneously.",
+    ],
+    photos: [
+      {
+        src: "/media/subsystems/comms-dish.jpg",
+        caption: "The dish at competition, tracking the rover downrange.",
+      },
     ],
     photoSlot: "SOFTWARE-01",
     ownedBy: "software",
@@ -441,6 +487,10 @@ export const SUBSYSTEMS: Subsystem[] = [
         caption: "From the rear left.",
       },
       { src: "/media/subsystems/rover-lab-behind.jpg", caption: "From behind." },
+      {
+        src: "/media/subsystems/rover-lab-soil-collection.jpg",
+        caption: "Soil collection.",
+      },
     ],
     photoSlot: "ROVERLAB-01",
     ownedBy: "rover-lab",
@@ -629,15 +679,35 @@ export const SUBTEAMS: Subteam[] = [
     name: "Arm",
     discipline: "Mechanical",
     blurb:
-      "We develop a multi-axis robotic arm capable of high payload capacity, long reach, and fast end-effector swapping.",
+      "Manipulation of objects is paramount to all future Martian exploration. The arm team makes that possible. We have a 6 + 1 dof robotic arm which represents the penultimate student robotics object at UBC.",
     image: "/media/team/arm.jpg",
     capabilities: [
-      "Multi-axis kinematics",
-      "High payload capacity",
-      "Swappable end-effectors",
-      "Long reach",
+      "6 DOF manipulation",
+      "Hot-swappable tooling",
+      "Arm-wide CAN bus",
+      "Custom PCBs",
     ],
-    projects: placeholderProjects("Arm", "arm"),
+    projects: [
+      {
+        index: "01",
+        title: "Axis redesign",
+        blurb: "Redesign of some axis.",
+        photoSlot: "ARM-P1",
+      },
+      {
+        index: "02",
+        title: "Assembly and wiring",
+        blurb: "Upgrading design for more focus on assembly and wiring.",
+        photoSlot: "ARM-P2",
+      },
+      {
+        index: "03",
+        title: "Competition post-mortem",
+        blurb:
+          "Analysis and redesign with respect to problem points from our last competition.",
+        photoSlot: "ARM-P3",
+      },
+    ],
     openRoles: placeholderRoles("Arm"),
   },
   {
