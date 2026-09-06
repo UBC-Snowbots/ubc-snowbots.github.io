@@ -899,6 +899,8 @@ export const PEOPLE: Person[] = [
   },
   // TODO(team): Eugene has no LinkedIn on record yet.
   { name: "Eugene Lee", image: "/media/people/eugene.jpg" },
+  // TODO(team): Danyaal has no LinkedIn on record yet.
+  { name: "Danyaal Abbas", image: "/media/people/danyaal.jpg" },
   // TODO(team): Darwyn has no portrait and no LinkedIn on record yet.
   { name: "Darwyn M" },
 ];
@@ -911,9 +913,8 @@ export const CAPTAIN_NAMES = ["Andres Fleet", "Rowan Zawadzki"] as const;
 /**
  * Leads per sub-team.
  *
- * TODO(team): Science and Business have no lead on record. Their bands show a
- * card-shaped placeholder until someone supplies a name — an obvious gap beats
- * a stale one.
+ * TODO(team): Business has no lead on record. Its band shows a card-shaped
+ * placeholder until someone supplies a name — an obvious gap beats a stale one.
  */
 export const SUBTEAM_LEAD_NAMES: Record<string, string[]> = {
   chassis: ["Eugene Lee"],
@@ -921,7 +922,7 @@ export const SUBTEAM_LEAD_NAMES: Record<string, string[]> = {
   "rover-lab": ["Jennifer Phung"],
   electrical: ["Darwyn M"],
   software: ["Rowan Zawadzki", "Aaron Rhim", "Ben Newington", "Riddhima Gupta"],
-  science: [],
+  science: ["Danyaal Abbas"],
   business: [],
 };
 
