@@ -33,7 +33,7 @@ export default function SubteamsPage() {
         <div className="space-y-5">
           {SUBTEAMS.map((team, i) => (
             <Reveal key={team.slug} delay={(i % 3) * 70}>
-              <article className="group bg-navy-900 relative isolate overflow-hidden border border-white/10 transition-colors duration-500 hover:border-amber-500/40">
+              <article className="group bg-navy-900 relative isolate overflow-hidden border border-white/10">
                 <div className="grid md:grid-cols-[minmax(0,32rem)_minmax(0,1fr)]">
                   {/* Media */}
                   <div className="relative aspect-[16/9] overflow-hidden md:aspect-auto md:min-h-[22rem]">
@@ -42,7 +42,7 @@ export default function SubteamsPage() {
                       alt=""
                       loading="lazy"
                       decoding="async"
-                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
+                      className="absolute inset-0 h-full w-full object-cover"
                     />
                     <div
                       aria-hidden

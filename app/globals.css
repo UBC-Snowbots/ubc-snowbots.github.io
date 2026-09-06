@@ -45,16 +45,27 @@
   --color-chalk-dim: #d2cfd1;
 
   /* -- light surfaces ----------------------------------------------------
-     Sections alternate rather than running one unbroken navy. These are not
-     white: pure #fff against the navy is a ~19:1 jump that reads as two
-     different websites stapled together. `mist` is the navy hue pulled up to
-     a near-white, and `slate` is a mid tone for a band that needs to sit
-     between the two without competing with either. Text on both is navy-950,
-     so the palette stays the same four colours throughout. */
-  --color-mist: #e8eaef;
-  --color-mist-deep: #d5d9e2;
-  --color-slate-mid: #7c8398;
-  /* Accent for light grounds — see .section-light. 5.43:1 on mist. */
+     The flyer palette is a SPLIT-COMPLEMENT: cool blues (navy 222deg, indigo
+     229deg) against warm oranges (rust 11deg, amber 36deg). sand-400 at 29deg
+     is that warm family desaturated almost to neutral.
+
+     So the light ground is warm, not white and not grey:
+
+     - pure #fff is hue-less. It introduces no relationship to anything else on
+       the page, and at 19.4:1 against navy-950 it makes the hardest possible
+       section break.
+     - a cool near-white (223deg) was the first attempt and it duplicated the
+       navy's own hue, so the band read as "navy with the lights on" — a
+       lighting change rather than a second colour.
+     - `bone` sits at 39deg with the chroma pulled almost out. It is the sand
+       tone lifted, so it reads as the same palette lit from a different angle,
+       it agrees with the amber accent instead of cooling against it, and at
+       14.6:1 it steps down from the dark bands more gently than white does.
+
+     Everything on it is navy-950 and amber-ink, so no new colour enters. */
+  --color-bone: #e5dfd4;
+  --color-bone-deep: #d8d0c1;
+  /* Accent for light grounds — see .section-light. 4.93:1 on bone. */
   --color-amber-ink: #8a4f16;
 
   /* -- type -------------------------------------------------------------- */
@@ -155,7 +166,7 @@
    * underneath is untouched.
    */
   .section-light {
-    background-color: var(--color-mist);
+    background-color: var(--color-bone);
     color: var(--color-navy-950);
   }
 
@@ -181,9 +192,9 @@
   }
 
   /* The amber accent is a mid-tone: it carries on navy but not on mist.
-     amber-700 was the obvious swap and still only measured 3.94:1 against
-     #e8eaef — under the 4.5 small-text floor. This deeper burnt amber measures
-     5.43:1 while staying recognisably the same accent. */
+     amber-700 was the obvious swap and still only measured 3.94:1 against the
+     light ground — under the 4.5 small-text floor. This deeper burnt amber
+     measures 4.93:1 on bone while staying recognisably the same accent. */
   .section-light .text-eyebrow,
   .section-light [class*="text-amber-500"],
   .section-light [class*="text-amber-500/"] {
@@ -192,7 +203,7 @@
 
   .section-light .bg-navy-900,
   .section-light .bg-navy-950 {
-    background-color: var(--color-mist-deep);
+    background-color: var(--color-bone-deep);
   }
 
   /* Fine grid wash — the "engineering drawing" texture behind dark sections. */
@@ -279,6 +290,30 @@
 
     .group:hover .label-on-hover,
     .group:focus-visible .label-on-hover {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  /* Companion to .label-on-hover: the arrow rises into place from below rather
+     than sitting on the card permanently. Same capability gate — on touch it is
+     always visible, because there is no hover there to raise it. */
+  .arrow-on-hover {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .arrow-on-hover {
+      opacity: 0;
+      transform: translate3d(0, 10px, 0);
+      transition:
+        opacity 0.3s var(--ease-out-quart),
+        transform 0.45s var(--ease-out-expo);
+    }
+
+    .group:hover .arrow-on-hover,
+    .group:focus-visible .arrow-on-hover {
       opacity: 1;
       transform: translate3d(0, 0, 0);
     }

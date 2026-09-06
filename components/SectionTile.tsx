@@ -16,6 +16,12 @@ import type { SectionTile as Tile } from "@/lib/content";
  * of these sit in a grid, and every extra line of chrome multiplies by four.
  * The title and the photo say where the link goes; the page behind it explains.
  *
+ * There is no zoom on the photo, no amber rule drawing along the bottom edge,
+ * and no darkening wash on hover. Each was a separate thing moving at once, and
+ * four tiles firing three effects apiece reads as fidgeting. What is left is
+ * the label arriving and the arrow rising — two movements, both of which mean
+ * "there is more here", which is the only thing the hover has to say.
+ *
  * At rest the tile shows only its title. The label fades in and decodes out of
  * noise on hover, the way Anduril's product cards do. Both the hiding and the
  * decode are gated on hover CAPABILITY rather than a breakpoint — on touch the
@@ -42,7 +48,7 @@ export default function SectionTile({
       onPointerLeave={(e) => e.pointerType === "mouse" && setDecoding(false)}
       onFocus={() => setDecoding(true)}
       onBlur={() => setDecoding(false)}
-      className="group bg-navy-900 relative isolate block overflow-hidden border border-white/10 transition-colors duration-500 hover:border-amber-500/40 focus-visible:border-amber-500/40"
+      className="group bg-navy-900 relative isolate block overflow-hidden border border-white/10"
     >
       {/* Media */}
       <div
@@ -58,18 +64,14 @@ export default function SectionTile({
           loading={priority ? "eager" : "lazy"}
           decoding="async"
           fetchPriority={priority ? "high" : "auto"}
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform group-hover:scale-[1.045] group-focus-visible:scale-[1.045]"
+          className="absolute inset-0 h-full w-full object-cover"
         />
 
-        {/* Scrim: keeps the label legible over any photo, and deepens on hover
-            so the copy gains contrast exactly when it's being read. */}
+        {/* Scrim: keeps the label legible over any photo. Static — it does not
+            deepen on hover, so the photo never dims under the pointer. */}
         <div
           aria-hidden
-          className="from-navy-950/95 via-navy-950/58 to-navy-950/22 absolute inset-0 bg-gradient-to-t transition-opacity duration-500 group-hover:opacity-90"
-        />
-        <div
-          aria-hidden
-          className="bg-navy-950/12 absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          className="from-navy-950/95 via-navy-950/58 to-navy-950/22 absolute inset-0 bg-gradient-to-t"
         />
       </div>
 
@@ -80,10 +82,12 @@ export default function SectionTile({
             {tile.title}
           </h3>
 
-          {/* Arrow: slides on hover to signal "enter". */}
+          {/* Arrow rises up into place on hover rather than sitting there
+              permanently. Same capability gate as the label: on touch it is
+              simply always visible, since there is no hover to raise it. */}
           <span
             aria-hidden
-            className="mb-1 shrink-0 text-2xl text-amber-500 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1 group-focus-visible:translate-x-1"
+            className="arrow-on-hover mb-1 shrink-0 text-2xl text-amber-500"
           >
             &#8594;
           </span>
@@ -99,12 +103,6 @@ export default function SectionTile({
           />
         </div>
       </div>
-
-      {/* Amber rule that draws in along the bottom edge on hover. */}
-      <span
-        aria-hidden
-        className="absolute bottom-0 left-0 h-[3px] w-0 bg-amber-500 transition-[width] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:w-full group-focus-visible:w-full"
-      />
     </Link>
   );
 }
