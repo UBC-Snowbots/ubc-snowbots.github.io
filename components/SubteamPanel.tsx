@@ -4,16 +4,16 @@ import Link from "next/link";
 import { SUBTEAMS } from "@/lib/content";
 
 /**
- * The Explore grid's sub-teams panel.
+ * The Explore grid's subteams panel.
  *
  * Unlike the other panels this one is NOT a single link, because there is no
- * sub-teams index page any more — the seven sub-teams are the destinations. So
+ * subteams index page any more — the seven subteams are the destinations. So
  * the panel is a container and each name inside it is its own target, listed
  * between hairlines.
  *
  * Consequences of that, both deliberate:
- *  - no arrow, since the panel as a whole does not go anywhere;
- *  - no decoding label, since the list is the label.
+ * - no arrow, since the panel as a whole does not go anywhere;
+ * - no decoding label, since the list is the label.
  *
  * The list is hidden until hover on hover-capable pointers and always visible
  * on touch, matching every other panel: there is no hover on a phone to reveal
@@ -64,7 +64,7 @@ export default function SubteamPanel() {
 
       <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
         <h3 className="font-display text-chalk text-3xl leading-[0.95] font-medium tracking-[-0.03em] sm:text-5xl">
-          Sub-teams
+          Subteams
         </h3>
       </div>
     </div>

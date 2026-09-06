@@ -8,10 +8,10 @@ import type { Photo } from "@/lib/content";
  *
  * Built on a native horizontally-scrollable, scroll-snapping strip rather than a
  * JS-driven carousel:
- *  - it works before hydration and without JS — you can still swipe or trackpad
+ * - it works before hydration and without JS — you can still swipe or trackpad
  *    across the images; the buttons are an enhancement, not the mechanism
- *  - touch gets real momentum scrolling for free
- *  - only `scrollLeft` changes, so nothing re-renders while you drag
+ * - touch gets real momentum scrolling for free
+ * - only `scrollLeft` changes, so nothing re-renders while you drag
  *
  * The current index comes from an IntersectionObserver scoped to the strip, not
  * a scroll handler, matching the rest of the codebase.
@@ -98,7 +98,7 @@ export default function PhotoGallery({ photos, alt }: { photos: Photo[]; alt: st
         // the images even when the buttons are not used.
         tabIndex={single ? undefined : 0}
         role={single ? undefined : "group"}
-        aria-label={single ? undefined : `${alt} — ${photos.length} images`}
+        aria-label={single ? undefined : `${alt} - ${photos.length} images`}
       >
         {photos.map((photo, i) => (
           <div

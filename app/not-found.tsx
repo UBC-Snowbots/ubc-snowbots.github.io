@@ -13,7 +13,7 @@ export default function NotFound() {
         </h1>
         <StripeRule className="mt-8 max-w-md" />
         <p className="text-chalk-dim/80 mt-8 max-w-lg text-base leading-relaxed">
-          That page is not on the map. Navigation error — recalculating.
+          That page is not on the map. Navigation error - recalculating.
         </p>
         <Link
           href="/"

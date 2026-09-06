@@ -14,12 +14,12 @@ import {
 
 export const metadata: Metadata = {
   title: "Our Team",
-  description: `Meet UBC Rover — ${SITE.memberCount} students across engineering, science and business, organised into ${SITE.subteamCount} sub-teams.`,
+  description: `Meet UBC Rover - ${SITE.memberCount} students across engineering, science and business, organised into ${SITE.subteamCount} subteams.`,
 };
 
 /**
  * Structured after UBC Formula Electric's team page: captains, then one band
- * per sub-team. TeamSection decides each band's layout from how many people it
+ * per subteam. TeamSection decides each band's layout from how many people it
  * has, so no band leaves a mostly-empty row.
  */
 export default function TeamPage() {
@@ -27,7 +27,7 @@ export default function TeamPage() {
     <>
       <PageHero
         title="Our Team"
-        lede={`${SITE.memberCount} students across engineering, science and business, organised into ${SITE.subteamCount} sub-teams.`}
+        lede={`${SITE.memberCount} students across engineering, science and business, organised into ${SITE.subteamCount} subteams.`}
         image={TEAM_PHOTO}
       />
 

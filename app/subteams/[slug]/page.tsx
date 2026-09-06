@@ -19,9 +19,9 @@ type Params = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
   const team = getSubteam(slug);
-  if (!team) return { title: "Sub-team" };
+  if (!team) return { title: "Subteam" };
   return {
-    title: `${team.name} Sub-team`,
+    title: `${team.name} Subteam`,
     description: team.blurb.slice(0, 155),
   };
 }
@@ -31,7 +31,7 @@ export default async function SubteamPage({ params }: Params) {
   const team = getSubteam(slug);
   if (!team) notFound();
 
-  // The rover subsystems this sub-team owns. These used to live on a separate
+  // The rover subsystems this subteam owns. These used to live on a separate
   // /rover page; they belong here, next to the people who actually build them.
   const owned = subsystemsForSubteam(team.slug);
 
@@ -68,7 +68,7 @@ export default async function SubteamPage({ params }: Params) {
         {/* ------------------------------------------------------------
             What we do.
 
-            For sub-teams that own hardware this is the full subsystem
+            For subteams that own hardware this is the full subsystem
             breakdown — main job, description and a Tech Specs table each,
             in the style of NASA's Perseverance components page. Science and
             Business own no subsystem, so they fall back to their capability
@@ -180,10 +180,10 @@ export default async function SubteamPage({ params }: Params) {
           </div>
         )}
 
-        {/* Other sub-teams */}
+        {/* Other subteams */}
         <Reveal>
           <h2 className="font-display text-chalk mt-16 text-2xl font-medium tracking-[-0.02em] sm:text-3xl">
-            Other sub-teams
+            Other subteams
           </h2>
           <div className="mt-6 flex flex-wrap gap-3">
             {SUBTEAMS.filter((t) => t.slug !== team.slug).map((other) => (

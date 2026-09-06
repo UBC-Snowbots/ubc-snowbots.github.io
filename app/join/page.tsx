@@ -14,17 +14,17 @@ import {
 export const metadata: Metadata = {
   title: "Join Us",
   description:
-    "UBC Rover recruits every Fall. See what each sub-team works on and apply to the one that fits.",
+    "UBC Rover recruits every Fall. See what each subteam works on and apply to the one that fits.",
 };
 
 /**
  * Structured after UBC Formula Electric's Join Us page: a joining package at the
- * top, then one compact block per sub-team — what you would work on, who leads
+ * top, then one compact block per subteam — what you would work on, who leads
  * it, and a direct apply button.
  *
  * The point of this layout is that everything is readable at a glance. An
  * earlier version hid the role detail behind hover, which defeats the whole
- * purpose: you cannot compare sub-teams if you have to hover each one in turn.
+ * purpose: you cannot compare subteams if you have to hover each one in turn.
  * Nothing here is behind an interaction.
  */
 export default function JoinPage() {
@@ -32,7 +32,7 @@ export default function JoinPage() {
     <>
       <PageHero
         title="Join Us!"
-        lede="Hands-on experience in robotics, software and mechanical design. Find the sub-team that fits and apply to it directly."
+        lede="Hands-on experience in robotics, software and mechanical design. Find the subteam that fits and apply to it directly."
         image="/media/team/electrical.jpg"
       />
 
@@ -80,7 +80,7 @@ export default function JoinPage() {
         </Reveal>
       </section>
 
-      {/* One compact block per sub-team, alternating sides. */}
+      {/* One compact block per subteam, alternating sides. */}
       {/* Light band between the joining-package strip and the roles grid, so
           the page reads as three moves rather than one long scroll. */}
       <section className="section-raised">
@@ -110,7 +110,7 @@ export default function JoinPage() {
                       <div className="relative aspect-[16/9] overflow-hidden border border-white/10">
                         <img
                           src={team.image}
-                          alt={`${team.name} sub-team at work.`}
+                          alt={`${team.name} subteam at work.`}
                           loading="lazy"
                           decoding="async"
                           className="absolute inset-0 h-full w-full object-cover"

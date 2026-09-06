@@ -120,7 +120,7 @@ export default function HoverPanel({
         href={href}
         target="_blank"
         rel="noreferrer noopener"
-        aria-label={`${title} — ${decode} (opens in a new tab)`}
+        aria-label={`${title} - ${decode} (opens in a new tab)`}
         className={shell}
         {...handlers}
       >
@@ -130,7 +130,7 @@ export default function HoverPanel({
   }
 
   return (
-    <Link href={href} aria-label={`${title} — ${decode}`} className={shell} {...handlers}>
+    <Link href={href} aria-label={`${title} - ${decode}`} className={shell} {...handlers}>
       {inner}
     </Link>
   );

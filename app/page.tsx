@@ -133,7 +133,7 @@ export default function Home() {
                   UBC Rover is a multidisciplinary team of {SITE.memberCount} students
                   dedicated to designing and building the next generation of
                   semi-autonomous Mars rovers. We push the boundaries of robotics through{" "}
-                  {SITE.subteamCount} specialised sub-teams — from machine-learning-driven
+                  {SITE.subteamCount} specialised subteams - from machine-learning-driven
                   navigation to swappable end-effectors.
                 </p>
                 <p>
@@ -207,7 +207,7 @@ export default function Home() {
 
           {/* Uneven mosaic: one wide tile, then two full rows of two. */}
           <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-2">
-            {/* Not a SectionTile: the sub-teams have no index page, so this
+            {/* Not a SectionTile: the subteams have no index page, so this
                 panel lists the seven destinations instead of being one. */}
             <Reveal>
               <SubteamPanel />

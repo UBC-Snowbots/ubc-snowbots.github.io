@@ -14,15 +14,15 @@ const EPSILON = 0.4;
  * Deliberately narrow, because taking over scrolling is the easiest way to
  * ruin a site:
  *
- *  - **Mouse and trackpad only.** Touch already has momentum from the platform,
+ * - **Mouse and trackpad only.** Touch already has momentum from the platform,
  *    and re-integrating it on top produces the drifting, unstoppable feel that
  *    makes hijacked scrolling notorious. Coarse pointers get native scroll.
- *  - **Wheel only.** Keyboard (space, Page Down, arrows), scrollbar drags,
+ * - **Wheel only.** Keyboard (space, Page Down, arrows), scrollbar drags,
  *    find-in-page and scrollIntoView are all left to the browser. Anything that
  *    moves the page by a route we did not cause resyncs the target instead of
  *    fighting it — the failure mode otherwise is the page snapping back to
  *    where this component still thinks it should be.
- *  - **Off under prefers-reduced-motion**, where added inertia is exactly the
+ * - **Off under prefers-reduced-motion**, where added inertia is exactly the
  *    thing being opted out of.
  *
  * The gesture still travels the same distance it natively would: `deltaY` is

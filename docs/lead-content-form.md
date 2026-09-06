@@ -1,7 +1,7 @@
-# Sub-team Lead Content Form — spec
+# Subteam Lead Content Form - spec
 
 This document is the source for building a Google Form that collects website
-copy from each sub-team lead. Hand it to Gemini in Google Forms and ask it to
+copy from each subteam lead. Hand it to Gemini in Google Forms and ask it to
 build the form from this spec.
 
 **Why this exists.** Most of the technical copy on the UBC Rover site is
@@ -13,13 +13,13 @@ answers can be pasted straight into `lib/content.ts` with no rewriting.
 
 ## Instructions for the form builder
 
-- **Title:** `UBC Rover — Sub-team Content Submission`
-- **Description:** _Every sub-team lead fills this out once. Your answers go
+- **Title:** `UBC Rover - Subteam Content Submission`
+- **Description:** _Every subteam lead fills this out once. Your answers go
   directly onto the public website, so write them the way you want them read.
   Budget 30–45 minutes. You can save and return._
 - **Collect email addresses:** on.
 - **One response per lead**, and allow response editing after submission.
-- **Use sections with branching.** After the sub-team question, route each lead
+- **Use sections with branching.** After the subteam question, route each lead
   to only the subsystem sections their team owns (mapping in
   [Section 3](#section-3--what-youve-built-the-long-one)). Do not show a lead
   sections for hardware they do not own.
@@ -27,45 +27,45 @@ answers can be pasted straight into `lib/content.ts` with no rewriting.
   _optional_. Section 4 is optional.
 - Long-answer questions should be **Paragraph** type; short factual ones
   **Short answer**. Where a question expects a number with units, say so in the
-  help text — a bare number is not usable.
+  help text - a bare number is not usable.
 
 ---
 
-## Section 1 — Who is filling this in
+## Section 1 - Who is filling this in
 
-| Question                                    | Type            | Notes                                                                                                             |
-| ------------------------------------------- | --------------- | ----------------------------------------------------------------------------------------------------------------- |
-| Your name                                   | Short answer    | Required                                                                                                          |
-| Your role                                   | Short answer    | e.g. "Chassis Lead". Required                                                                                     |
-| Which sub-team are you filling this in for? | Dropdown        | Chassis / Arm / Rover Lab / Electrical / Software / Science / Business. **Required — this drives the branching.** |
-| LinkedIn URL                                | Short answer    | Optional. Only added to the site if you provide it                                                                |
-| Do you have a portrait photo we can use?    | Multiple choice | Yes, attached below / Yes, I'll send it separately / No                                                           |
-| Portrait photo                              | File upload     | Optional. Square crop preferred, at least 800×800                                                                 |
-
----
-
-## Section 2 — What your sub-team does
-
-This replaces the sub-team description on `/subteams` and the summary on your
-sub-team's own page. Two to four sentences. Written for a first-year student who
-does not know what your sub-team is, not for a judge.
-
-| Question                                       | Type            | Notes                                                                                 |
-| ---------------------------------------------- | --------------- | ------------------------------------------------------------------------------------- |
-| In 2–4 sentences, what does your sub-team do?  | Paragraph       | Required. Plain language. Avoid acronyms on first use                                 |
-| List 4 things your sub-team is responsible for | Short answer ×4 | Required. 2–4 words each, e.g. "Motor control", "Waterproofing". These render as tags |
+| Question                                   | Type            | Notes                                                                                                             |
+| ------------------------------------------ | --------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Your name                                  | Short answer    | Required                                                                                                          |
+| Your role                                  | Short answer    | e.g. "Chassis Lead". Required                                                                                     |
+| Which subteam are you filling this in for? | Dropdown        | Chassis / Arm / Rover Lab / Electrical / Software / Science / Business. **Required - this drives the branching.** |
+| LinkedIn URL                               | Short answer    | Optional. Only added to the site if you provide it                                                                |
+| Do you have a portrait photo we can use?   | Multiple choice | Yes, attached below / Yes, I'll send it separately / No                                                           |
+| Portrait photo                             | File upload     | Optional. Square crop preferred, at least 800×800                                                                 |
 
 ---
 
-## Section 3 — What you've built (the long one)
+## Section 2 - What your subteam does
+
+This replaces the subteam description on `/subteams` and the summary on your
+subteam's own page. Two to four sentences. Written for a first-year student who
+does not know what your subteam is, not for a judge.
+
+| Question                                      | Type            | Notes                                                                                 |
+| --------------------------------------------- | --------------- | ------------------------------------------------------------------------------------- |
+| In 2–4 sentences, what does your subteam do?  | Paragraph       | Required. Plain language. Avoid acronyms on first use                                 |
+| List 4 things your subteam is responsible for | Short answer ×4 | Required. 2–4 words each, e.g. "Motor control", "Waterproofing". These render as tags |
+
+---
+
+## Section 3 - What you've built (the long one)
 
 **This is the most important part of the form, and the longest.** It becomes the
-technical breakdown on your sub-team's page: what the system is, how it works,
+technical breakdown on your subteam's page: what the system is, how it works,
 and its specifications.
 
-Ask these questions **once per subsystem** the lead owns. Route by sub-team:
+Ask these questions **once per subsystem** the lead owns. Route by subteam:
 
-| Sub-team   | Subsystem sections to show          |
+| Subteam    | Subsystem sections to show          |
 | ---------- | ----------------------------------- |
 | Chassis    | Chassis, Drivetrain                 |
 | Arm        | Robotic Arm, End Effector           |
@@ -77,23 +77,23 @@ Ask these questions **once per subsystem** the lead owns. Route by sub-team:
 
 ### Questions to repeat for each subsystem
 
-Prefix every question with the subsystem name, e.g. **"Drivetrain — main job"**,
+Prefix every question with the subsystem name, e.g. **"Drivetrain - main job"**,
 so answers are unambiguous when exported.
 
 | Question                                                | Type         | Guidance to put in help text                                                                                                                                                                                         |
 | ------------------------------------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Main job — in one sentence, what is this subsystem for? | Short answer | Required. One line, plain language. Example: _"Turns power into motion across loose, broken and steep ground."_                                                                                                      |
-| Summary — 2–3 sentences on what it is                   | Paragraph    | Required. What it is and why it matters to the rover as a whole                                                                                                                                                      |
-| How it works — the design and the reasoning             | Paragraph    | **Required. Aim for 120–200 words.** Describe the architecture and, importantly, _why_ it is built that way. What were the constraints? What did you choose between?                                                 |
-| What it has to survive                                  | Paragraph    | **Required. Aim for 80–150 words.** What this subsystem has to tolerate at URC and CIRC — terrain, temperature, dust, water, vibration, power limits. What has actually failed before, and what changed as a result? |
+| Main job - in one sentence, what is this subsystem for? | Short answer | Required. One line, plain language. Example: _"Turns power into motion across loose, broken and steep ground."_                                                                                                      |
+| Summary - 2–3 sentences on what it is                   | Paragraph    | Required. What it is and why it matters to the rover as a whole                                                                                                                                                      |
+| How it works - the design and the reasoning             | Paragraph    | **Required. Aim for 120–200 words.** Describe the architecture and, importantly, _why_ it is built that way. What were the constraints? What did you choose between?                                                 |
+| What it has to survive                                  | Paragraph    | **Required. Aim for 80–150 words.** What this subsystem has to tolerate at URC and CIRC - terrain, temperature, dust, water, vibration, power limits. What has actually failed before, and what changed as a result? |
 | Photo of this subsystem                                 | File upload  | Optional but strongly encouraged. A clear shot of the real hardware                                                                                                                                                  |
 | Caption for that photo                                  | Short answer | Optional. One line describing what is shown                                                                                                                                                                          |
 
-### Tech specs — per subsystem
+### Tech specs - per subsystem
 
 Each subsystem has its own spec list. Ask each as a **Short answer**, and put
 _"include units"_ in the help text. If a value genuinely does not apply or is not
-measured, answer `N/A` rather than leaving it blank — a blank reads as forgotten.
+measured, answer `N/A` rather than leaving it blank - a blank reads as forgotten.
 
 | Subsystem               | Spec fields to ask for                                                                                          |
 | ----------------------- | --------------------------------------------------------------------------------------------------------------- |
@@ -111,18 +111,18 @@ measured, answer `N/A` rather than leaving it blank — a blank reads as forgott
 
 ---
 
-## Section 4 — Open roles _(optional)_
+## Section 4 - Open roles _(optional)_
 
 Feeds the "What you'd be working on" section of `/join`. Skip if you are not
 recruiting right now.
 
 Repeat 1–3 times:
 
-| Question                                  | Type         | Notes                                                                                                                                                                                          |
-| ----------------------------------------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Role title                                | Short answer | e.g. "Suspension design"                                                                                                                                                                       |
-| What would this person actually be doing? | Paragraph    | Required if a title is given. Describe the work a new member would be handed in their first term. **Describe the job, not the sub-team** — "what our sub-team does" already lives in Section 2 |
-| Useful skills                             | Short answer | Comma-separated, 2–4 items. Things that help, not hard requirements                                                                                                                            |
+| Question                                  | Type         | Notes                                                                                                                                                                                        |
+| ----------------------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Role title                                | Short answer | e.g. "Suspension design"                                                                                                                                                                     |
+| What would this person actually be doing? | Paragraph    | Required if a title is given. Describe the work a new member would be handed in their first term. **Describe the job, not the subteam** - "what our subteam does" already lives in Section 2 |
+| Useful skills                             | Short answer | Comma-separated, 2–4 items. Things that help, not hard requirements                                                                                                                          |
 
 ---
 
@@ -135,7 +135,7 @@ whether the answers are usable:
   the site as prose.
 - **Prefer specifics over adjectives.** "Six wheels on a rocker-bogie, 20 cm
   diameter" beats "a robust and advanced mobility system".
-- **Say what is not done yet.** If a subsystem is mid-redesign, say so — the site
+- **Say what is not done yet.** If a subsystem is mid-redesign, say so - the site
   can carry that honestly. Do not describe an aspiration as if it exists.
 - **Numbers need units**, and should be the real measured value, not a target.
 - **Do not write marketing copy.** No "cutting-edge", "state-of-the-art",
@@ -146,19 +146,19 @@ whether the answers are usable:
 
 ## Where each answer lands
 
-For whoever transfers the responses into the codebase — everything goes into
+For whoever transfers the responses into the codebase - everything goes into
 `lib/content.ts`:
 
 | Form section                        | Destination                                      |
 | ----------------------------------- | ------------------------------------------------ |
-| 1 — name, role, LinkedIn, photo     | `PEOPLE`, plus `SUBTEAM_LEAD_NAMES`              |
-| 2 — what the sub-team does          | `SUBTEAMS[].blurb` and `SUBTEAMS[].capabilities` |
-| 3 — main job / summary              | `SUBSYSTEMS[].role` and `SUBSYSTEMS[].summary`   |
-| 3 — how it works / what it survives | the two entries in `SUBSYSTEMS[].detail`         |
-| 3 — tech specs                      | `SUBSYSTEMS[].specs`                             |
-| 3 — photo and caption               | `SUBSYSTEMS[].image` and `.imageCaption`         |
-| 4 — open roles                      | `SUBTEAMS[].openRoles`                           |
+| 1 - name, role, LinkedIn, photo     | `PEOPLE`, plus `SUBTEAM_LEAD_NAMES`              |
+| 2 - what the subteam does           | `SUBTEAMS[].blurb` and `SUBTEAMS[].capabilities` |
+| 3 - main job / summary              | `SUBSYSTEMS[].role` and `SUBSYSTEMS[].summary`   |
+| 3 - how it works / what it survives | the two entries in `SUBSYSTEMS[].detail`         |
+| 3 - tech specs                      | `SUBSYSTEMS[].specs`                             |
+| 3 - photo and caption               | `SUBSYSTEMS[].image` and `.imageCaption`         |
+| 4 - open roles                      | `SUBTEAMS[].openRoles`                           |
 
-Photos go in `public/media/` — subsystem shots under `team/`, portraits under
+Photos go in `public/media/` - subsystem shots under `team/`, portraits under
 `people/`. Anything still marked `PLACEHOLDER` renders in amber on the live site,
 so it is easy to see what is still outstanding.

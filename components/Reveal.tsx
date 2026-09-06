@@ -6,15 +6,15 @@ import { useEffect, useRef, type ElementType, type ReactNode } from "react";
  * Scroll-reveal primitive.
  *
  * Perf notes — why this is built the way it is:
- *  - ONE IntersectionObserver is shared by every <Reveal> on the page. Creating
+ * - ONE IntersectionObserver is shared by every <Reveal> on the page. Creating
  *    an observer per element is the usual cause of jank on long pages; a single
  *    observer keeps the work O(1) per scroll frame regardless of element count.
- *  - Elements unobserve themselves the moment they reveal, so the observer set
+ * - Elements unobserve themselves the moment they reveal, so the observer set
  *    shrinks as you scroll instead of growing.
- *  - The animation itself is pure CSS (see `[data-reveal]` in globals.css) and
+ * - The animation itself is pure CSS (see `[data-reveal]` in globals.css) and
  *    only touches opacity/transform, so it runs on the compositor. React does
  *    no per-frame work at all.
- *  - No state, so revealing never triggers a re-render.
+ * - No state, so revealing never triggers a re-render.
  */
 
 let observer: IntersectionObserver | null = null;

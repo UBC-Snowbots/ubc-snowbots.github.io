@@ -17,7 +17,7 @@ export default function TeamBanner({
   /**
    * `inline` puts the band inside the page container beside other content
    * instead of running edge to edge: it stretches to its grid row and gains a
-   * full border rather than just top and bottom. Used where a sub-team has a
+   * full border rather than just top and bottom. Used where a subteam has a
    * single lead, so the header and that one card sit side by side rather than
    * leaving a near-empty row under a full-width band.
    */

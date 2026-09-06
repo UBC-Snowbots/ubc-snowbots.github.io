@@ -144,7 +144,7 @@ export default function SponsorLogo({ logo, blurb }: { logo: Sponsor; blurb?: st
         type="button"
         aria-expanded={open}
         aria-controls={open ? panelId : undefined}
-        aria-label={`${logo.name} — what their support built`}
+        aria-label={`${logo.name} - what their support built`}
         className="block w-full cursor-pointer text-left transition-transform duration-200 hover:-translate-y-0.5"
         onPointerEnter={(e) => e.pointerType === "mouse" && setOpen(true)}
         onPointerLeave={(e) => e.pointerType === "mouse" && setOpen(false)}

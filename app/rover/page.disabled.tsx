@@ -7,7 +7,7 @@
  * WHY IT IS OFF
  * The subsystem write-ups that used to live here (chassis, drivetrain, arm, end
  * effector, rover lab, power, comms, control base) were moved into each
- * sub-team's own "What we do" section on /subteams/<slug>, next to the people
+ * subteam's own "What we do" section on /subteams/<slug>, next to the people
  * who actually build them. Nothing was lost in the move.
  *
  * WHAT THIS PAGE SHOULD BECOME
@@ -25,12 +25,12 @@
  *     by scroll progress rather than a timeline.
  *
  * THINGS TO GET RIGHT WHEN IT IS BUILT
- *  - Keep it off the critical path: the model must lazy-load, and the page has
+ * - Keep it off the critical path: the model must lazy-load, and the page has
  *    to render its text content before (and without) WebGL. A CAD export is
  *    easily tens of MB.
- *  - Honour `prefers-reduced-motion`: fall back to a static exploded still plus
+ * - Honour `prefers-reduced-motion`: fall back to a static exploded still plus
  *    the same subsystem copy.
- *  - Provide a non-WebGL fallback — this is a recruitment site, and a blank
+ * - Provide a non-WebGL fallback — this is a recruitment site, and a blank
  *    canvas on an old laptop is worse than a photo.
  *
  * TO RE-ENABLE

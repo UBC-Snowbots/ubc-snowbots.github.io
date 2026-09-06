@@ -28,7 +28,7 @@ export default function Footer() {
       heading: "Follow",
       links: [
         ...SOCIALS.map((s) => ({
-          label: `${s.label} — ${s.handle}`,
+          label: `${s.label} - ${s.handle}`,
           href: s.href,
           external: true,
         })),

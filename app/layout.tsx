@@ -41,7 +41,7 @@ const jetbrains = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: `${SITE.name} — ${SITE.tagline}`,
+    default: `${SITE.name} - ${SITE.tagline}`,
     template: `%s | ${SITE.name}`,
   },
   description: `${SITE.blurb} A student team at the University of British Columbia competing in the University Rover Challenge and the Canadian International Rover Challenge.`,
@@ -58,14 +58,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: SITE.name,
-    title: `${SITE.name} — ${SITE.tagline}`,
+    title: `${SITE.name} - ${SITE.tagline}`,
     description: SITE.blurb,
     url: SITE.url,
     images: [{ url: "/media/rover-mog.jpg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE.name} — ${SITE.tagline}`,
+    title: `${SITE.name} - ${SITE.tagline}`,
     description: SITE.blurb,
   },
 };

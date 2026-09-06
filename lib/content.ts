@@ -57,7 +57,7 @@ export const applyHref = (): string => APPLY.formUrl ?? APPLY.fallbackHref;
 export const JOINING_PACKAGE = {
   url: null as string | null,
   label: "Joining Package",
-  pending: "Joining Package — coming soon",
+  pending: "Joining Package - coming soon",
 } as const;
 
 /* -------------------------------------------------------------------------- */
@@ -183,7 +183,7 @@ export type Subsystem = {
    * before the files are converted and dropped in.
    */
   expects?: string[];
-  /** Which sub-team owns this subsystem. */
+  /** Which subteam owns this subsystem. */
   ownedBy: string;
 };
 
@@ -292,8 +292,8 @@ export const SUBSYSTEMS: Subsystem[] = [
     summary:
       "The one meter long arm goes from our moving chassis to our high precision end effector; mounted on a differential. The six degrees of freedom allows us to impact and perform every task as needed.",
     detail: [
-      "The primary design focus was precision through survival — specifically within our competitions we have to carry heavy items and deal with vibrations. Our main goals for design are to be both fail-safe and fail-proof. The way to do that, we found is through simplifying our designs and building them for both assembly and debugging.",
-      "The desert is dusty and warm and sometimes wet. The arm needs to survive all of that. It also needs to function as protection and mounting for wires, cameras — all in the hot desert sun. But all while surviving we also need to be at high precision at our end effector.",
+      "The primary design focus was precision through survival - specifically within our competitions we have to carry heavy items and deal with vibrations. Our main goals for design are to be both fail-safe and fail-proof. The way to do that, we found is through simplifying our designs and building them for both assembly and debugging.",
+      "The desert is dusty and warm and sometimes wet. The arm needs to survive all of that. It also needs to function as protection and mounting for wires, cameras - all in the hot desert sun. But all while surviving we also need to be at high precision at our end effector.",
     ],
     specs: [
       { label: "Length", value: "1 m" },
@@ -396,7 +396,7 @@ export const SUBSYSTEMS: Subsystem[] = [
     summary:
       "The Autonomy subsystem gives the rover the ability to independently traverse unknown terrain and perform manipulation tasks with the robotic arm. It combines Visual SLAM (VSLAM) for localization and path planning with computer vision for object and marker detection, allowing the rover to complete GNSS-only navigation, AR tag post-finding, and object-retrieval missions autonomously.",
     detail: [
-      "We chose a VSLAM based approach over relying solely on GNSS because GPS accuracy alone isn't sufficient for precise final-approach navigation to posts and objects, especially in terrain with signal degradation. VSLAM lets the rover build a local map in real time and correct its position using visual features. For the arm, our only supported autonomy stack involves RL — which is still in development. Using behavior trees and excluding an observation module, we trained a hierarchical reinforcement learning model to dynamically press keys on a keyboard in simulation. Overall, we prioritized modularity between the navigation stack and the manipulation stack so each can be tested and tuned independently before integration.",
+      "We chose a VSLAM based approach over relying solely on GNSS because GPS accuracy alone isn't sufficient for precise final-approach navigation to posts and objects, especially in terrain with signal degradation. VSLAM lets the rover build a local map in real time and correct its position using visual features. For the arm, our only supported autonomy stack involves RL - which is still in development. Using behavior trees and excluding an observation module, we trained a hierarchical reinforcement learning model to dynamically press keys on a keyboard in simulation. Overall, we prioritized modularity between the navigation stack and the manipulation stack so each can be tested and tuned independently before integration.",
       "The subsystem has to operate over unstructured, uneven outdoor Mars-like terrain without reliable GPS lock at every point along the course, using onboard cameras as the primary sensing source. It must reliably detect AR tags, and small ground objects under variable outdoor lighting. The arm's vision-guided keypress task demands sub-centimeter positioning accuracy despite vibration and imperfect stopping position from the drive system.",
     ],
     specs: [
@@ -407,7 +407,7 @@ export const SUBSYSTEMS: Subsystem[] = [
       },
     ],
     photoSlot: "SOFTWARE-02",
-    expects: ["Software RL.mp4 — video"],
+    expects: ["Software RL.mp4 - video"],
     ownedBy: "software",
   },
   {
@@ -443,7 +443,7 @@ export const SUBSYSTEMS: Subsystem[] = [
       "While our on-board computers handle more general tasks, our firmware is built for specific applications. It is the final layer of code that will translate a raw voltage into a temperature reading, or a software command into motor movement.",
     detail: [
       "Firmware is a joint team between Electrical and Software.",
-      "PLACEHOLDER — operating conditions not yet supplied for this subsystem.",
+      "PLACEHOLDER - operating conditions not yet supplied for this subsystem.",
     ],
     specs: [
       { label: "Boards running custom firmware", value: "8" },
@@ -462,7 +462,7 @@ export const SUBSYSTEMS: Subsystem[] = [
     summary:
       "The power distribution system takes the battery's input voltage and regulates it into our desired output voltages. The main loads we drive are the motors, the robotic arm and the science module. These all have specific power needs that our power distribution system is there to support.",
     detail: [
-      "Due to the nature of our competitions, we prioritise efficiency when interchanging the many loads our rover hosts. Our system makes this possible with its durable XT30 connectors and fuse holders. This way, we simply need to plug in and fuse the required power lines for a specific task — it is a flexible and intuitive design.",
+      "Due to the nature of our competitions, we prioritise efficiency when interchanging the many loads our rover hosts. Our system makes this possible with its durable XT30 connectors and fuse holders. This way, we simply need to plug in and fuse the required power lines for a specific task - it is a flexible and intuitive design.",
       "Our power distribution boards are built to withstand 90 A of continuous current. It can supply power on four different voltage rails, totalling 22 individual channels. All of this operates under 1000 W+ loads in high heat conditions to keep the rover's heart beating.",
     ],
     specs: [
@@ -513,7 +513,7 @@ export const SUBSYSTEMS: Subsystem[] = [
     summary:
       "The motor drivers receive software communications and send commands and power to the motors. They also deal with feedback, allowing the control base to access position, velocity and acceleration data to better understand the unique Mars-like terrains.",
     detail: [
-      "As the wheels and top plate of the chassis frequently need to be removed, we decided to use aviator connectors to attach the drivers to the motors. These are durable and easy to use, so assembly can happen in a timely manner — which is extremely important in a competition environment. Wiring therefore plays an important and often overlooked role in the drivetrain system's success.",
+      "As the wheels and top plate of the chassis frequently need to be removed, we decided to use aviator connectors to attach the drivers to the motors. These are durable and easy to use, so assembly can happen in a timely manner - which is extremely important in a competition environment. Wiring therefore plays an important and often overlooked role in the drivetrain system's success.",
       "The motor drivers can provide over 1000 W of power to our drivetrain. This allows masterful maneuvering of rocky terrain, loose gravel and steep cliffs. This is all operating with over 40 kg of weight from the battery, chassis and arm module.",
     ],
     specs: [
@@ -660,19 +660,19 @@ export const SUBSYSTEMS: Subsystem[] = [
 export const CAD = {
   modelUrl: null as string | null,
   downloadUrl: null as string | null,
-  note: "PLACEHOLDER — interactive CAD model of the current rover.",
+  note: "PLACEHOLDER - interactive CAD model of the current rover.",
 } as const;
 
 /* -------------------------------------------------------------------------- */
-/* Sub-teams                                                                   */
+/* Subteams                                                                   */
 /* -------------------------------------------------------------------------- */
 
 /**
  * Group photo used behind every team banner on /team.
  *
- * TODO(team): this one shot stands in for all of them. When each sub-team has
+ * TODO(team): this one shot stands in for all of them. When each subteam has
  * its own group photo, drop it in public/media/team/ and set `photo` on that
- * sub-team in SUBTEAMS below — the banner picks it up automatically.
+ * subteam in SUBTEAMS below — the banner picks it up automatically.
  */
 export const TEAM_PHOTO = "/media/team/team-photo.jpg";
 
@@ -682,7 +682,7 @@ export const TEAM_INTRO =
 
 export type OpenRole = {
   title: string;
-  /** What you would actually be doing — NOT what the sub-team does. */
+  /** What you would actually be doing — NOT what the subteam does. */
   doing: string;
   skills: string[];
 };
@@ -691,9 +691,9 @@ export type Subteam = {
   slug: string;
   name: string;
   discipline: string;
-  /** Group photo for this sub-team's banner. Falls back to TEAM_PHOTO. */
+  /** Group photo for this subteam's banner. Falls back to TEAM_PHOTO. */
   photo?: string;
-  /** TODO(team): sub-team leads to rewrite. Carried over from the old site. */
+  /** TODO(team): subteam leads to rewrite. Carried over from the old site. */
   blurb: string;
   image: string;
   capabilities: string[];
@@ -703,13 +703,13 @@ export type Subteam = {
 
 const placeholderRoles = (name: string): OpenRole[] => [
   {
-    title: "PLACEHOLDER — Role One",
-    doing: `PLACEHOLDER — what a new member on ${name} would actually be handed in their first term. Describe the work, not the sub-team.`,
+    title: "PLACEHOLDER - Role One",
+    doing: `PLACEHOLDER - what a new member on ${name} would actually be handed in their first term. Describe the work, not the subteam.`,
     skills: ["PLACEHOLDER", "PLACEHOLDER"],
   },
   {
-    title: "PLACEHOLDER — Role Two",
-    doing: "PLACEHOLDER — a second role, with the concrete deliverable attached to it.",
+    title: "PLACEHOLDER - Role Two",
+    doing: "PLACEHOLDER - a second role, with the concrete deliverable attached to it.",
     skills: ["PLACEHOLDER", "PLACEHOLDER"],
   },
 ];
@@ -766,7 +766,7 @@ export const SUBTEAMS: Subteam[] = [
     name: "Electrical",
     discipline: "Electrical",
     blurb:
-      "Here in the Electrical team, we do everything from high-level design and PCB manufacturing to testing and integration. We put in the hours to ensure the safety of the rover and everyone around it. And in a high stakes competition environment, when the rover loses its heartbeat, Electrical is ready — multimeters in hand — to bring it back to life.",
+      "Here in the Electrical team, we do everything from high-level design and PCB manufacturing to testing and integration. We put in the hours to ensure the safety of the rover and everyone around it. And in a high stakes competition environment, when the rover loses its heartbeat, Electrical is ready - multimeters in hand - to bring it back to life.",
     image: "/media/team/electrical.jpg",
     capabilities: [
       "Motor control",
@@ -821,13 +821,13 @@ export const SUBTEAMS: Subteam[] = [
 export const getSubteam = (slug: string) => SUBTEAMS.find((t) => t.slug === slug);
 
 /**
- * The leads for a given sub-team, derived from LEADS[].role (e.g. "Chassis
+ * The leads for a given subteam, derived from LEADS[].role (e.g. "Chassis
  * Lead"). Derived rather than duplicated so a role change in one place cannot
  * leave the two lists disagreeing. Business currently has no lead listed on the
  * source site, so it correctly returns an empty array.
  */
 /**
- * The rover subsystems a given sub-team owns. These render inside the sub-team's
+ * The rover subsystems a given subteam owns. These render inside the subteam's
  * own "What we do" section — there is no separate rover page for them to live
  * on. Science and Business own no hardware subsystem and correctly return [].
  */
@@ -849,7 +849,7 @@ export type LeadLink = { kind: "github" | "linkedin" | "website"; href: string }
  * duplicating photos and links, which then drift apart. Andres and Jennifer
  * used to hold two roles each as well — Andres captain + chassis, Jennifer
  * rover lab + science — and both reduced to one when Eugene and Danyaal took
- * those sub-teams, which is exactly the churn this shape absorbs without
+ * those subteams, which is exactly the churn this shape absorbs without
  * touching a photo.
  *
  * `image` is optional — where there is no portrait the card renders initials
@@ -920,7 +920,7 @@ const person = (name: string): Person => PEOPLE.find((p) => p.name === name) ?? 
 export const CAPTAIN_NAMES = ["Andres Fleet", "Rowan Zawadzki"] as const;
 
 /**
- * Leads per sub-team.
+ * Leads per subteam.
  *
  * TODO(team): Business has no lead on record. Its band shows a card-shaped
  * placeholder until someone supplies a name — an obvious gap beats a stale one.
@@ -940,7 +940,7 @@ export const CAPTAINS = (): Person[] => CAPTAIN_NAMES.map(person);
 export const leadsForSubteam = (slug: string): Person[] =>
   (SUBTEAM_LEAD_NAMES[slug] ?? []).map(person);
 
-/** Label shown under a name in a sub-team band, e.g. "Chassis Lead". */
+/** Label shown under a name in a subteam band, e.g. "Chassis Lead". */
 export const leadTitleFor = (slug: string): string => {
   const team = getSubteam(slug);
   return team ? `${team.name} Lead` : "Lead";
@@ -965,7 +965,7 @@ export const COMPETITIONS: Competition[] = [
   {
     abbr: "URC",
     name: "University Rover Challenge",
-    location: "Mars Desert Research Station — Hanksville, Utah",
+    location: "Mars Desert Research Station - Hanksville, Utah",
     blurb:
       "The world's premier robotics competition, held at the Mars Desert Research Station in Utah. Teams from around the globe push their rovers to the limit in extreme heat and difficult terrain.",
     image: "/media/rover-mog.jpg",
@@ -980,7 +980,7 @@ export const COMPETITIONS: Competition[] = [
   {
     abbr: "CIRC",
     name: "Canadian International Rover Challenge",
-    location: "The badlands — Drumheller, Alberta",
+    location: "The badlands - Drumheller, Alberta",
     blurb:
       "Held in the badlands of Drumheller, Alberta. We compete in tasks simulating a disaster at an early Martian colony, requiring search and rescue, equipment servicing, and night operations.",
     image: "/media/team/chassis.jpg",
@@ -1164,16 +1164,16 @@ export const INQUIRY_TYPES = [
 
 /**
  * A nav entry. `menu` turns it into a drop-down trigger rather than a link:
- * the sub-teams no longer have an index page, so "Sub-Teams" is a heading for
+ * the subteams no longer have an index page, so "Subteams" is a heading for
  * seven destinations rather than a destination itself.
  */
 /**
  * A nav entry. `menu` turns it into a drop-down trigger rather than a link:
- * the sub-teams no longer have an index page, so "Sub-Teams" is a heading for
+ * the subteams no longer have an index page, so "Subteams" is a heading for
  * seven destinations rather than a destination itself.
  *
  * The drop-down's third column is not stored here — it is derived from
- * SUBSYSTEMS via subsystemsForSubteam(), so a sub-team gaining or losing a
+ * SUBSYSTEMS via subsystemsForSubteam(), so a subteam gaining or losing a
  * subsystem updates the menu with nothing to keep in sync.
  */
 export type NavItem = {
@@ -1188,10 +1188,10 @@ export type NavItem = {
 
 export const NAV: NavItem[] = [
   {
-    label: "Sub-Teams",
+    label: "Subteams",
     menu: {
       description:
-        "Seven sub-teams build one rover. Each owns a part of it end to end — designing it, making it, and standing behind it at competition.",
+        "Seven subteams build one rover. Each one owns its part of the machine from the first sketch to the last bolt, and then stands behind it at competition.",
       items: SUBTEAMS.map((t) => ({
         label: t.name,
         slug: t.slug,
@@ -1201,18 +1201,18 @@ export const NAV: NavItem[] = [
   },
   { label: "Competition", href: "/compete" },
   { label: "Our Team", href: "/team" },
-  { label: "Contact", href: "/contact" },
+  { label: "Sponsors", href: "/sponsors" },
 ];
 
 export const NAV_EMPHASIS: { label: string; href: string }[] = [
-  { label: "Sponsors", href: "/sponsors" },
+  { label: "Contact", href: "/contact" },
   { label: "Join Us", href: "/join" },
 ];
 
 /**
  * Every nav DESTINATION in order — used by the footer and the mobile panel.
- * Sub-Teams is not among them: it is a group heading with no page of its own,
- * so it expands to its seven sub-teams rather than appearing as a dead link.
+ * Subteams is not among them: it is a group heading with no page of its own,
+ * so it expands to its seven subteams rather than appearing as a dead link.
  */
 export const ALL_NAV: { label: string; href: string }[] = [
   ...NAV.flatMap((n) =>

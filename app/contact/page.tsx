@@ -6,7 +6,7 @@ import { FORMSPREE_ENDPOINT, INQUIRY_TYPES, SITE, SOCIALS } from "@/lib/content"
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: `Get in touch with UBC Rover — ${SITE.email}. Sponsorship, recruitment, media and partnership enquiries welcome.`,
+  description: `Get in touch with UBC Rover - ${SITE.email}. Sponsorship, recruitment, media and partnership enquiries welcome.`,
 };
 
 const fieldClass =
@@ -19,7 +19,7 @@ export default function ContactPage() {
     <>
       <PageHero
         title="Get in touch"
-        lede="Sponsorship, recruitment, media or partnership — we would like to hear from you."
+        lede="Sponsorship, recruitment, media or partnership - we would like to hear from you."
       />
 
       <section className="mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
@@ -168,7 +168,7 @@ export default function ContactPage() {
               <StripeRule className="mt-10" />
 
               <p className="text-chalk-dim/70 mt-10 text-sm leading-relaxed">
-                We are a student team, so replies land between lectures and lab time — but
+                We are a student team, so replies land between lectures and lab time - but
                 every enquiry gets one.
               </p>
             </div>

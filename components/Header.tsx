@@ -33,7 +33,7 @@ export default function Header() {
 
   /** Which drop-down is open, by label. */
   const [menu, setMenu] = useState<string | null>(null);
-  /** Which sub-team the third column is showing. Defaults to the first. */
+  /** Which subteam the third column is showing. Defaults to the first. */
   const [hovered, setHovered] = useState<string>(SUBTEAMS[0].slug);
   /**
    * Closing is delayed so the pointer can cross the gap between the trigger and
@@ -157,7 +157,7 @@ export default function Header() {
           className={`relative transition-colors duration-500 ${
             scrolled || open || menu
               ? // Fully solid once scrolling starts, and whenever the drop-down
-                // is open — transparent, the panel sat straight on the hero
+                // is open - transparent, the panel sat straight on the hero
                 // photo and its labels were unreadable. A menu has to bring its
                 // own ground.
                 "bg-navy-950 border-b border-white/10"
@@ -175,12 +175,12 @@ export default function Header() {
               className="from-navy-950/92 via-navy-950/55 pointer-events-none absolute inset-x-0 top-0 -z-10 h-36 bg-gradient-to-b to-transparent"
             />
           ) : null}
-          <div className="mx-auto flex h-16 max-w-[1800px] items-center justify-between px-4 sm:h-20 sm:px-5">
+          <div className="mx-auto grid h-16 max-w-[1800px] grid-cols-[1fr_auto_1fr] items-center px-4 sm:h-20 sm:px-5">
             <Link
               href="/"
               onClick={() => setOpen(false)}
               className="group flex items-center gap-3"
-              aria-label="UBC Rover — home"
+              aria-label="UBC Rover - home"
             >
               {/* The white-on-transparent mark — the other export in the media
                 folder is dark artwork and disappears against the navy bar. */}
@@ -196,23 +196,30 @@ export default function Header() {
               </span>
             </Link>
 
-            {/* Desktop nav. Order is fixed in lib/content.ts: the five
-                informational pages, then Sponsors and Join Us emphasised as the
-                two calls to action. */}
+            {/* Centred nav. The bar is a three-column grid with the logo and
+                the right-hand group as the outer tracks, so this group is
+                centred on the VIEWPORT rather than on whatever space the logo
+                happens to leave. */}
             <nav
               aria-label="Primary"
-              className="hidden items-center gap-8 lg:flex"
+              className="hidden items-center justify-center gap-8 lg:flex"
               onPointerLeave={scheduleClose}
             >
               {NAV.map((item) => {
                 const active = item.href
                   ? isActive(item.href)
                   : !!item.menu?.items.some((i) => isActive(i.href));
-                // No underline. The current page is marked by weight of colour
-                // alone — a sliding amber rule under every label was a second
-                // moving part competing with the drop-down for attention.
-                const cls = `hover:text-chalk py-1 font-mono text-[11px] tracking-[0.16em] uppercase transition-colors duration-200 ${
-                  active ? "text-chalk" : "text-chalk-dim/90"
+                // No underline: the current page is marked by colour alone, and
+                // a sliding amber rule under every label was a second moving
+                // part competing with the drop-down.
+                //
+                // Labels start at FULL strength and dim on hover, rather than
+                // starting grey and brightening. Every label is a real
+                // destination, so none should look half-disabled while the
+                // pointer is elsewhere; dimming then reads as "you are touching
+                // this one" without introducing another colour.
+                const cls = `py-1 font-mono text-[11px] tracking-[0.16em] uppercase transition-colors duration-200 ${
+                  active ? "text-amber-500" : "text-chalk hover:text-chalk-dim/55"
                 }`;
 
                 // A group heading with no page of its own is a button, not a
@@ -250,14 +257,22 @@ export default function Header() {
                   </Link>
                 );
               })}
+            </nav>
 
+            {/* Right-hand group, in the grid's trailing track. */}
+            <nav
+              aria-label="Secondary"
+              className="hidden items-center justify-end gap-8 lg:flex"
+            >
               {NAV_EMPHASIS.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
                   aria-current={isActive(item.href) ? "page" : undefined}
-                  className={`py-1 font-mono text-[11px] font-bold tracking-[0.16em] uppercase transition-colors duration-200 hover:text-amber-500 ${
-                    isActive(item.href) ? "text-amber-500" : "text-chalk"
+                  className={`py-1 font-mono text-[11px] font-bold tracking-[0.16em] uppercase transition-colors duration-200 ${
+                    isActive(item.href)
+                      ? "text-amber-500"
+                      : "text-chalk hover:text-chalk-dim/60"
                   }`}
                 >
                   {item.label}
@@ -319,7 +334,7 @@ export default function Header() {
               }`}
             >
               <div className="min-h-0">
-                <div className="mx-auto grid max-w-[1800px] grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)_minmax(0,1fr)] gap-14 px-4 pt-7 pb-12 sm:px-5">
+                <div className="mx-auto grid max-w-[1800px] grid-cols-3 gap-12 px-4 pt-7 pb-14 sm:px-5">
                   <div>
                     <p className="text-chalk-dim/50 font-mono text-[10px] tracking-[0.22em] uppercase">
                       {item.label}
@@ -360,7 +375,9 @@ export default function Header() {
                               text={sub.label}
                               active={menu === item.label && hovered === sub.slug}
                               className={`text-base transition-colors ${
-                                hovered === sub.slug ? "text-amber-500" : "text-chalk"
+                                hovered === sub.slug
+                                  ? "text-amber-500"
+                                  : "text-chalk hover:text-chalk-dim/60"
                               }`}
                             />
                           </Link>
@@ -369,8 +386,8 @@ export default function Header() {
                     </ul>
                   </div>
 
-                  {/* Parts of whichever sub-team is under the pointer. Each one
-                      is an anchor into that sub-team's page, so the section is
+                  {/* Parts of whichever subteam is under the pointer. Each one
+                      is an anchor into that subteam's page, so the section is
                       already in view on arrival rather than needing a scroll. */}
                   <div>
                     <DecodeText

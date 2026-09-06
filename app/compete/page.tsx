@@ -65,7 +65,7 @@ export default function CompetePage() {
                     rel="noreferrer noopener"
                     className="mt-8 inline-flex w-fit items-center gap-2 border-b border-amber-500/40 pb-1 font-mono text-[11px] tracking-[0.16em] text-amber-500 uppercase transition-colors hover:border-amber-500"
                   >
-                    {comp.abbr} official site &mdash; {comp.host}
+                    {comp.abbr} official site - {comp.host}
                     <span aria-hidden>&#8599;</span>
                     <span className="sr-only">(opens in a new tab)</span>
                   </a>

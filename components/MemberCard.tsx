@@ -17,7 +17,7 @@ function initials(name: string): string {
  * from UBC Formula Electric's team page, in our palette.
  *
  * The role is passed in rather than stored on the person: several people hold
- * two roles (captain and a sub-team lead, or two sub-teams), so the same person
+ * two roles (captain and a subteam lead, or two subteams), so the same person
  * renders with a different title depending on which band they appear in.
  *
  * Portraits are static by request: no grayscale, no hover zoom. Where someone

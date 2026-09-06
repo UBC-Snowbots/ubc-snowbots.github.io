@@ -73,7 +73,7 @@ export default function TeamSection({
       >
         {/* `order` matters. In DOM order the left-hand cards come first, which
             on a single-column phone layout stacks them ABOVE the band heading —
-            so Software's leads appeared to belong to the sub-team named above
+            so Software's leads appeared to belong to the subteam named above
             them. On mobile the banner is forced first and every card follows it;
             the left/banner/right arrangement is restored at lg. */}
         {left.length ? (
