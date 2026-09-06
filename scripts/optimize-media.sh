@@ -28,10 +28,14 @@ command -v magick >/dev/null || { echo "ImageMagick ('magick') not found."; exit
 # hero on a 2x display; portraits and logos need far less.
 max_edge_for() {
   case "$1" in
-    */people/*)   echo 900  ;;
-    */sponsors/*) echo 600  ;;
-    */brand/*)    echo 600  ;;
-    *)            echo 2000 ;;
+    */people/*)     echo 900  ;;
+    */sponsors/*)   echo 600  ;;
+    */brand/*)      echo 600  ;;
+    # Gallery frames are half of a max-w-[1600px] container, so ~768 CSS px at
+    # the widest; 1600 still covers that at 2x with room to spare.
+    */subsystems/*) echo 1600 ;;
+    # Full-bleed banners and section tiles.
+    *)              echo 2000 ;;
   esac
 }
 
@@ -57,8 +61,19 @@ while IFS= read -r -d '' f; do
   # shot in portrait do not end up sideways once the EXIF tag is removed.
   magick "$f" -auto-orient -strip -resize "${edge}x${edge}>" -quality 82 "$tmp"
   after=$(stat -c%s "$tmp")
-  total_after=$((total_after + after))
 
+  # Re-encoding a file that is already small and already web-sized can make it
+  # BIGGER — a 6K logo came back 17K, and an already-optimised photo grew by
+  # 27K. Keep whichever is smaller, so this script can never regress a file.
+  # Anything already at or below the target loses nothing by being left alone.
+  if [[ $after -ge $now ]]; then
+    rm -f "$tmp"
+    total_after=$((total_after + now))
+    printf '%-52s %9sK %9sK  (kept)\n' "${rel:0:52}" "$((now / 1024))" "$((now / 1024))"
+    continue
+  fi
+
+  total_after=$((total_after + after))
   printf '%-52s %9sK %9sK\n' "${rel:0:52}" "$((now / 1024))" "$((after / 1024))"
 
   if [[ $APPLY -eq 1 ]]; then

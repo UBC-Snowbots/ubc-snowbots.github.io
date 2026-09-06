@@ -98,13 +98,6 @@ export default function Home() {
             </div>
           </Reveal>
         </div>
-
-        <div
-          aria-hidden
-          className="animate-scroll-cue text-chalk-dim absolute bottom-6 left-1/2 hidden -translate-x-1/2 font-mono text-[10px] tracking-[0.3em] uppercase lg:block"
-        >
-          Scroll
-        </div>
       </section>
 
       {/* ==================================================================
@@ -187,25 +180,17 @@ export default function Home() {
 
         <div className="relative mx-auto max-w-[1600px] px-5 py-16 sm:px-8 sm:py-20">
           <Reveal>
-            <div className="flex flex-wrap items-end justify-between gap-6 border-b border-white/10 pb-8">
-              <div>
-                <p className="text-eyebrow">Explore</p>
-                <h2
-                  id="explore-heading"
-                  className="font-display text-chalk mt-4 text-4xl leading-[0.95] font-extrabold tracking-[-0.035em] sm:text-6xl"
-                >
-                  Start here
-                </h2>
-              </div>
-              <p className="text-chalk-dim/70 max-w-sm text-sm leading-relaxed">
-                The machine, the sub-teams that build it, the competitions it goes to, and
-                how to get on the team.
-              </p>
-            </div>
+            {/* No visible heading. The four tiles are self-describing, and a
+                title plus eyebrow plus standfirst above them was three lines of
+                scaffolding explaining a grid that needs none. The heading stays
+                in the document for the landmark that labels this section. */}
+            <h2 id="explore-heading" className="sr-only">
+              Explore
+            </h2>
           </Reveal>
 
           {/* Uneven mosaic: one wide tile, then two full rows of two. */}
-          <div className="mt-10 grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-2">
             {SECTIONS.map((tile, i) => (
               <Reveal
                 key={tile.href}

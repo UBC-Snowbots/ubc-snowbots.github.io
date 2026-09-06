@@ -1,4 +1,8 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
+import DecodeText from "./DecodeText";
 import type { SectionTile as Tile } from "@/lib/content";
 
 /**
@@ -8,9 +12,16 @@ import type { SectionTile as Tile } from "@/lib/content";
  * hit target; the hover treatment is mirrored on :focus-visible so keyboard
  * users get the same affordance.
  *
+ * Deliberately bare: no eyebrow, no index number, and a five-word label. Four
+ * of these sit in a grid, and every extra line of chrome multiplies by four.
+ * The title and the photo say where the link goes; the page behind it explains.
+ *
+ * The label decodes out of noise on hover — hover being a capability here, not
+ * a breakpoint. Touch and keyboard users get the settled text immediately
+ * rather than a state they cannot reach.
+ *
  * CLS: the media sits in a fixed-aspect box with the image absolutely filling
- * it, so the tile occupies its final height before the (deliberately
- * unoptimised, full-resolution) photo arrives.
+ * it, so the tile occupies its final height before the photo arrives.
  */
 export default function SectionTile({
   tile,
@@ -19,10 +30,14 @@ export default function SectionTile({
   tile: Tile;
   priority?: boolean;
 }) {
+  const [decoding, setDecoding] = useState(false);
+
   return (
     <Link
       href={tile.href}
-      aria-label={`${tile.title} — ${tile.eyebrow}`}
+      aria-label={`${tile.title} — ${tile.blurb}`}
+      onPointerEnter={(e) => e.pointerType === "mouse" && setDecoding(true)}
+      onPointerLeave={(e) => e.pointerType === "mouse" && setDecoding(false)}
       className="group bg-navy-900 relative isolate block overflow-hidden border border-white/10 transition-colors duration-500 hover:border-amber-500/40 focus-visible:border-amber-500/40"
     >
       {/* Media */}
@@ -54,18 +69,8 @@ export default function SectionTile({
         />
       </div>
 
-      {/* Index marker, top-left */}
-      <span
-        aria-hidden
-        className="absolute top-5 left-5 font-mono text-[11px] tracking-[0.2em] text-amber-500 sm:top-7 sm:left-7"
-      >
-        {tile.index}
-      </span>
-
       {/* Label block, bottom-left */}
       <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
-        <p className="text-eyebrow mb-2">{tile.eyebrow}</p>
-
         <div className="flex items-end justify-between gap-4">
           <h3 className="font-display text-chalk text-3xl leading-[0.95] font-extrabold tracking-[-0.03em] sm:text-5xl">
             {tile.title}
@@ -80,16 +85,15 @@ export default function SectionTile({
           </span>
         </div>
 
-        {/* Blurb. `.reveal-on-hover` gates on hover CAPABILITY, not viewport
-            width — a width-gated version hid this permanently on every touch
-            tablet, which has no hover to open it with. */}
-        <div className="reveal-on-hover">
-          <div>
-            <p className="text-chalk-dim/85 mt-3 max-w-xl text-sm leading-relaxed">
-              {tile.blurb}
-            </p>
-          </div>
-        </div>
+        {/* The label is always present — it is five words, and hiding it until
+            hover would keep it from touch users entirely. Hover only changes
+            HOW it arrives. min-h reserves the line so the decode cannot reflow
+            the tile. */}
+        <DecodeText
+          text={tile.blurb}
+          active={decoding}
+          className="text-chalk-dim/80 mt-3 block min-h-[1.25rem] font-mono text-[11px] tracking-[0.14em] uppercase"
+        />
       </div>
 
       {/* Amber rule that draws in along the bottom edge on hover. */}

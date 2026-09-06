@@ -84,10 +84,13 @@ export const STATS: { value: string; label: string }[] = [
 /* -------------------------------------------------------------------------- */
 
 export type SectionTile = {
-  index: string;
   title: string;
   href: string;
-  eyebrow: string;
+  /**
+   * Five or six words. These are labels, not summaries — the tile's job is to
+   * say where the link goes, and the page behind it does the explaining. The
+   * long versions read as filler once four of them sit in a grid together.
+   */
   blurb: string;
   image: string;
   /** Column span at lg. Four narrow tiles give two clean rows of two. */
@@ -96,42 +99,30 @@ export type SectionTile = {
 
 export const SECTIONS: SectionTile[] = [
   {
-    index: "01",
     title: "Sub-teams",
     href: "/subteams",
-    eyebrow: "How we're organised",
-    blurb:
-      "Seven sub-teams across mechanical, electrical, software, science and business. Each owns part of the rover \u2014 drivetrain, arm, end effector, comms, control base and the onboard lab.",
+    blurb: "Seven teams, one rover",
     image: "/media/team/software.jpg",
     span: "narrow",
   },
   {
-    index: "02",
     title: "Competition",
     href: "/compete",
-    eyebrow: "Where we prove it",
-    blurb:
-      "The University Rover Challenge in the Utah desert, and the Canadian International Rover Challenge in the Alberta badlands.",
+    blurb: "Utah desert, Alberta badlands",
     image: "/media/team/chassis.jpg",
     span: "narrow",
   },
   {
-    index: "03",
     title: "Our Team",
     href: "/team",
-    eyebrow: "Who builds it",
-    blurb:
-      "64 students across engineering, science, and business. Meet the leads and the sub-teams they run.",
+    blurb: "Sixty-four students who build it",
     image: "/media/team/arm.jpg",
     span: "narrow",
   },
   {
-    index: "04",
     title: "Sponsors",
     href: "/sponsors",
-    eyebrow: "Who makes it possible",
-    blurb:
-      "External support is the engine behind our innovation. Put your brand on the chassis.",
+    blurb: "Put your name on Mars",
     image: "/media/team/electrical.jpg",
     span: "narrow",
   },
@@ -157,6 +148,9 @@ export const SECTIONS: SectionTile[] = [
  */
 export type Photo = { src: string; caption?: string; kind?: "image" | "video" };
 
+/** One row of a subsystem's tech-spec table. */
+export type Spec = { label: string; value: string };
+
 export type Subsystem = {
   slug: string;
   name: string;
@@ -173,11 +167,14 @@ export type Subsystem = {
    */
   callout?: string;
   /**
-   * Tech specs as prose. The leads wrote these as paragraphs, not label/value
-   * pairs, so the model matches what they actually submitted rather than
-   * forcing their sentences into a table they were never written for.
+   * Tech specs as datasheet rows.
+   *
+   * Most leads DID submit these as label/value lines; an earlier version of
+   * this file flattened them into sentences, which lost the scannability that
+   * made them worth collecting. Where a lead wrote prose instead, the rows here
+   * carry only figures they stated explicitly — nothing is derived or inferred.
    */
-  techSpecs?: string;
+  specs?: Spec[];
   /**
    * Photos for this subsystem. More than one renders a gallery with prev/next
    * controls along the bottom of the frame. Absent until the files arrive, at
@@ -209,8 +206,14 @@ export const SUBSYSTEMS: Subsystem[] = [
       "The design philosophy was to make the frame as flexible as possible. To minimize assembly, the frame was bent to reduce the number of components, and the number of fasteners was minimized. PEM nuts are used for screwing attachments into the frame. Simply put, the frame is an electrical enclosure that is designed for modularity, flexibility, and reliability.",
       "The frame has to survive thousands of cycles of assembly and disassembly, bumps while traversing over rough terrain, and unexpected weather, if need be. The frame allows for the rover to function as a device in a stable, predictable manner.",
     ],
-    techSpecs:
-      "The frame is manufactured using sheet metal bending using Aluminum 5052-T6 to allow for good bending. The high magnesium content of the alloy allows for high strength and corrosion resistance while still retaining good bending manufacturability. The frame has 400+ attachment points to allow for flexibility.",
+    specs: [
+      { label: "Material", value: "Powder-coated aluminium 5052-H12" },
+      { label: "Dimensions", value: "600 × 590 × 200 mm" },
+      { label: "Weight", value: "5 kg" },
+      { label: "Attachment points", value: "400+" },
+      { label: "Weather resistance", value: "Rain- and dust-proof" },
+      { label: "Wiring", value: "Super clean" },
+    ],
     photos: [
       { src: "/media/subsystems/frame.jpg", caption: "The bare frame during assembly." },
     ],
@@ -227,8 +230,15 @@ export const SUBSYSTEMS: Subsystem[] = [
       "The design philosophy of the rocker-bogie suspension system is weight minimization. Topology optimization was performed on the differential and the rocker-bogie legs. The differential links are made of brass and are self-lubricating. The rocker-bogie system has a greater moment of inertia due to the use of struts that increase the second moment of area while minimizing added weight, similar to a plane wing.",
       "Uneven terrain can range up to obstacles 20 cm in height, such as a rock. The suspension system must be able to endure forces that include the weight of the rover, arm, and any added components while handling rough terrain.",
     ],
-    techSpecs:
-      "The drivetrain has six wheels, is constructed out of Aluminum-6061, and is manufactured mainly using the waterjet.",
+    specs: [
+      { label: "Wheels", value: "6" },
+      { label: "Suspension material", value: "Aluminium 6061-T6" },
+      { label: "Topology optimisation saving", value: "40%" },
+      { label: "Mass", value: "6 kg" },
+      { label: "Power", value: "900 W" },
+      { label: "Torque", value: "33 N·m" },
+      { label: "Max speed", value: "13 km/h" },
+    ],
     // The two "chassis" shots from Drive live here rather than under Frame:
     // both foreground the six wheels and the rocker-bogie, which is drivetrain,
     // not the frame. Filenames alone would have put them in the wrong slot.
@@ -265,8 +275,12 @@ export const SUBSYSTEMS: Subsystem[] = [
       "The comms relay is designed around deploying the most stable and reliable relay while still ensuring portability. Still in the developmental and testing phases, the comms relay relies on a gear mechanism that prioritizes reliability.",
       "The comms relay has to survive inclement weather, harsh terrain, and unpredictable landing spots.",
     ],
-    techSpecs:
-      "The comms relay extends the rover's range by 1 km. It is 3D-printed and weighs 5 lbs.",
+    specs: [
+      { label: "Range extension", value: "300 m beyond line of sight" },
+      { label: "Material", value: "3D-printed PLA" },
+      { label: "Weight", value: "2 kg" },
+      { label: "Deployable height", value: "0.4 m" },
+    ],
     photos: [
       {
         src: "/media/subsystems/comms-relay.jpg",
@@ -288,8 +302,11 @@ export const SUBSYSTEMS: Subsystem[] = [
       "The primary design focus was precision through survival — specifically within our competitions we have to carry heavy items and deal with vibrations. Our main goals for design are to be both fail-safe and fail-proof. The way to do that, we found is through simplifying our designs and building them for both assembly and debugging.",
       "The desert is dusty and warm and sometimes wet. The arm needs to survive all of that. It also needs to function as protection and mounting for wires, cameras — all in the hot desert sun. But all while surviving we also need to be at high precision at our end effector.",
     ],
-    techSpecs:
-      "1 meter long, 6 degrees of freedom, 5 kg payload at millimeter precision.",
+    specs: [
+      { label: "Length", value: "1 m" },
+      { label: "Degrees of freedom", value: "6" },
+      { label: "Payload", value: "5 kg at millimetre precision" },
+    ],
     photos: [
       {
         src: "/media/subsystems/arm-6dof.jpg",
@@ -310,11 +327,14 @@ export const SUBSYSTEMS: Subsystem[] = [
       "We also have a swappable end effector system, which uses a custom spring locking mechanism combined with spring loaded magnetic pogo pin connectors to attach all wiring instruments to the rest of the system.",
       "The end effector has all the same heat / dust / wet requirements as the arm. Really hot day's dust always attacking it, we also need to monitor vibrations as anything from the system gets amplified as it comes all the way up to the end effector. We had to design it with that in mind.",
     ],
-    techSpecs:
-      "Over 5 kg payload. Tool use — wire cutters, screwdrivers. Hot swappable system.",
+    specs: [
+      { label: "Payload", value: "Over 5 kg" },
+      { label: "Tooling", value: "Wire cutters, screwdrivers" },
+      { label: "Coupling", value: "Hot-swappable" },
+    ],
     photos: [
       {
-        src: "/media/subsystems/arm-end-effector.png",
+        src: "/media/subsystems/arm-end-effector.jpg",
         caption: "The end effector gripping a payload.",
       },
     ],
@@ -331,11 +351,16 @@ export const SUBSYSTEMS: Subsystem[] = [
       "Our motor system uses an arm wide CAN bus. To make termination and wire management simpler we utilize custom printed circuit boards that handle can organization, high power organization, sensor wire management. The fundamental goal with these decisions and other decisions with the subsystem were: how can we design to be fail-safe in both production and debugging while still letting us iterate quickly.",
       "PCBs and electrical circuits (especially high current high voltage ones like what we have) must be protected properly to function in high heat, high dust deserts. Alongside that everything needs to be spec'd perfectly as a failure with respect to any high current system could result in literal flames.",
     ],
-    techSpecs:
-      "6 PCBs. 7 motors with encoders, some with over 100 amp stall current. 2 cameras. 1 end-effector-mounted microcontroller.",
+    specs: [
+      { label: "PCBs", value: "6" },
+      { label: "Motors", value: "7, all with encoders" },
+      { label: "Stall current", value: "Over 100 A on some" },
+      { label: "Cameras", value: "2" },
+      { label: "Microcontrollers", value: "1, end-effector mounted" },
+    ],
     photos: [
       {
-        src: "/media/subsystems/arm-electrical.png",
+        src: "/media/subsystems/arm-electrical.jpg",
         caption: "A custom CAN board mounted on the arm.",
       },
     ],
@@ -354,8 +379,14 @@ export const SUBSYSTEMS: Subsystem[] = [
       "Many teams use two omnidirectional antennas, however we use a dish to manually or automatically rotate towards the rover. This allows us to communicate with our rover at large distances with a high throughput.",
       "Our network has an effective range of 780 m with an average latency of under 3 ms. It can also stream up to 5 camera feeds simultaneously.",
     ],
-    techSpecs:
-      "20-80 MHz bandwidth, 2 omni directional antennas, 5 GHz powerbeam antenna, 5 cameras",
+    specs: [
+      { label: "Bandwidth", value: "20–80 MHz" },
+      { label: "Antennas", value: "2 omnidirectional, 5 GHz powerbeam" },
+      { label: "Range", value: "780 m" },
+      { label: "Latency", value: "Under 3 ms" },
+      { label: "Camera feeds", value: "5" },
+      { label: "Compression", value: "H.265" },
+    ],
     photos: [
       {
         src: "/media/subsystems/comms-dish.jpg",
@@ -375,8 +406,13 @@ export const SUBSYSTEMS: Subsystem[] = [
       "We chose a VSLAM based approach over relying solely on GNSS because GPS accuracy alone isn't sufficient for precise final-approach navigation to posts and objects, especially in terrain with signal degradation. VSLAM lets the rover build a local map in real time and correct its position using visual features. For the arm, our only supported autonomy stack involves RL — which is still in development. Using behavior trees and excluding an observation module, we trained a hierarchical reinforcement learning model to dynamically press keys on a keyboard in simulation. Overall, we prioritized modularity between the navigation stack and the manipulation stack so each can be tested and tuned independently before integration.",
       "The subsystem has to operate over unstructured, uneven outdoor Mars-like terrain without reliable GPS lock at every point along the course, using onboard cameras as the primary sensing source. It must reliably detect AR tags, and small ground objects under variable outdoor lighting. The arm's vision-guided keypress task demands sub-centimeter positioning accuracy despite vibration and imperfect stopping position from the drive system.",
     ],
-    techSpecs:
-      "98.7% task completion accuracy using RL with domain randomization (excluding observation module).",
+    specs: [
+      { label: "Task completion accuracy", value: "98.7%" },
+      {
+        label: "Method",
+        value: "RL with domain randomisation, excluding observation module",
+      },
+    ],
     photoSlot: "SOFTWARE-02",
     expects: ["Software RL.mp4 — video"],
     ownedBy: "software",
@@ -391,7 +427,12 @@ export const SUBSYSTEMS: Subsystem[] = [
       "One important feature on our control base is having cleanly split roles. The HMI serves only as the frontend of the control base and we use many ROS nodes to provide a trustworthy backend for this system. This also allows for a modular codebase which is integral for collaboration across multiple projects and the addition of new features depending on what the other subteams require.",
       "This subsystem operates under highly illuminated spaces. For efficient operator control, our monitors require especially high nits so that even in the brightest conditions, the operator can see everything happening easily. Our existing setup has 3 monitors, however we are considering adding additional monitors to have more room for telemetry and operation panels.",
     ],
-    techSpecs: "1000 nit monitors, 2 analog joysticks, 10 buttons.",
+    specs: [
+      { label: "Startup time", value: "1.5 minutes" },
+      { label: "Configurable physical controls", value: "34" },
+      { label: "Total screen space", value: "550 cm²" },
+      { label: "Monitors", value: "3" },
+    ],
     photos: [
       {
         src: "/media/subsystems/control-base.jpg",
@@ -411,6 +452,11 @@ export const SUBSYSTEMS: Subsystem[] = [
       "Firmware is a joint team between Electrical and Software.",
       "PLACEHOLDER — operating conditions not yet supplied for this subsystem.",
     ],
+    specs: [
+      { label: "Boards running custom firmware", value: "8" },
+      { label: "Favourite controller", value: "STM32G474" },
+      { label: "Favourite protocol", value: "CAN FD, with SIC transceivers" },
+    ],
     photoSlot: "SOFTWARE-04",
     ownedBy: "software",
   },
@@ -426,8 +472,14 @@ export const SUBSYSTEMS: Subsystem[] = [
       "Due to the nature of our competitions, we prioritise efficiency when interchanging the many loads our rover hosts. Our system makes this possible with its durable XT30 connectors and fuse holders. This way, we simply need to plug in and fuse the required power lines for a specific task — it is a flexible and intuitive design.",
       "Our power distribution boards are built to withstand 90 A of continuous current. It can supply power on four different voltage rails, totalling 22 individual channels. All of this operates under 1000 W+ loads in high heat conditions to keep the rover's heart beating.",
     ],
-    techSpecs:
-      "The input voltage for our power distribution boards ranges from 19–21 V. Its output voltages include 5 V, 12 V, 18 V and 24 V rails. Each output has an XT30 connector and a fuse holder for easy access and rotations. These feed all onboard systems including the drivetrain, the robotic arm and end effector, onboard computer, communications and a science testing module.",
+    specs: [
+      { label: "Input voltage", value: "19–21 V" },
+      { label: "Output rails", value: "5 V, 12 V, 18 V, 24 V" },
+      { label: "Channels", value: "22" },
+      { label: "Continuous current", value: "90 A" },
+      { label: "Load", value: "1000 W+" },
+      { label: "Per-output connector", value: "XT30 with fuse holder" },
+    ],
     photos: [
       {
         src: "/media/subsystems/power-distribution.jpg",
@@ -451,8 +503,13 @@ export const SUBSYSTEMS: Subsystem[] = [
       "Competition night tasks require a lighting system that can be controlled remotely from the operations base. We have on/off as well as dimming controls, as some competition tasks have specific no-light zones. Our system allows for this flexibility, thanks to software integration.",
       "The lighting system's water-resistant protection and brightness controls allow us to see in clear skies and rainstorms alike. We not only perform in turbulent weather, but we also perform in style thanks to the colour changing feature that allows our lights to range any HEX value.",
     ],
-    techSpecs:
-      "Powered by the 18 V rail, the lighting system uses an LED driver to ensure constant current. This improves brightness consistency across all four LEDs. Our design also powers a floodlight mounted on top of the PTZ camera for maximum coverage.",
+    specs: [
+      { label: "Supply rail", value: "18 V" },
+      { label: "LEDs", value: "4" },
+      { label: "Driver", value: "Constant current" },
+      { label: "Colour range", value: "Any HEX value" },
+      { label: "Additional", value: "Floodlight on the PTZ camera" },
+    ],
     photoSlot: "ELECTRICAL-02",
     ownedBy: "electrical",
   },
@@ -466,8 +523,13 @@ export const SUBSYSTEMS: Subsystem[] = [
       "As the wheels and top plate of the chassis frequently need to be removed, we decided to use aviator connectors to attach the drivers to the motors. These are durable and easy to use, so assembly can happen in a timely manner — which is extremely important in a competition environment. Wiring therefore plays an important and often overlooked role in the drivetrain system's success.",
       "The motor drivers can provide over 1000 W of power to our drivetrain. This allows masterful maneuvering of rocky terrain, loose gravel and steep cliffs. This is all operating with over 40 kg of weight from the battery, chassis and arm module.",
     ],
-    techSpecs:
-      "The driver system is composed of Phidget VINT motor drivers at 24 V with a 20 A current rating. Each of the six motors has an isolated driver to improve system resiliency and allow for more complicated maneuvers.",
+    specs: [
+      { label: "Drivers", value: "Phidget VINT, one isolated per motor" },
+      { label: "Motors driven", value: "6" },
+      { label: "Voltage", value: "24 V" },
+      { label: "Current rating", value: "20 A" },
+      { label: "Drivetrain power", value: "Over 1000 W" },
+    ],
     photos: [
       { src: "/media/subsystems/motor-drivers.jpg", caption: "Driver board detail." },
     ],
@@ -477,15 +539,26 @@ export const SUBSYSTEMS: Subsystem[] = [
 
   /* ---- Rover Lab ----------------------------------------------------- */
   {
-    slug: "rover-lab",
-    name: "Rover Lab",
-    role: "PLACEHOLDER — the Rover Lab lead has not filled in the content doc yet.",
-    summary: "PLACEHOLDER — awaiting the Rover Lab sub-team's submission.",
+    slug: "soil-collection",
+    name: "Soil Collection",
+    role: "Collects and caches soil samples for experimentation.",
+    summary:
+      "The soil collection system provides a method to extract and store samples from dense, dry terrain. It features a drill, a vacuum pump, and a tri-chambered collection carousel, equipping the rover with the ability to analyze multiple sites in one short expedition.",
     detail: [
-      "PLACEHOLDER — design decisions and philosophy.",
-      "PLACEHOLDER — what this subsystem has to survive.",
+      "Competition conditions, such as the weather and soil composition, tend to vary heavily by location. The soil collection system is built to be resilient and adaptable. Its main goal is to efficiently gather samples, regardless of the environmental challenges that it may face.",
+      "The soil collection system operates under strict time constraints, with most competition exploration periods lasting from 30 minutes to an hour. It must also overcome uneven terrain with unknown geological composition, variations in soil moisture content, and be sturdy enough to survive the journey to and from the sample site.",
+    ],
+    specs: [
+      { label: "Max sample depth", value: "30 cm below surface" },
+      { label: "Max collection rate", value: "40 L/min" },
+      { label: "Drill motor", value: "12 V stepper" },
+      { label: "Caching", value: "Tri-chambered carousel" },
     ],
     photos: [
+      {
+        src: "/media/subsystems/rover-lab-soil-collection.jpg",
+        caption: "The soil collection hopper.",
+      },
       { src: "/media/subsystems/rover-lab-above.jpg", caption: "From above." },
       {
         src: "/media/subsystems/rover-lab-front-left.jpg",
@@ -496,20 +569,55 @@ export const SUBSYSTEMS: Subsystem[] = [
         caption: "From the rear left.",
       },
       { src: "/media/subsystems/rover-lab-behind.jpg", caption: "From behind." },
-      {
-        src: "/media/subsystems/rover-lab-soil-collection.jpg",
-        caption: "The soil collection hopper.",
-      },
+    ],
+    photoSlot: "ROVERLAB-01",
+    ownedBy: "rover-lab",
+  },
+  {
+    slug: "soil-processing",
+    name: "Soil Processing",
+    role: "Processes soil samples for biochemical analysis.",
+    summary:
+      "Rover Lab's soil processing system prepares samples using agitation, filtration, and separation. Pumps and valves control the flow of fluid from each compartment. The end result is a homogenized, clear sample that the science team can use for scientific experiments.",
+    detail: [
+      "This system expects the unexpected. It is manufactured to produce consistent results whilst being flexible by design. By using swappable filters of varying sizes and adjustable agitator blade speeds, Rover Lab is able to react appropriately to variations in soil composition.",
+      "It is impossible to predict the exact contents that enter the processing assembly. It must account for blockages, insoluble objects, and potential damage to its components. It also needs to monitor the progress of each processing stage, preventing the sample from premature analysis and ensuring that the chemical assays deliver accurate results.",
+    ],
+    specs: [
+      { label: "Max agitator speed", value: "12,000 RPM" },
+      { label: "Filtration", value: "Swappable micrometre mesh" },
+      { label: "Flow control", value: "Pumps and solenoid valves" },
+    ],
+    photos: [
       {
         src: "/media/subsystems/rover-lab-pumps.jpg",
         caption: "Pumps and tubing on the bench.",
       },
+    ],
+    photoSlot: "ROVERLAB-02",
+    ownedBy: "rover-lab",
+  },
+  {
+    slug: "rover-lab-electrical",
+    name: "Electrical Systems",
+    role: "Centralizes the power requirements, drivers, and wiring required to run Rover Lab's electromechanical payload.",
+    summary:
+      "Electrical components are the heart and brain of Rover Lab's functionality. Through the use of microcontrollers, circuit boards, and a PCB for the 2026/27 season, this subsystem controls and powers the lab. Every manual or automatic command is linked back to this electrical core, allowing for seamless and efficient control of the rover's soil collection and processing abilities.",
+    detail: [
+      "The challenges that the electrical system has faced so far involve organization, durability, and power distribution amongst components. This subsystem's focus is to constantly improve the repairability, security, and cohesiveness of Rover Lab's electrical components.",
+      "Navigating rocky surfaces poses the risk of unplugged wires or damaged electrical connections, which can cause the failure of a scientific expedition. Components powered by up to 24 V can short circuit and become hazardous when exposed to moisture. Rover Lab's electrical system implements safeguards and solutions to prevent these issues from interfering with the success of the lab.",
+    ],
+    specs: [
+      { label: "Max simultaneous actuators + sensors", value: "10" },
+      { label: "Supported voltage rails", value: "5 V, 12 V, 24 V" },
+    ],
+    photos: [
       {
         src: "/media/subsystems/rover-lab-control-box.jpg",
         caption: "Control electronics in their enclosure.",
       },
     ],
-    photoSlot: "ROVERLAB-01",
+    photoSlot: "ROVERLAB-03",
     ownedBy: "rover-lab",
   },
 
@@ -523,8 +631,12 @@ export const SUBSYSTEMS: Subsystem[] = [
     detail: [
       "We understand nothing is ever free. Part of the challenge is explaining the benefits of sponsorship to companies. By working closely with our marketing subteam, we offer tailored posts highlighting sponsors and show that we can expand brand outreach.",
     ],
-    techSpecs:
-      "2025–26 sponsorship value: $12,500, across 14 sponsors. Highest all-time single donation: $9,860. Chassis real-estate: 70% unbranded.",
+    specs: [
+      { label: "2025–26 sponsorship value", value: "$12,500" },
+      { label: "Sponsors", value: "14" },
+      { label: "Highest all-time donation", value: "$9,860" },
+      { label: "Chassis real-estate", value: "70% unbranded" },
+    ],
     photoSlot: "BUSINESS-01",
     ownedBy: "business",
   },
@@ -676,13 +788,13 @@ export const SUBTEAMS: Subteam[] = [
     name: "Rover Lab",
     discipline: "Mechatronics",
     blurb:
-      "We create and assemble automated onboard lab systems that collect soil samples, run chemical analyses, and search for signs of life — bringing fully autonomous science capabilities to a mobile rover.",
-    image: "/media/team/rover-lab.png",
+      "Collect, process, and analyze: the Rover Lab team builds the engineering systems that allow for scientific experiments to be carried out onboard the rover. Using a collection of sensors, motors, pumps, and other electromechanical components, we work under adverse, time-sensitive conditions to discover which lifeforms exist beyond Earth.",
+    image: "/media/team/rover-lab.jpg",
     capabilities: [
-      "Soil sample collection",
-      "Onboard chemical analysis",
-      "Life detection",
-      "Autonomous lab systems",
+      "Soil collection",
+      "Soil processing",
+      "Onboard biochemical analysis",
+      "Fluid filtration",
     ],
     openRoles: placeholderRoles("Rover Lab"),
   },
@@ -788,12 +900,12 @@ export const PEOPLE: Person[] = [
   },
   {
     name: "Jennifer Phung",
-    image: "/media/people/jennifer.png",
+    image: "/media/people/jennifer.jpg",
     links: li("https://www.linkedin.com/in/jennifer-phung-734541338/"),
   },
   {
     name: "William Banquier",
-    image: "/media/people/william.png",
+    image: "/media/people/william.jpg",
     links: li("https://www.linkedin.com/in/william-banquier/"),
   },
   {

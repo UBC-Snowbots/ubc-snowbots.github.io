@@ -140,14 +140,32 @@ export default async function SubteamPage({ params }: Params) {
                       </p>
                     ))}
 
-                    {sub.techSpecs ? (
+                    {/* Datasheet block. A <dl> rather than a <table>: these are
+                        name/value pairs, not a grid of related records, and a
+                        table would announce phantom rows and columns to a
+                        screen reader. The two columns come from the grid, and
+                        collapse to stacked rows under 400px where a 50/50 split
+                        would leave three words per line. */}
+                    {sub.specs?.length ? (
                       <div className="mt-7 border border-white/10">
                         <p className="text-chalk-dim/70 border-b border-white/10 px-5 py-3 font-mono text-[11px] tracking-[0.18em] uppercase">
                           Tech Specs
                         </p>
-                        <p className="text-chalk-dim/90 px-5 py-4 text-sm leading-relaxed">
-                          {sub.techSpecs}
-                        </p>
+                        <dl className="divide-y divide-white/[0.07]">
+                          {sub.specs.map((spec) => (
+                            <div
+                              key={spec.label}
+                              className="grid grid-cols-1 gap-x-4 gap-y-1 px-5 py-3 min-[400px]:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]"
+                            >
+                              <dt className="text-chalk-dim/60 font-mono text-[11px] tracking-[0.1em] uppercase">
+                                {spec.label}
+                              </dt>
+                              <dd className="text-chalk font-mono text-[13px] leading-snug">
+                                {spec.value}
+                              </dd>
+                            </div>
+                          ))}
+                        </dl>
                       </div>
                     ) : null}
                   </Reveal>
