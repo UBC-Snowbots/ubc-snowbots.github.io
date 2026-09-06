@@ -83,7 +83,7 @@ export default function JoinPage() {
       {/* One compact block per sub-team, alternating sides. */}
       {/* Light band between the joining-package strip and the roles grid, so
           the page reads as three moves rather than one long scroll. */}
-      <section className="section-light">
+      <section className="section-raised">
         <div className="mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
           <Reveal>
             <div className="border-b border-white/10 pb-6">

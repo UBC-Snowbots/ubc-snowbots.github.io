@@ -21,7 +21,7 @@ export default function CompetePage() {
 
       {/* Light band. This page is a masthead photo followed by two blocks of
           pure text and figures — the case where paper beats a dark ground. */}
-      <section className="section-light">
+      <section className="section-raised">
         <div className="mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
           <div className="space-y-16 sm:space-y-20">
             {COMPETITIONS.map((comp) => (

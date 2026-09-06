@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
+import HoverPanel from "@/components/HoverPanel";
 import SectionTile from "@/components/SectionTile";
 import StripeRule from "@/components/StripeRule";
 import {
@@ -106,11 +107,10 @@ export default function Home() {
       {/* ==================================================================
           MISSION — one bold statement, generous air (Relativity).
           ================================================================== */}
-      {/* The one light band on the page. It sits between the hero photo and the
-          tile grid, which are both dark and image-heavy, so it reads as a pause
-          rather than a different site — and it is the section that is pure
-          words, which is exactly the one that benefits from paper. */}
-      <section className="section-light flex min-h-[100svh] flex-col justify-center">
+      {/* Raised band. It sits between the hero photo and the panel grid, both
+          image-heavy, so a step up in the navy marks it as the page's one block
+          of pure writing without turning it into a different-coloured page. */}
+      <section className="section-raised flex min-h-[100svh] flex-col justify-center">
         <div className="mx-auto w-full max-w-[1800px] px-4 py-16 sm:px-5 sm:py-20">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] lg:gap-16">
             <Reveal from="left">
@@ -119,7 +119,7 @@ export default function Home() {
                   step below it. The full stop is set in the body colour, not
                   amber: a single orange dot on an otherwise black-on-bone
                   section was the only warm mark in it and read as decoration. */}
-              <h2 className="font-display text-navy-950 text-[clamp(2.25rem,4.6vw,4.25rem)] leading-[0.95] font-medium tracking-[-0.04em]">
+              <h2 className="font-display text-chalk text-[clamp(2.25rem,4.6vw,4.25rem)] leading-[0.95] font-medium tracking-[-0.04em]">
                 We build Mars rovers.
                 <br />
                 On campus. From scratch.
@@ -127,7 +127,7 @@ export default function Home() {
             </Reveal>
 
             <Reveal from="left" delay={140}>
-              <div className="text-navy-950/75 space-y-6 text-base leading-relaxed sm:text-lg">
+              <div className="text-chalk-dim/85 space-y-6 text-base leading-relaxed sm:text-lg">
                 <p>
                   UBC Rover is a multidisciplinary team of {SITE.memberCount} students
                   dedicated to designing and building the next generation of
@@ -140,7 +140,7 @@ export default function Home() {
                   robotics, earning top placements at the University Rover Challenge and
                   the Canadian International Rover Challenge.
                 </p>
-                <p className="text-navy-950">
+                <p className="text-chalk">
                   Alongside the engineering, we run community outreach to inspire the next
                   wave of STEM leaders.
                 </p>
@@ -158,7 +158,7 @@ export default function Home() {
                 // Five items do not tile into 2 or 3 columns, and the grid's
                 // parent background shows through any uncovered cell as a pale
                 // block. Letting the last item span the remainder closes it.
-                // bg is inherited from the band (.section-light remaps
+                // bg is inherited from the band (.section-raised remaps
                 // bg-navy-950), so the same markup works on either ground.
                 className={`bg-navy-950 ${
                   i === STATS.length - 1 ? "col-span-2 lg:col-span-1" : ""
@@ -169,7 +169,7 @@ export default function Home() {
                     className={
                       stat.value === "PLACEHOLDER"
                         ? "font-mono text-sm leading-none tracking-[0.14em] text-amber-500/70"
-                        : "font-display text-navy-950 text-4xl leading-none font-medium tracking-[-0.04em] xl:text-6xl"
+                        : "font-display text-chalk text-4xl leading-none font-medium tracking-[-0.04em] xl:text-6xl"
                     }
                   >
                     {stat.value}
@@ -187,13 +187,10 @@ export default function Home() {
       {/* ==================================================================
           SECTION GRID — the core "click and enter" surface (Anduril).
           ================================================================== */}
-      <section
-        aria-labelledby="explore-heading"
-        className="relative border-t border-white/10"
-      >
+      <section aria-labelledby="explore-heading" className="relative">
         <div aria-hidden className="grid-wash absolute inset-0 opacity-40" />
 
-        <div className="relative mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
+        <div className="relative mx-auto max-w-[1800px] px-4 pt-14 pb-10 sm:px-5 sm:pt-16 sm:pb-12">
           <Reveal>
             {/* One word. The earlier version was a title plus an eyebrow plus
                 a standfirst — three lines of scaffolding over a grid that
@@ -223,59 +220,36 @@ export default function Home() {
       </section>
 
       {/* ==================================================================
-          COMPETITIONS — split panels, each linking out to the organiser.
+          COMPETITIONS — same panel as Explore, linking out to each organiser.
           ================================================================== */}
-      <section className="border-t border-white/10">
-        <div className="mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
+      {/* No rule between this and Explore, and the two share one vertical
+          rhythm: they are one continuous surface of panels, and a border plus
+          a full section pad was cutting them into two unrelated lists. */}
+      <section>
+        <div className="mx-auto max-w-[1800px] px-4 pb-14 sm:px-5 sm:pb-16">
           <Reveal>
-            <h2 className="font-display text-chalk mt-4 text-4xl leading-[0.95] font-medium tracking-[-0.035em] sm:text-6xl">
-              Two Competitions.
+            <h2 className="font-display text-chalk mb-8 text-4xl leading-[0.95] font-medium tracking-[-0.035em] sm:mb-10 sm:text-5xl">
+              Our Competitions
             </h2>
           </Reveal>
 
-          <div className="mt-10 grid gap-4 sm:gap-5 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-2">
             {COMPETITIONS.map((comp, i) => (
-              <Reveal key={comp.abbr} delay={i * 110}>
-                <article className="group bg-navy-900 relative isolate flex h-full flex-col overflow-hidden border border-white/10">
-                  <div className="relative aspect-[16/9] w-full overflow-hidden">
-                    <img
-                      src={comp.image}
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                      className="absolute inset-0 h-full w-full object-cover"
-                    />
-                    <div
-                      aria-hidden
-                      className="from-navy-900/88 via-navy-900/22 absolute inset-0 bg-gradient-to-t to-transparent"
-                    />
-                    <span className="font-display text-chalk/95 absolute bottom-4 left-5 text-6xl font-medium tracking-[-0.04em] sm:text-7xl">
-                      {comp.abbr}
-                    </span>
-                  </div>
-
-                  <div className="flex flex-1 flex-col p-6 sm:p-8">
-                    <h3 className="font-display text-chalk text-xl font-semibold tracking-[-0.02em] sm:text-2xl">
-                      {comp.name}
-                    </h3>
-                    <p className="text-eyebrow mt-2 normal-case">{comp.location}</p>
-                    <p className="text-chalk-dim/80 mt-5 flex-1 text-sm leading-relaxed">
-                      {comp.blurb}
-                    </p>
-
-                    {/* Out to the organiser's own site. */}
-                    <a
-                      href={comp.url}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className="mt-6 inline-flex w-fit items-center gap-2 border-b border-amber-500/40 pb-1 font-mono text-[11px] tracking-[0.16em] text-amber-500 uppercase transition-colors hover:border-amber-500"
-                    >
-                      {comp.abbr} official site
-                      <span aria-hidden>&#8599;</span>
-                      <span className="sr-only">(opens in a new tab)</span>
-                    </a>
-                  </div>
-                </article>
+              <Reveal key={comp.name} delay={(i % 2) * 90}>
+                <HoverPanel
+                  href={comp.url}
+                  external
+                  image={comp.image}
+                  title={comp.name}
+                  decode={comp.location}
+                  // Two revealed lines here rather than Explore's one, so the
+                  // title has further to travel to clear them.
+                  lift="5.5rem"
+                >
+                  <p className="text-chalk-dim/80 mt-3 max-w-md text-sm leading-relaxed">
+                    {comp.blurb}
+                  </p>
+                </HoverPanel>
               </Reveal>
             ))}
           </div>

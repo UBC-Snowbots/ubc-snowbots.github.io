@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
  *  momentarily spell something. */
 const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/\\<>[]{}=+*#%$@&";
 
-const FRAME_MS = 22;
+const FRAME_MS = 19;
 /** Frames a character spends scrambling before it locks to its real value.
  *  Tuned so the longest label (~30 chars) settles in about 0.7s: at the first
  *  values it took 1.1s, which is long enough that a pointer passing over the

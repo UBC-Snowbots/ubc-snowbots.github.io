@@ -44,30 +44,6 @@
   --color-chalk: #eef1f6;
   --color-chalk-dim: #d2cfd1;
 
-  /* -- light surfaces ----------------------------------------------------
-     The flyer palette is a SPLIT-COMPLEMENT: cool blues (navy 222deg, indigo
-     229deg) against warm oranges (rust 11deg, amber 36deg). sand-400 at 29deg
-     is that warm family desaturated almost to neutral.
-
-     So the light ground is warm, not white and not grey:
-
-     - pure #fff is hue-less. It introduces no relationship to anything else on
-       the page, and at 19.4:1 against navy-950 it makes the hardest possible
-       section break.
-     - a cool near-white (223deg) was the first attempt and it duplicated the
-       navy's own hue, so the band read as "navy with the lights on" — a
-       lighting change rather than a second colour.
-     - `bone` sits at 39deg with the chroma pulled almost out. It is the sand
-       tone lifted, so it reads as the same palette lit from a different angle,
-       it agrees with the amber accent instead of cooling against it, and at
-       14.6:1 it steps down from the dark bands more gently than white does.
-
-     Everything on it is navy-950 and amber-ink, so no new colour enters. */
-  --color-bone: #e5dfd4;
-  --color-bone-deep: #d8d0c1;
-  /* Accent for light grounds — see .section-light. 4.93:1 on bone. */
-  --color-amber-ink: #8a4f16;
-
   /* -- type -------------------------------------------------------------- */
   --font-display: var(--font-archivo), "Archivo", system-ui, sans-serif;
   --font-sans: var(--font-inter), "Inter", system-ui, sans-serif;
@@ -156,54 +132,21 @@
   }
 
   /**
-   * A section on a light ground.
+   * A section on a lighter ground.
    *
-   * The dark palette is expressed through a handful of utility classes
-   * (text-chalk, text-chalk-dim/70, border-white/10) scattered across every
-   * page. Re-authoring all of them per section would mean two copies of every
-   * block, which drift. Instead this remaps those same tokens inside the
-   * section, so one class on the wrapper flips the whole ramp and the markup
-   * underneath is untouched.
+   * An earlier version of this made alternating sections near-white with the
+   * whole text ramp inverted. It was too much: the page stopped reading as one
+   * surface and became light and dark pages interleaved, and every component
+   * inside needed its colours remapped to survive the flip.
+   *
+   * A band is now the same navy a step lighter — navy-850, which is the field
+   * colour off the recruitment flyer. It measures 1.21:1 against navy-950, so
+   * the section boundary is legible without being an event, and nothing inside
+   * changes: text stays chalk, borders stay white/10, the accent stays amber.
+   * One declaration, no remapping, nothing to drift.
    */
-  .section-light {
-    background-color: var(--color-bone);
-    color: var(--color-navy-950);
-  }
-
-  .section-light :is(h1, h2, h3, h4) {
-    color: var(--color-navy-950);
-  }
-
-  .section-light .text-chalk,
-  .section-light .text-chalk\/90 {
-    color: var(--color-navy-950);
-  }
-
-  .section-light [class*="text-chalk-dim"] {
-    color: color-mix(in srgb, var(--color-navy-950) 72%, transparent);
-  }
-
-  .section-light [class*="border-white/"] {
-    border-color: color-mix(in srgb, var(--color-navy-950) 14%, transparent);
-  }
-
-  .section-light [class*="divide-white/"] > * + * {
-    border-color: color-mix(in srgb, var(--color-navy-950) 12%, transparent);
-  }
-
-  /* The amber accent is a mid-tone: it carries on navy but not on mist.
-     amber-700 was the obvious swap and still only measured 3.94:1 against the
-     light ground — under the 4.5 small-text floor. This deeper burnt amber
-     measures 4.93:1 on bone while staying recognisably the same accent. */
-  .section-light .text-eyebrow,
-  .section-light [class*="text-amber-500"],
-  .section-light [class*="text-amber-500/"] {
-    color: var(--color-amber-ink);
-  }
-
-  .section-light .bg-navy-900,
-  .section-light .bg-navy-950 {
-    background-color: var(--color-bone-deep);
+  .section-raised {
+    background-color: var(--color-navy-850);
   }
 
   /* Fine grid wash — the "engineering drawing" texture behind dark sections. */
@@ -319,27 +262,24 @@
     }
   }
 
-  /* Companion to .label-on-hover: the arrow rises into place from below rather
-     than sitting on the card permanently. Same capability gate — on touch it is
-     always visible, because there is no hover there to raise it. */
+  /* Companion to .label-on-hover: the arrow fades in and stays where it is.
+     It marks the corner you are entering through, so it should hold position
+     while the words move — an arrow that travels as well is a third thing
+     moving for no extra meaning. Same capability gate: always visible on touch,
+     where there is no hover to fade it in. */
   .arrow-on-hover {
     opacity: 1;
-    transform: none;
   }
 
   @media (hover: hover) and (pointer: fine) {
     .arrow-on-hover {
       opacity: 0;
-      transform: translate3d(0, 10px, 0);
-      transition:
-        opacity 0.45s var(--ease-out-quart),
-        transform 0.6s var(--ease-out-expo);
+      transition: opacity 0.56s var(--ease-out-quart);
     }
 
     .group:hover .arrow-on-hover,
     .group:focus-visible .arrow-on-hover {
       opacity: 1;
-      transform: translate3d(0, 0, 0);
     }
   }
 
