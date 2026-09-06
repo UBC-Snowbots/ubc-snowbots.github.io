@@ -129,7 +129,7 @@ export default function Header() {
               className="from-navy-950/92 via-navy-950/55 pointer-events-none absolute inset-x-0 top-0 -z-10 h-36 bg-gradient-to-b to-transparent"
             />
           ) : null}
-          <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-5 sm:h-20 sm:px-8">
+          <div className="mx-auto flex h-16 max-w-[1800px] items-center justify-between px-4 sm:h-20 sm:px-5">
             <Link
               href="/"
               onClick={() => setOpen(false)}

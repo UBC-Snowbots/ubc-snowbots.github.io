@@ -41,7 +41,7 @@ export default function Footer() {
     <footer className="bg-navy-950 relative border-t border-white/10">
       <div className="stripe-rule-thin h-[3px] w-full" aria-hidden />
 
-      <div className="mx-auto max-w-[1600px] px-5 py-7 sm:px-8 sm:py-9 [@media(max-height:760px)]:py-5">
+      <div className="mx-auto max-w-[1800px] px-4 py-7 sm:px-5 sm:py-9 [@media(max-height:760px)]:py-5">
         <div className="grid gap-6 md:grid-cols-[1.6fr_1fr_1fr] md:gap-10 [@media(max-height:760px)]:gap-4">
           {/* Identity */}
           <div>

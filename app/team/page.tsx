@@ -26,13 +26,12 @@ export default function TeamPage() {
   return (
     <>
       <PageHero
-        eyebrow="Who builds it"
         title="Our Team"
         lede={`${SITE.memberCount} students across engineering, science and business, organised into ${SITE.subteamCount} sub-teams.`}
         image={TEAM_PHOTO}
       />
 
-      <section className="mx-auto max-w-[1600px] px-5 py-12 sm:px-8 sm:py-16">
+      <section className="mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
         <Reveal>
           <p className="text-chalk-dim/85 mx-auto max-w-3xl text-center text-base leading-relaxed text-balance sm:text-lg">
             {TEAM_INTRO}

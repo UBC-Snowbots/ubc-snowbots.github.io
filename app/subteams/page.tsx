@@ -24,13 +24,12 @@ export default function SubteamsPage() {
   return (
     <>
       <PageHero
-        eyebrow="How we're organised"
         title="Seven sub-teams"
         lede={`Every one of our ${SITE.memberCount} members sits on one. Cross-team integration is where most of the engineering actually happens.`}
         image="/media/team/software.jpg"
       />
 
-      <section className="mx-auto max-w-[1600px] px-5 py-14 sm:px-8 sm:py-20">
+      <section className="mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
         <div className="space-y-5">
           {SUBTEAMS.map((team, i) => (
             <Reveal key={team.slug} delay={(i % 3) * 70}>
@@ -53,13 +52,11 @@ export default function SubteamsPage() {
 
                   {/* Copy */}
                   <div className="flex flex-col p-6 sm:p-8">
-                    <p className="text-eyebrow">{String(i + 1).padStart(2, "0")}</p>
-
                     <h2 className="mt-3">
                       {/* Stretched link: covers the whole card, one tab stop. */}
                       <Link
                         href={`/subteams/${team.slug}`}
-                        className="font-display text-chalk text-3xl font-extrabold tracking-[-0.03em] transition-colors duration-300 group-hover:text-amber-500 after:absolute after:inset-0 sm:text-5xl"
+                        className="font-display text-chalk text-3xl font-medium tracking-[-0.03em] transition-colors duration-300 group-hover:text-amber-500 after:absolute after:inset-0 sm:text-5xl"
                       >
                         {team.name}
                       </Link>

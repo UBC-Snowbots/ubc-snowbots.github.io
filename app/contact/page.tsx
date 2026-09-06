@@ -18,12 +18,11 @@ export default function ContactPage() {
   return (
     <>
       <PageHero
-        eyebrow="Say hello"
         title="Get in touch"
         lede="Sponsorship, recruitment, media or partnership — we would like to hear from you."
       />
 
-      <section className="mx-auto max-w-[1600px] px-5 py-14 sm:px-8 sm:py-20">
+      <section className="mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
         <div className="grid gap-16 lg:grid-cols-[1.1fr_1fr] lg:gap-24">
           {/* Form — posts to the same Formspree endpoint the previous site used,
               so submissions keep landing in the team's existing inbox. It is a
@@ -31,7 +30,7 @@ export default function ContactPage() {
               before (or entirely without) hydration. */}
           <div>
             <Reveal>
-              <h2 className="font-display text-chalk text-3xl leading-[0.95] font-extrabold tracking-[-0.03em] sm:text-5xl">
+              <h2 className="font-display text-chalk text-3xl leading-[0.95] font-medium tracking-[-0.03em] sm:text-5xl">
                 Send us a message
               </h2>
             </Reveal>
@@ -120,7 +119,7 @@ export default function ContactPage() {
               <p className="text-eyebrow">Direct</p>
               <a
                 href={`mailto:${SITE.email}`}
-                className="group font-display text-chalk mt-4 inline-flex items-center gap-3 text-xl font-bold tracking-[-0.01em] transition-colors hover:text-amber-500 sm:text-2xl"
+                className="group font-display text-chalk mt-4 inline-flex items-center gap-3 text-xl font-semibold tracking-[-0.01em] transition-colors hover:text-amber-500 sm:text-2xl"
               >
                 {SITE.email}
                 <span

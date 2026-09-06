@@ -128,7 +128,7 @@ export default function SponsorLogo({ logo, blurb }: { logo: Sponsor; blurb?: st
         // that does not, and nobody discovers the writing behind it.
         <span
           aria-hidden
-          className="text-navy-950 absolute right-1.5 bottom-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-amber-500 font-mono text-[11px] leading-none font-bold"
+          className="text-navy-950 absolute right-1.5 bottom-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-amber-500 font-mono text-[11px] leading-none font-semibold"
         >
           +
         </span>
@@ -172,7 +172,7 @@ export default function SponsorLogo({ logo, blurb }: { logo: Sponsor; blurb?: st
               role="tooltip"
               className="border-navy-600 bg-navy-900 fixed z-50 border p-5 shadow-2xl shadow-black/50"
             >
-              <p className="font-display text-chalk text-base font-bold tracking-[-0.01em]">
+              <p className="font-display text-chalk text-base font-semibold tracking-[-0.01em]">
                 {logo.name}
               </p>
               <p className="text-chalk-dim/85 mt-2.5 text-sm leading-relaxed">{blurb}</p>

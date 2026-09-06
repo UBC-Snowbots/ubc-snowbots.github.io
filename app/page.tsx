@@ -40,7 +40,7 @@ export default function Home() {
         {/* pt clears the fixed header stack (banner 36px + bar 64/80px + 3px
             rule). The block is bottom-aligned, so without a top pad the eyebrow
             slides under the header on short viewports. */}
-        <div className="mx-auto w-full max-w-[1600px] px-5 pt-28 pb-12 sm:px-8 sm:pt-32 sm:pb-20 [@media(max-height:820px)]:pt-24 [@media(max-height:820px)]:pb-10">
+        <div className="mx-auto w-full max-w-[1800px] px-4 pt-28 pb-12 sm:px-5 sm:pt-32 sm:pb-20 [@media(max-height:820px)]:pt-24 [@media(max-height:820px)]:pb-10">
           <Reveal initiallyVisible>
             {/* White, not the amber .text-eyebrow: at 11px this needs 4.5:1, and
               amber over a photographic sky cannot reach that without darkening
@@ -51,7 +51,7 @@ export default function Home() {
           </Reveal>
 
           <Reveal delay={80} initiallyVisible>
-            <h1 className="font-display text-chalk mt-5 text-[clamp(2.75rem,min(13vw,17vh),12rem)] leading-[0.82] font-extrabold tracking-[-0.045em]">
+            <h1 className="font-display text-chalk mt-5 text-[clamp(2.75rem,min(13vw,17vh),12rem)] leading-[0.82] font-medium tracking-[-0.045em]">
               UBC
               <br />
               <span className="text-amber-500">ROVER</span>
@@ -65,7 +65,7 @@ export default function Home() {
           {/* The slogan, set as three beats so it reads like the flyer's
               stamped triad rather than a sentence. */}
           <Reveal delay={220} initiallyVisible>
-            <p className="font-display text-chalk mt-7 flex flex-wrap items-baseline gap-x-4 text-[clamp(1.9rem,min(6vw,7.5vh),4.5rem)] leading-[0.95] font-extrabold tracking-[-0.03em] uppercase sm:gap-x-7 [@media(max-height:820px)]:mt-5">
+            <p className="font-display text-chalk mt-7 flex flex-wrap items-baseline gap-x-4 text-[clamp(1.9rem,min(6vw,7.5vh),4.5rem)] leading-[0.95] font-medium tracking-[-0.03em] uppercase sm:gap-x-7 [@media(max-height:820px)]:mt-5">
               {SITE.slogan.map((word) => (
                 <span key={word}>
                   {word}
@@ -103,69 +103,76 @@ export default function Home() {
       {/* ==================================================================
           MISSION — one bold statement, generous air (Relativity).
           ================================================================== */}
-      <section className="mx-auto max-w-[1600px] px-5 py-16 sm:px-8 sm:py-20">
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-20">
-          <Reveal>
-            <p className="text-eyebrow">Who we are</p>
-            <h2 className="font-display text-chalk mt-5 text-4xl leading-[0.95] font-extrabold tracking-[-0.035em] sm:text-6xl">
-              We build Mars rovers
-              <span className="text-amber-500">.</span>
-              <br />
-              On campus. From scratch.
-            </h2>
-          </Reveal>
+      {/* The one light band on the page. It sits between the hero photo and the
+          tile grid, which are both dark and image-heavy, so it reads as a pause
+          rather than a different site — and it is the section that is pure
+          words, which is exactly the one that benefits from paper. */}
+      <section className="section-light">
+        <div className="mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-20">
+            <Reveal>
+              <h2 className="font-display text-chalk mt-5 text-4xl leading-[0.95] font-medium tracking-[-0.035em] sm:text-6xl">
+                We build Mars rovers
+                <span className="text-amber-500">.</span>
+                <br />
+                On campus. From scratch.
+              </h2>
+            </Reveal>
 
-          <Reveal delay={120}>
-            <div className="text-chalk-dim/85 space-y-6 text-base leading-relaxed sm:text-lg">
-              <p>
-                UBC Rover is a multidisciplinary team of {SITE.memberCount} students
-                dedicated to designing and building the next generation of semi-autonomous
-                Mars rovers. We push the boundaries of robotics through{" "}
-                {SITE.subteamCount} specialised sub-teams — from machine-learning-driven
-                navigation to swappable end-effectors.
-              </p>
-              <p>
-                Since our inception we have strived to push the limits of student
-                robotics, earning top placements at the University Rover Challenge and the
-                Canadian International Rover Challenge.
-              </p>
-              <p className="text-chalk">
-                Alongside the engineering, we run community outreach to inspire the next
-                wave of STEM leaders.
-              </p>
-            </div>
-          </Reveal>
-        </div>
-
-        {/* Stats band */}
-        <div className="mt-14 grid grid-cols-2 gap-px border border-white/10 bg-white/10 sm:mt-16 sm:grid-cols-3 lg:grid-cols-5">
-          {STATS.map((stat, i) => (
-            <Reveal
-              key={stat.label}
-              delay={i * 70}
-              // Five items do not tile into 2 or 3 columns, and the grid's
-              // parent background shows through any uncovered cell as a pale
-              // block. Letting the last item span the remainder closes it.
-              className={`bg-navy-950 ${
-                i === STATS.length - 1 ? "col-span-2 lg:col-span-1" : ""
-              }`}
-            >
-              <div className="p-7 sm:p-10">
-                <p
-                  className={
-                    stat.value === "PLACEHOLDER"
-                      ? "font-mono text-sm leading-none tracking-[0.14em] text-amber-500/70"
-                      : "font-display text-4xl leading-none font-extrabold tracking-[-0.04em] text-amber-500 xl:text-6xl"
-                  }
-                >
-                  {stat.value}
+            <Reveal delay={120}>
+              <div className="text-chalk-dim/85 space-y-6 text-base leading-relaxed sm:text-lg">
+                <p>
+                  UBC Rover is a multidisciplinary team of {SITE.memberCount} students
+                  dedicated to designing and building the next generation of
+                  semi-autonomous Mars rovers. We push the boundaries of robotics through{" "}
+                  {SITE.subteamCount} specialised sub-teams — from machine-learning-driven
+                  navigation to swappable end-effectors.
                 </p>
-                <p className="text-chalk-dim/60 mt-4 font-mono text-[11px] leading-relaxed tracking-[0.14em] uppercase">
-                  {stat.label}
+                <p>
+                  Since our inception we have strived to push the limits of student
+                  robotics, earning top placements at the University Rover Challenge and
+                  the Canadian International Rover Challenge.
+                </p>
+                <p className="text-chalk">
+                  Alongside the engineering, we run community outreach to inspire the next
+                  wave of STEM leaders.
                 </p>
               </div>
             </Reveal>
-          ))}
+          </div>
+
+          {/* Stats band */}
+          <div className="mt-12 grid grid-cols-2 gap-px border border-white/10 bg-white/10 sm:mt-14 sm:grid-cols-3 lg:grid-cols-5">
+            {STATS.map((stat, i) => (
+              <Reveal
+                key={stat.label}
+                delay={i * 70}
+                // Five items do not tile into 2 or 3 columns, and the grid's
+                // parent background shows through any uncovered cell as a pale
+                // block. Letting the last item span the remainder closes it.
+                // bg is inherited from the band (.section-light remaps
+                // bg-navy-950), so the same markup works on either ground.
+                className={`bg-navy-950 ${
+                  i === STATS.length - 1 ? "col-span-2 lg:col-span-1" : ""
+                }`}
+              >
+                <div className="p-7 sm:p-10">
+                  <p
+                    className={
+                      stat.value === "PLACEHOLDER"
+                        ? "font-mono text-sm leading-none tracking-[0.14em] text-amber-500/70"
+                        : "font-display text-4xl leading-none font-medium tracking-[-0.04em] text-amber-500 xl:text-6xl"
+                    }
+                  >
+                    {stat.value}
+                  </p>
+                  <p className="text-chalk-dim/60 mt-4 font-mono text-[11px] leading-relaxed tracking-[0.14em] uppercase">
+                    {stat.label}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -178,7 +185,7 @@ export default function Home() {
       >
         <div aria-hidden className="grid-wash absolute inset-0 opacity-40" />
 
-        <div className="relative mx-auto max-w-[1600px] px-5 py-16 sm:px-8 sm:py-20">
+        <div className="relative mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
           <Reveal>
             {/* No visible heading. The four tiles are self-describing, and a
                 title plus eyebrow plus standfirst above them was three lines of
@@ -208,15 +215,14 @@ export default function Home() {
           COMPETITIONS — split panels, each linking out to the organiser.
           ================================================================== */}
       <section className="border-t border-white/10">
-        <div className="mx-auto max-w-[1600px] px-5 py-16 sm:px-8 sm:py-20">
+        <div className="mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
           <Reveal>
-            <p className="text-eyebrow">Where we prove it</p>
-            <h2 className="font-display text-chalk mt-4 text-4xl leading-[0.95] font-extrabold tracking-[-0.035em] sm:text-6xl">
+            <h2 className="font-display text-chalk mt-4 text-4xl leading-[0.95] font-medium tracking-[-0.035em] sm:text-6xl">
               Two Competitions.
             </h2>
           </Reveal>
 
-          <div className="mt-14 grid gap-5 lg:grid-cols-2">
+          <div className="mt-10 grid gap-4 sm:gap-5 lg:grid-cols-2">
             {COMPETITIONS.map((comp, i) => (
               <Reveal key={comp.abbr} delay={i * 110}>
                 <article className="group bg-navy-900 relative isolate flex h-full flex-col overflow-hidden border border-white/10">
@@ -232,13 +238,13 @@ export default function Home() {
                       aria-hidden
                       className="from-navy-900/88 via-navy-900/22 absolute inset-0 bg-gradient-to-t to-transparent"
                     />
-                    <span className="font-display text-chalk/95 absolute bottom-4 left-5 text-6xl font-extrabold tracking-[-0.04em] sm:text-7xl">
+                    <span className="font-display text-chalk/95 absolute bottom-4 left-5 text-6xl font-medium tracking-[-0.04em] sm:text-7xl">
                       {comp.abbr}
                     </span>
                   </div>
 
                   <div className="flex flex-1 flex-col p-6 sm:p-8">
-                    <h3 className="font-display text-chalk text-xl font-bold tracking-[-0.02em] sm:text-2xl">
+                    <h3 className="font-display text-chalk text-xl font-semibold tracking-[-0.02em] sm:text-2xl">
                       {comp.name}
                     </h3>
                     <p className="text-eyebrow mt-2 normal-case">{comp.location}</p>
@@ -266,7 +272,7 @@ export default function Home() {
           <Reveal delay={140}>
             <Link
               href="/compete"
-              className="group mt-10 inline-flex items-center gap-3 font-mono text-[11px] tracking-[0.18em] text-amber-500 uppercase"
+              className="group mt-8 inline-flex items-center gap-3 font-mono text-[11px] tracking-[0.18em] text-amber-500 uppercase"
             >
               <span className="border-b border-amber-500/40 pb-1 transition-colors group-hover:border-amber-500">
                 All competition detail
@@ -285,13 +291,12 @@ export default function Home() {
       {/* ==================================================================
           SPONSORS — logo wall.
           ================================================================== */}
-      <section className="bg-navy-900 border-t border-white/10">
-        <div className="mx-auto max-w-[1600px] px-5 py-14 sm:px-8 sm:py-16">
+      <section className="bg-navy-900/60 border-t border-white/10">
+        <div className="mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
           <Reveal>
             <div className="flex flex-wrap items-end justify-between gap-6">
               <div>
-                <p className="text-eyebrow">Backed by</p>
-                <h2 className="font-display text-chalk mt-4 text-3xl leading-[0.95] font-extrabold tracking-[-0.03em] sm:text-5xl">
+                <h2 className="font-display text-chalk mt-4 text-3xl leading-[0.95] font-medium tracking-[-0.03em] sm:text-5xl">
                   Our sponsors
                 </h2>
               </div>
@@ -313,7 +318,7 @@ export default function Home() {
           </Reveal>
 
           <Reveal delay={100}>
-            <ul className="mt-12 grid grid-cols-3 gap-3 sm:grid-cols-5 lg:grid-cols-8">
+            <ul className="mt-10 grid grid-cols-3 gap-3 sm:grid-cols-5 lg:grid-cols-8">
               {SPONSOR_TIERS.flatMap((t) => t.logos).map((logo) => (
                 <li key={logo.src}>
                   <div className="bg-chalk/92 flex aspect-[3/2] items-center justify-center rounded-sm p-3">
@@ -344,12 +349,9 @@ export default function Home() {
         />
         <div aria-hidden className="grid-wash absolute inset-0 -z-10 opacity-30" />
 
-        <div className="mx-auto max-w-[1600px] px-5 py-8 text-center sm:px-8 sm:py-10 [@media(max-height:760px)]:py-5">
+        <div className="mx-auto max-w-[1800px] px-4 py-8 text-center sm:px-5 sm:py-10 [@media(max-height:760px)]:py-5">
           <Reveal>
-            <p className="text-eyebrow [@media(max-height:680px)]:hidden">
-              Recruitment opens every September
-            </p>
-            <h2 className="font-display text-chalk mx-auto mt-3 max-w-4xl text-2xl leading-[0.95] font-extrabold tracking-[-0.04em] sm:text-4xl [@media(max-height:760px)]:mt-0 [@media(max-height:760px)]:text-xl">
+            <h2 className="font-display text-chalk mx-auto mt-3 max-w-4xl text-2xl leading-[0.95] font-medium tracking-[-0.04em] sm:text-4xl [@media(max-height:760px)]:mt-0 [@media(max-height:760px)]:text-xl">
               Build a rover with us.
             </h2>
             <div className="mt-6 flex flex-wrap justify-center gap-3 [@media(max-height:760px)]:mt-4">

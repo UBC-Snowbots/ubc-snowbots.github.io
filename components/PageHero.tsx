@@ -3,17 +3,20 @@ import Reveal from "./Reveal";
 /**
  * Shared masthead for every interior page.
  *
- * Keeping one component means the eyebrow / title / lede rhythm is identical
- * across /rover, /team, /compete, /join, /sponsors and /contact — which is what
- * makes a set of pages read as one site rather than six.
+ * Keeping one component means the title / lede rhythm is identical across
+ * /team, /compete, /join, /sponsors and /contact — which is what makes a set of
+ * pages read as one site rather than six.
+ *
+ * There is deliberately no eyebrow above the title. A small amber label over
+ * every H1 on every page is a tic, not information — it restated the title six
+ * different ways. The only one left on the site is the hero's, where it names
+ * the university.
  */
 export default function PageHero({
-  eyebrow,
   title,
   lede,
   image,
 }: {
-  eyebrow: string;
   title: string;
   lede?: string;
   image?: string;
@@ -42,13 +45,12 @@ export default function PageHero({
 
       <div /* pt clears the fixed header stack: 104px below sm, 120px above.
              Both values leave the same 24px gap. */
-        className="mx-auto max-w-[1600px] px-5 pt-32 pb-12 sm:px-8 sm:pt-36 sm:pb-16"
+        className="mx-auto max-w-[1800px] px-4 pt-28 pb-10 sm:px-5 sm:pt-32 sm:pb-14"
       >
         {/* initiallyVisible: this masthead is the first viewport on every
             interior page, so it must not wait for hydration to become opaque. */}
         <Reveal initiallyVisible>
-          <p className="text-eyebrow">{eyebrow}</p>
-          <h1 className="font-display text-chalk mt-4 max-w-4xl text-5xl leading-[0.9] font-extrabold tracking-[-0.04em] sm:text-7xl lg:text-8xl">
+          <h1 className="font-display text-chalk max-w-4xl text-5xl leading-[0.9] font-medium tracking-[-0.04em] sm:text-7xl lg:text-8xl">
             {title}
           </h1>
           {lede ? (

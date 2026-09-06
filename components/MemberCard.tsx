@@ -51,7 +51,7 @@ export function MemberCard({
               className="grid-wash bg-navy-950 absolute inset-0 flex items-center justify-center"
               aria-hidden
             >
-              <span className="font-display text-4xl font-extrabold tracking-[-0.03em] text-amber-500/45 sm:text-5xl">
+              <span className="font-display text-4xl font-medium tracking-[-0.03em] text-amber-500/45 sm:text-5xl">
                 {initials(person.name)}
               </span>
             </div>
@@ -61,7 +61,7 @@ export function MemberCard({
           {/* Name and LinkedIn share a row so the caption is two lines whether
               or not the person has a link. */}
           <div className="flex items-start justify-between gap-3">
-            <p className="font-display text-chalk text-base leading-tight font-bold tracking-[-0.01em] sm:text-lg">
+            <p className="font-display text-chalk text-base leading-tight font-semibold tracking-[-0.01em] sm:text-lg">
               {person.name}
             </p>
             <LinkedInLink person={person} />
@@ -85,7 +85,7 @@ export function PlaceholderCard({ note }: { note: string }) {
     <Reveal>
       <figure className="bg-navy-900 h-full border border-dashed border-amber-500/40">
         <div className="grid-wash bg-navy-950 relative flex aspect-[3/4] items-center justify-center">
-          <span className="font-display text-4xl font-extrabold tracking-[-0.03em] text-amber-500/35 sm:text-5xl">
+          <span className="font-display text-4xl font-medium tracking-[-0.03em] text-amber-500/35 sm:text-5xl">
             ?
           </span>
         </div>

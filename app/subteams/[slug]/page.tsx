@@ -37,20 +37,14 @@ export default async function SubteamPage({ params }: Params) {
 
   return (
     <>
-      <PageHero
-        eyebrow="Sub-team"
-        title={team.name}
-        lede={team.blurb}
-        image={team.image}
-      />
+      <PageHero title={team.name} lede={team.blurb} image={team.image} />
 
-      <section className="mx-auto max-w-[1600px] px-5 py-14 sm:px-8 sm:py-16">
+      <section className="mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
         {/* Apply */}
         <Reveal>
           <div className="bg-navy-900 flex flex-col gap-6 border border-white/10 p-8 sm:flex-row sm:items-center sm:justify-between sm:p-10">
             <div>
-              <p className="text-eyebrow">Join {team.name}</p>
-              <p className="font-display text-chalk mt-3 text-2xl font-extrabold tracking-[-0.02em] sm:text-3xl">
+              <p className="font-display text-chalk mt-3 text-2xl font-medium tracking-[-0.02em] sm:text-3xl">
                 Applications open every Fall.
               </p>
             </div>
@@ -82,8 +76,7 @@ export default async function SubteamPage({ params }: Params) {
             ------------------------------------------------------------ */}
         <Reveal>
           <div className="mt-14 border-b border-white/10 pb-6">
-            <p className="text-eyebrow">What we do</p>
-            <h2 className="font-display text-chalk mt-3 text-3xl leading-[0.95] font-extrabold tracking-[-0.03em] sm:text-5xl">
+            <h2 className="font-display text-chalk mt-3 text-3xl leading-[0.95] font-medium tracking-[-0.03em] sm:text-5xl">
               {owned.length ? "The systems we build" : "What we handle"}
             </h2>
           </div>
@@ -109,13 +102,10 @@ export default async function SubteamPage({ params }: Params) {
                   </Reveal>
 
                   <Reveal delay={110}>
-                    <p className="text-eyebrow">
-                      {String(i + 1).padStart(2, "0")} &nbsp;/&nbsp; Subsystem
-                    </p>
-                    <h3 className="font-display text-chalk mt-3 text-3xl font-extrabold tracking-[-0.03em] sm:text-4xl">
+                    <h3 className="font-display text-chalk mt-3 text-3xl font-medium tracking-[-0.03em] sm:text-4xl">
                       {sub.name}
                     </h3>
-                    <p className="font-display text-chalk mt-4 text-lg leading-snug font-bold tracking-[-0.01em]">
+                    <p className="font-display text-chalk mt-4 text-lg leading-snug font-semibold tracking-[-0.01em]">
                       {sub.role}
                     </p>
                     <p className="text-chalk-dim/85 mt-5 text-base leading-relaxed">
@@ -181,7 +171,7 @@ export default async function SubteamPage({ params }: Params) {
                   <p className="font-mono text-[11px] tracking-[0.2em] text-amber-500">
                     {String(i + 1).padStart(2, "0")}
                   </p>
-                  <p className="font-display text-chalk mt-4 text-lg leading-snug font-bold tracking-[-0.01em]">
+                  <p className="font-display text-chalk mt-4 text-lg leading-snug font-semibold tracking-[-0.01em]">
                     {cap}
                   </p>
                 </div>
@@ -192,7 +182,7 @@ export default async function SubteamPage({ params }: Params) {
 
         {/* Other sub-teams */}
         <Reveal>
-          <h2 className="font-display text-chalk mt-16 text-2xl font-extrabold tracking-[-0.02em] sm:text-3xl">
+          <h2 className="font-display text-chalk mt-16 text-2xl font-medium tracking-[-0.02em] sm:text-3xl">
             Other sub-teams
           </h2>
           <div className="mt-6 flex flex-wrap gap-3">

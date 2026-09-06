@@ -14,13 +14,12 @@ export default function SponsorsPage() {
   return (
     <>
       <PageHero
-        eyebrow="Who makes it possible"
         title="Sponsor the build"
         lede="As a student-led team we rely on strategic sponsorship and community funding to design, build and deploy our rovers on the world stage."
         image="/media/team/arm.jpg"
       />
 
-      <section className="mx-auto max-w-[1600px] px-5 py-14 sm:px-8 sm:py-20">
+      <section className="mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
         {/* What sponsorship gets you — one undifferentiated offer, quoted from
             the source site. The team does not tier its benefits, so neither do
             we; inventing a ladder would be promising things on their behalf. */}
@@ -37,7 +36,7 @@ export default function SponsorsPage() {
         <div className="mt-14 space-y-12">
           {SPONSOR_TIERS.map((tier) => (
             <Reveal key={tier.tier}>
-              <h2 className="font-display text-chalk border-b border-white/10 pb-6 text-3xl font-extrabold tracking-[-0.03em] sm:text-4xl">
+              <h2 className="font-display text-chalk border-b border-white/10 pb-6 text-3xl font-medium tracking-[-0.03em] sm:text-4xl">
                 {tier.tier}
               </h2>
 
@@ -55,8 +54,7 @@ export default function SponsorsPage() {
         {/* CTA */}
         <Reveal>
           <div className="to-navy-950 mt-18 border border-white/10 bg-gradient-to-br from-indigo-600/40 p-10 text-center sm:p-16">
-            <p className="text-eyebrow">Partnership</p>
-            <h2 className="font-display text-chalk mx-auto mt-5 max-w-3xl text-3xl leading-[0.95] font-extrabold tracking-[-0.035em] sm:text-5xl">
+            <h2 className="font-display text-chalk mx-auto mt-5 max-w-3xl text-3xl leading-[0.95] font-medium tracking-[-0.035em] sm:text-5xl">
               Put your name on a Mars rover.
             </h2>
             <p className="text-chalk-dim/80 mx-auto mt-6 max-w-lg text-base leading-relaxed">

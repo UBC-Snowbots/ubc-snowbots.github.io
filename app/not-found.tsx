@@ -6,9 +6,9 @@ export default function NotFound() {
     <section className="relative isolate flex min-h-[80svh] items-center overflow-hidden">
       <div aria-hidden className="grid-wash absolute inset-0 -z-10 opacity-40" />
 
-      <div className="mx-auto w-full max-w-[1600px] px-5 py-20 sm:px-8">
+      <div className="mx-auto w-full max-w-[1800px] px-4 py-14 sm:px-5">
         <p className="text-eyebrow">Error 404</p>
-        <h1 className="font-display text-chalk mt-5 text-[clamp(3.5rem,14vw,11rem)] leading-[0.85] font-extrabold tracking-[-0.045em]">
+        <h1 className="font-display text-chalk mt-5 text-[clamp(3.5rem,14vw,11rem)] leading-[0.85] font-medium tracking-[-0.045em]">
           Off<span className="text-amber-500">-</span>course
         </h1>
         <StripeRule className="mt-8 max-w-md" />

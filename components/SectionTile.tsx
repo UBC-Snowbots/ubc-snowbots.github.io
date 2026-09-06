@@ -16,9 +16,11 @@ import type { SectionTile as Tile } from "@/lib/content";
  * of these sit in a grid, and every extra line of chrome multiplies by four.
  * The title and the photo say where the link goes; the page behind it explains.
  *
- * The label decodes out of noise on hover — hover being a capability here, not
- * a breakpoint. Touch and keyboard users get the settled text immediately
- * rather than a state they cannot reach.
+ * At rest the tile shows only its title. The label fades in and decodes out of
+ * noise on hover, the way Anduril's product cards do. Both the hiding and the
+ * decode are gated on hover CAPABILITY rather than a breakpoint — on touch the
+ * label is simply always visible, since there is no hover there to reveal it
+ * with and hiding it would delete the copy from every phone.
  *
  * CLS: the media sits in a fixed-aspect box with the image absolutely filling
  * it, so the tile occupies its final height before the photo arrives.
@@ -38,6 +40,8 @@ export default function SectionTile({
       aria-label={`${tile.title} — ${tile.blurb}`}
       onPointerEnter={(e) => e.pointerType === "mouse" && setDecoding(true)}
       onPointerLeave={(e) => e.pointerType === "mouse" && setDecoding(false)}
+      onFocus={() => setDecoding(true)}
+      onBlur={() => setDecoding(false)}
       className="group bg-navy-900 relative isolate block overflow-hidden border border-white/10 transition-colors duration-500 hover:border-amber-500/40 focus-visible:border-amber-500/40"
     >
       {/* Media */}
@@ -72,7 +76,7 @@ export default function SectionTile({
       {/* Label block, bottom-left */}
       <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
         <div className="flex items-end justify-between gap-4">
-          <h3 className="font-display text-chalk text-3xl leading-[0.95] font-extrabold tracking-[-0.03em] sm:text-5xl">
+          <h3 className="font-display text-chalk text-3xl leading-[0.95] font-medium tracking-[-0.03em] sm:text-5xl">
             {tile.title}
           </h3>
 
@@ -85,15 +89,15 @@ export default function SectionTile({
           </span>
         </div>
 
-        {/* The label is always present — it is five words, and hiding it until
-            hover would keep it from touch users entirely. Hover only changes
-            HOW it arrives. min-h reserves the line so the decode cannot reflow
-            the tile. */}
-        <DecodeText
-          text={tile.blurb}
-          active={decoding}
-          className="text-chalk-dim/80 mt-3 block min-h-[1.25rem] font-mono text-[11px] tracking-[0.14em] uppercase"
-        />
+        {/* min-h reserves the line whether or not the label is showing, so
+            neither the reveal nor the decode can reflow the tile. */}
+        <div className="label-on-hover mt-3 min-h-[1.25rem]">
+          <DecodeText
+            text={tile.blurb}
+            active={decoding}
+            className="text-chalk-dim/85 block font-mono text-[11px] tracking-[0.14em] uppercase"
+          />
+        </div>
       </div>
 
       {/* Amber rule that draws in along the bottom edge on hover. */}

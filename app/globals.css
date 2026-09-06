@@ -44,6 +44,19 @@
   --color-chalk: #eef1f6;
   --color-chalk-dim: #d2cfd1;
 
+  /* -- light surfaces ----------------------------------------------------
+     Sections alternate rather than running one unbroken navy. These are not
+     white: pure #fff against the navy is a ~19:1 jump that reads as two
+     different websites stapled together. `mist` is the navy hue pulled up to
+     a near-white, and `slate` is a mid tone for a band that needs to sit
+     between the two without competing with either. Text on both is navy-950,
+     so the palette stays the same four colours throughout. */
+  --color-mist: #e8eaef;
+  --color-mist-deep: #d5d9e2;
+  --color-slate-mid: #7c8398;
+  /* Accent for light grounds — see .section-light. 5.43:1 on mist. */
+  --color-amber-ink: #8a4f16;
+
   /* -- type -------------------------------------------------------------- */
   --font-display: var(--font-archivo), "Archivo", system-ui, sans-serif;
   --font-sans: var(--font-inter), "Inter", system-ui, sans-serif;
@@ -75,6 +88,7 @@
     background-color: var(--color-navy-950);
     color: var(--color-chalk);
     font-family: var(--font-sans);
+    font-weight: 350;
     font-synthesis-weight: none;
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
@@ -91,10 +105,17 @@
     border-radius: 2px;
   }
 
+  /* Display type sits at 500, not 800.
+     The heavy grotesque read as a poster; at large sizes an extrabold face
+     turns headings into blocks and swallows the tracking. Medium keeps the
+     condensed silhouette while letting the counters open up, which is what
+     makes the reference sites look engineered rather than shouted. Weight is
+     set here so a heading is light BY DEFAULT and has to opt into more. */
   h1,
   h2,
   h3 {
     font-family: var(--font-display);
+    font-weight: 500;
     text-wrap: balance;
   }
 
@@ -121,6 +142,57 @@
       var(--color-indigo-400) 50% 75%,
       var(--color-chalk) 75% 100%
     );
+  }
+
+  /**
+   * A section on a light ground.
+   *
+   * The dark palette is expressed through a handful of utility classes
+   * (text-chalk, text-chalk-dim/70, border-white/10) scattered across every
+   * page. Re-authoring all of them per section would mean two copies of every
+   * block, which drift. Instead this remaps those same tokens inside the
+   * section, so one class on the wrapper flips the whole ramp and the markup
+   * underneath is untouched.
+   */
+  .section-light {
+    background-color: var(--color-mist);
+    color: var(--color-navy-950);
+  }
+
+  .section-light :is(h1, h2, h3, h4) {
+    color: var(--color-navy-950);
+  }
+
+  .section-light .text-chalk,
+  .section-light .text-chalk\/90 {
+    color: var(--color-navy-950);
+  }
+
+  .section-light [class*="text-chalk-dim"] {
+    color: color-mix(in srgb, var(--color-navy-950) 72%, transparent);
+  }
+
+  .section-light [class*="border-white/"] {
+    border-color: color-mix(in srgb, var(--color-navy-950) 14%, transparent);
+  }
+
+  .section-light [class*="divide-white/"] > * + * {
+    border-color: color-mix(in srgb, var(--color-navy-950) 12%, transparent);
+  }
+
+  /* The amber accent is a mid-tone: it carries on navy but not on mist.
+     amber-700 was the obvious swap and still only measured 3.94:1 against
+     #e8eaef — under the 4.5 small-text floor. This deeper burnt amber measures
+     5.43:1 while staying recognisably the same accent. */
+  .section-light .text-eyebrow,
+  .section-light [class*="text-amber-500"],
+  .section-light [class*="text-amber-500/"] {
+    color: var(--color-amber-ink);
+  }
+
+  .section-light .bg-navy-900,
+  .section-light .bg-navy-950 {
+    background-color: var(--color-mist-deep);
   }
 
   /* Fine grid wash — the "engineering drawing" texture behind dark sections. */
@@ -179,6 +251,36 @@
     .group:focus-within .reveal-on-hover {
       grid-template-rows: 1fr;
       opacity: 1;
+    }
+  }
+
+  /**
+   * Hidden until the tile is hovered — the Anduril card treatment, where a
+   * grid shows only titles until you point at one.
+   *
+   * Gated on hover CAPABILITY. A touch device has no hover to open this with,
+   * so it simply shows the label; hiding it there would delete the copy from
+   * every phone rather than deferring it. Opacity and transform only, so the
+   * reveal never reflows the tile or costs a layout pass.
+   */
+  .label-on-hover {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .label-on-hover {
+      opacity: 0;
+      transform: translate3d(0, 6px, 0);
+      transition:
+        opacity 0.35s var(--ease-out-quart),
+        transform 0.45s var(--ease-out-expo);
+    }
+
+    .group:hover .label-on-hover,
+    .group:focus-visible .label-on-hover {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
     }
   }
 

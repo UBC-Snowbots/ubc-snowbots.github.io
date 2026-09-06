@@ -63,7 +63,7 @@ export default function TeamSection({
   const right = split ? people.slice(half) : people;
 
   return (
-    <section className="mx-auto max-w-[1600px] px-5 py-8 sm:px-8 sm:py-10">
+    <section className="mx-auto max-w-[1800px] px-4 py-8 sm:px-5 sm:py-10">
       <div
         className={`grid items-stretch gap-5 ${
           left.length

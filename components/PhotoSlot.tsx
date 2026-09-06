@@ -38,7 +38,7 @@ export default function PhotoSlot({
             <p className="font-mono text-[11px] tracking-[0.22em] text-amber-500 uppercase">
               Photo slot
             </p>
-            <p className="font-display text-chalk mt-3 text-2xl font-extrabold tracking-[-0.02em]">
+            <p className="font-display text-chalk mt-3 text-2xl font-medium tracking-[-0.02em]">
               {slot}
             </p>
             <p className="text-chalk-dim/60 mt-3 max-w-xs text-xs leading-relaxed">
