@@ -30,7 +30,7 @@ export default function CompetePage() {
                 className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-16"
               >
                 <Reveal>
-                  <h2 className="font-display mt-4 text-[clamp(3.5rem,9vw,7rem)] leading-[0.85] font-medium tracking-[-0.045em] text-amber-500">
+                  <h2 className="font-display mt-4 text-[clamp(3.5rem,9vw,7rem)] leading-[0.85] font-semibold tracking-[-0.045em] text-amber-500">
                     {comp.abbr}
                   </h2>
                   <h3 className="font-display text-chalk mt-5 text-2xl leading-tight font-semibold tracking-[-0.02em] sm:text-3xl">

@@ -8,7 +8,7 @@ export default function NotFound() {
 
       <div className="mx-auto w-full max-w-[1800px] px-4 py-14 sm:px-5">
         <p className="text-eyebrow">Error 404</p>
-        <h1 className="font-display text-chalk mt-5 text-[clamp(3.5rem,14vw,11rem)] leading-[0.85] font-medium tracking-[-0.045em]">
+        <h1 className="font-display text-chalk mt-5 text-[clamp(3.5rem,14vw,11rem)] leading-[0.85] font-semibold tracking-[-0.045em]">
           Off<span className="text-amber-500">-</span>course
         </h1>
         <StripeRule className="mt-8 max-w-md" />

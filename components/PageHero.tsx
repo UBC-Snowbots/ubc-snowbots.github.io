@@ -52,7 +52,7 @@ export default function PageHero({
         {/* initiallyVisible: this masthead is the first viewport on every
             interior page, so it must not wait for hydration to become opaque. */}
         <Reveal initiallyVisible>
-          <h1 className="font-display text-chalk max-w-4xl text-5xl leading-[0.9] font-medium tracking-[-0.04em] sm:text-7xl lg:text-8xl">
+          <h1 className="font-display text-chalk max-w-4xl text-5xl leading-[0.9] font-semibold tracking-[-0.04em] sm:text-7xl lg:text-8xl">
             {title}
           </h1>
           {lede ? (

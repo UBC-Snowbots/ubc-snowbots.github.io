@@ -152,7 +152,12 @@ export default function Header() {
     <>
       <div ref={sentinel} aria-hidden className="absolute top-0 h-px w-full" />
 
-      <header className="fixed inset-x-0 top-0 z-50">
+      {/* Close is owned by the header as a whole, not by the nav row or the
+          panel. Moving the pointer from the open panel back up across the bar
+          used to close it, because both had their own leave handler and the
+          bar's fired on the way past. Only leaving the header entirely, or
+          pointing at a DIFFERENT nav item, dismisses it now. */}
+      <header className="fixed inset-x-0 top-0 z-50" onPointerLeave={scheduleClose}>
         <div
           className={`relative transition-colors duration-500 ${
             scrolled || open || menu
@@ -203,7 +208,6 @@ export default function Header() {
             <nav
               aria-label="Primary"
               className="hidden items-center justify-center gap-8 lg:flex"
-              onPointerLeave={scheduleClose}
             >
               {NAV.map((item) => {
                 const active = item.href
@@ -250,7 +254,7 @@ export default function Header() {
                     key={item.href}
                     href={item.href as string}
                     aria-current={active ? "page" : undefined}
-                    onPointerEnter={(e) => e.pointerType === "mouse" && scheduleClose()}
+                    onPointerEnter={(e) => e.pointerType === "mouse" && setMenu(null)}
                     className={cls}
                   >
                     {item.label}
@@ -269,6 +273,7 @@ export default function Header() {
                   key={item.href}
                   href={item.href}
                   aria-current={isActive(item.href) ? "page" : undefined}
+                  onPointerEnter={(e) => e.pointerType === "mouse" && setMenu(null)}
                   className={`py-1 font-mono text-[11px] font-bold tracking-[0.16em] uppercase transition-colors duration-200 ${
                     isActive(item.href)
                       ? "text-amber-500"
@@ -326,7 +331,6 @@ export default function Header() {
             <div
               key={item.label}
               onPointerEnter={() => openMenu(item.label)}
-              onPointerLeave={scheduleClose}
               className={`hidden overflow-hidden transition-[grid-template-rows,opacity] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] lg:grid ${
                 menu === item.label
                   ? "grid-rows-[1fr] opacity-100"
@@ -336,20 +340,24 @@ export default function Header() {
               <div className="min-h-0">
                 <div className="mx-auto grid max-w-[1800px] grid-cols-3 gap-12 px-4 pt-7 pb-14 sm:px-5">
                   <div>
-                    <p className="text-chalk-dim/50 font-mono text-[10px] tracking-[0.22em] uppercase">
-                      {item.label}
-                    </p>
-                    <p className="text-chalk-dim/85 mt-6 max-w-sm text-sm leading-relaxed">
+                    <DecodeText
+                      text={item.label}
+                      active={menu === item.label}
+                      className="text-chalk block font-mono text-[13px] tracking-[0.18em] uppercase"
+                    />
+                    <p className="text-chalk-dim/85 mt-4 max-w-sm text-sm leading-relaxed">
                       {item.menu?.description}
                     </p>
                   </div>
 
                   {/* One column, no descriptions — the names are the menu. */}
                   <div>
-                    <p className="text-chalk-dim/50 font-mono text-[10px] tracking-[0.22em] uppercase">
-                      {item.label}
-                    </p>
-                    <ul className="mt-6">
+                    <DecodeText
+                      text={item.label}
+                      active={menu === item.label}
+                      className="text-chalk block font-mono text-[13px] tracking-[0.18em] uppercase"
+                    />
+                    <ul className="mt-4">
                       {item.menu?.items.map((sub) => (
                         <li key={sub.href}>
                           <Link
@@ -359,7 +367,7 @@ export default function Header() {
                               e.pointerType === "mouse" && setHovered(sub.slug)
                             }
                             onFocus={() => setHovered(sub.slug)}
-                            className="group/item flex items-center gap-3 py-1.5"
+                            className="group/item flex items-center gap-3 py-1"
                           >
                             <span
                               aria-hidden
@@ -371,15 +379,15 @@ export default function Header() {
                             >
                               +
                             </span>
-                            <DecodeText
-                              text={sub.label}
-                              active={menu === item.label && hovered === sub.slug}
+                            <span
                               className={`text-base transition-colors ${
                                 hovered === sub.slug
                                   ? "text-amber-500"
-                                  : "text-chalk hover:text-chalk-dim/60"
+                                  : "text-chalk hover:text-chalk-dim/55"
                               }`}
-                            />
+                            >
+                              {sub.label}
+                            </span>
                           </Link>
                         </li>
                       ))}
@@ -393,9 +401,9 @@ export default function Header() {
                     <DecodeText
                       text="Projects"
                       active={menu === item.label}
-                      className="text-chalk-dim/50 block font-mono text-[10px] tracking-[0.22em] uppercase"
+                      className="text-chalk block font-mono text-[13px] tracking-[0.18em] uppercase"
                     />
-                    <ul className="mt-6">
+                    <ul className="mt-4">
                       {subsystemsForSubteam(hovered).map((sys) => (
                         <li key={sys.slug}>
                           <Link
@@ -408,7 +416,7 @@ export default function Header() {
                         </li>
                       ))}
                       {subsystemsForSubteam(hovered).length === 0 ? (
-                        <li className="text-chalk-dim/40 py-1.5 font-mono text-xs">
+                        <li className="text-chalk-dim/40 py-1 font-mono text-xs">
                           Not documented yet
                         </li>
                       ) : null}

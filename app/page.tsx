@@ -56,7 +56,7 @@ export default function Home() {
           </Reveal>
 
           <Reveal delay={80} initiallyVisible>
-            <h1 className="font-display text-chalk mt-5 text-[clamp(2.75rem,min(13vw,17vh),12rem)] leading-[0.82] font-medium tracking-[-0.045em]">
+            <h1 className="font-display text-chalk mt-5 text-[clamp(2.75rem,min(13vw,17vh),12rem)] leading-[0.82] font-semibold tracking-[-0.045em]">
               UBC
               <br />
               <span className="text-amber-500">ROVER</span>
@@ -70,7 +70,7 @@ export default function Home() {
           {/* The slogan, set as three beats so it reads like the flyer's
               stamped triad rather than a sentence. */}
           <Reveal delay={220} initiallyVisible>
-            <p className="font-display text-chalk mt-7 flex flex-wrap items-baseline gap-x-4 text-[clamp(1.9rem,min(6vw,7.5vh),4.5rem)] leading-[0.95] font-medium tracking-[-0.03em] uppercase sm:gap-x-7 [@media(max-height:820px)]:mt-5">
+            <p className="font-display text-chalk mt-7 flex flex-wrap items-baseline gap-x-4 text-[clamp(1.9rem,min(6vw,7.5vh),4.5rem)] leading-[0.95] font-semibold tracking-[-0.03em] uppercase sm:gap-x-7 [@media(max-height:820px)]:mt-5">
               {SITE.slogan.map((word) => (
                 <span key={word}>
                   {word}
@@ -111,7 +111,7 @@ export default function Home() {
       {/* Raised band. It sits between the hero photo and the panel grid, both
           image-heavy, so a step up in the navy marks it as the page's one block
           of pure writing without turning it into a different-coloured page. */}
-      <section className="flex min-h-[100svh] flex-col justify-center">
+      <section className="section-raised flex min-h-[100svh] flex-col justify-center">
         <div className="mx-auto w-full max-w-[1800px] px-4 py-16 sm:px-5 sm:py-20">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] lg:gap-16">
             <Reveal from="left">
@@ -120,7 +120,7 @@ export default function Home() {
                   step below it. The full stop is set in the body colour, not
                   amber: a single orange dot on an otherwise black-on-bone
                   section was the only warm mark in it and read as decoration. */}
-              <h2 className="font-display text-chalk text-[clamp(2.25rem,4.6vw,4.25rem)] leading-[0.95] font-medium tracking-[-0.04em]">
+              <h2 className="font-display text-chalk text-[clamp(2.25rem,4.6vw,4.25rem)] leading-[0.95] font-semibold tracking-[-0.04em]">
                 We build Mars rovers.
                 <br />
                 On campus. From scratch.
@@ -170,7 +170,7 @@ export default function Home() {
                     className={
                       stat.value === "PLACEHOLDER"
                         ? "font-mono text-sm leading-none tracking-[0.14em] text-amber-500/70"
-                        : "font-display text-chalk text-4xl leading-none font-medium tracking-[-0.04em] xl:text-6xl"
+                        : "font-display text-chalk text-4xl leading-none font-semibold tracking-[-0.04em] xl:text-6xl"
                     }
                   >
                     {stat.value}
@@ -189,8 +189,6 @@ export default function Home() {
           SECTION GRID — the core "click and enter" surface (Anduril).
           ================================================================== */}
       <section aria-labelledby="explore-heading" className="relative">
-        <div aria-hidden className="grid-wash absolute inset-0 opacity-40" />
-
         <div className="relative mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
           <Reveal>
             {/* One word. The earlier version was a title plus an eyebrow plus
@@ -199,7 +197,7 @@ export default function Home() {
                 arguing for it. */}
             <h2
               id="explore-heading"
-              className="font-display text-chalk mb-8 text-4xl leading-[0.95] font-medium tracking-[-0.035em] sm:mb-10 sm:text-5xl"
+              className="font-display text-chalk mb-8 text-4xl leading-[0.95] font-semibold tracking-[-0.035em] sm:mb-10 sm:text-5xl"
             >
               Explore
             </h2>
@@ -230,7 +228,7 @@ export default function Home() {
       <section className="section-raised">
         <div className="mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
           <Reveal>
-            <h2 className="font-display text-chalk mb-8 text-4xl leading-[0.95] font-medium tracking-[-0.035em] sm:mb-10 sm:text-5xl">
+            <h2 className="font-display text-chalk mb-8 text-4xl leading-[0.95] font-semibold tracking-[-0.035em] sm:mb-10 sm:text-5xl">
               Our Competitions
             </h2>
           </Reveal>
@@ -246,7 +244,7 @@ export default function Home() {
                   decode={comp.location}
                   // Two revealed lines here rather than Explore's one, so the
                   // title has further to travel to clear them.
-                  lift="5.5rem"
+                  lift="6.5rem"
                 >
                   <p className="text-chalk-dim/80 mt-3 max-w-md text-sm leading-relaxed">
                     {comp.blurb}
@@ -283,7 +281,7 @@ export default function Home() {
           <Reveal>
             <div className="flex flex-wrap items-end justify-between gap-6">
               <div>
-                <h2 className="font-display text-chalk mt-4 text-3xl leading-[0.95] font-medium tracking-[-0.03em] sm:text-5xl">
+                <h2 className="font-display text-chalk mt-4 text-3xl leading-[0.95] font-semibold tracking-[-0.03em] sm:text-5xl">
                   Our sponsors
                 </h2>
               </div>
@@ -329,47 +327,48 @@ export default function Home() {
           one viewport so the final snap position shows the whole recruitment
           message AND the footer together, with nothing cut off.
           ================================================================== */}
-      {/* CLOSING CALL — the last thing on the page, so it gets room.
-          It was previously compressed to share a viewport with the footer, and
-          at 2xl the closing line was smaller than the section headings above
-          it, which read as the page trailing off rather than landing. */}
-      <section className="relative isolate flex min-h-[70svh] items-center overflow-hidden border-t border-white/10">
-        <div
-          aria-hidden
-          className="via-navy-850 to-navy-950 absolute inset-0 -z-10 bg-gradient-to-br from-indigo-600"
-        />
-        <div aria-hidden className="grid-wash absolute inset-0 -z-10 opacity-30" />
-        {/* Slow amber wash drifting behind the type. The only animation on the
-            page that runs unprompted, which is affordable here because it is
-            one element, transform-only, and the last thing before the footer. */}
-        <div
-          aria-hidden
-          className="animate-drift absolute -top-1/3 left-1/2 -z-10 h-[70vmax] w-[70vmax] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(218,156,62,0.14),transparent_62%)]"
-        />
+      {/* CLOSING CALL - an inset box rather than a full-bleed band, with its
+          edges on the same gutter as the Explore panels so the page closes on
+          the grid it has been using throughout.
 
-        <div className="mx-auto w-full max-w-[1800px] px-4 py-20 text-center sm:px-5 sm:py-24">
-          <Reveal>
-            <h2 className="font-display text-chalk mx-auto max-w-5xl text-[clamp(2.5rem,7vw,6rem)] leading-[0.9] font-extrabold tracking-[-0.045em]">
-              Build a rover with us
-              <span className="text-amber-500">.</span>
-            </h2>
-          </Reveal>
-          <Reveal delay={140}>
-            <div className="mt-10 flex flex-wrap justify-center gap-3">
-              <Link
-                href={applyHref()}
-                className="text-navy-950 bg-amber-500 px-10 py-4 font-mono text-[11px] tracking-[0.18em] uppercase transition-colors duration-200 hover:bg-amber-400"
-              >
-                Apply Now
-              </Link>
-              <Link
-                href="/contact"
-                className="text-chalk border border-white/25 px-10 py-4 font-mono text-[11px] tracking-[0.18em] uppercase transition-colors duration-200 hover:border-amber-500 hover:text-amber-500"
-              >
-                Get in Touch
-              </Link>
-            </div>
-          </Reveal>
+          The box inverts on hover: the raised navy becomes the deep navy. It is
+          the one element on the page that is entirely a call to action, so the
+          whole surface responding to the pointer is the point. */}
+      <section className="mx-auto max-w-[1800px] px-4 py-16 sm:px-5 sm:py-20">
+        <div className="group section-raised relative isolate overflow-hidden border border-white/10 transition-colors duration-500 hover:bg-[var(--color-navy-950)]">
+          <div
+            aria-hidden
+            className="animate-drift pointer-events-none absolute -top-1/3 left-1/2 -z-10 h-[70vmax] w-[70vmax] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(218,156,62,0.12),transparent_62%)]"
+          />
+
+          <div className="px-6 py-20 text-center sm:px-10 sm:py-28">
+            <Reveal>
+              <h2 className="font-display text-chalk mx-auto inline-block max-w-5xl text-[clamp(2.25rem,6vw,5rem)] leading-[0.9] font-extrabold tracking-[-0.045em]">
+                Build a rover with us
+                {/* Sweeps left to right on hover, easing at both ends. */}
+                <span
+                  aria-hidden
+                  className="slogan-rule mt-3 block h-[3px] w-full bg-amber-500"
+                />
+              </h2>
+            </Reveal>
+            <Reveal delay={140}>
+              <div className="mt-10 flex flex-wrap justify-center gap-3">
+                <Link
+                  href={applyHref()}
+                  className="text-navy-950 bg-amber-500 px-10 py-4 font-mono text-[13px] font-semibold tracking-[0.16em] uppercase transition-colors duration-200 hover:bg-amber-400"
+                >
+                  Apply Now
+                </Link>
+                <Link
+                  href="/contact"
+                  className="text-chalk border border-white/25 px-10 py-4 font-mono text-[13px] font-semibold tracking-[0.16em] uppercase transition-colors duration-200 hover:border-amber-500 hover:text-amber-500"
+                >
+                  Get in Touch
+                </Link>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
     </>

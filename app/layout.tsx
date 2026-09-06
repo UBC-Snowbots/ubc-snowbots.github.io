@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Inter, JetBrains_Mono } from "next/font/google";
+import { Chivo, Inter, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -20,7 +20,7 @@ import "./globals.css";
  * next/font self-hosts these at build time, so the static export makes zero
  * requests to Google and there is no font-swap flash.
  */
-const archivo = Archivo({
+const chivo = Chivo({
   variable: "--font-archivo",
   subsets: ["latin"],
   display: "swap",
@@ -84,7 +84,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${archivo.variable} ${inter.variable} ${jetbrains.variable} h-full antialiased`}
+      className={`${chivo.variable} ${inter.variable} ${jetbrains.variable} h-full antialiased`}
     >
       <head>
         {/* If scripting is unavailable the IntersectionObserver in <Reveal>

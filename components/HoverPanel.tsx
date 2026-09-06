@@ -73,7 +73,7 @@ export default function HoverPanel({
         style={{ "--label-lift": lift } as React.CSSProperties}
       >
         <div className="label-lift pr-10">
-          <h3 className="font-display text-chalk text-3xl leading-[0.95] font-medium tracking-[-0.03em] sm:text-5xl">
+          <h3 className="font-display text-chalk text-3xl leading-[0.95] font-semibold tracking-[-0.03em] sm:text-5xl">
             {title}
           </h3>
         </div>
@@ -84,7 +84,7 @@ export default function HoverPanel({
           <DecodeText
             text={decode}
             active={decoding}
-            className="text-chalk-dim/85 mt-1.5 block font-mono text-[11px] leading-relaxed tracking-[0.14em] uppercase"
+            className="text-chalk-dim/85 mt-3 block font-mono text-[11px] leading-relaxed tracking-[0.14em] uppercase"
           />
           {children}
         </div>

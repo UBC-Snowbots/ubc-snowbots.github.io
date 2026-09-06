@@ -45,7 +45,7 @@
   --color-chalk-dim: #d2cfd1;
 
   /* -- type -------------------------------------------------------------- */
-  --font-display: var(--font-archivo), "Archivo", system-ui, sans-serif;
+  --font-display: var(--font-archivo), "Chivo", system-ui, sans-serif;
   --font-sans: var(--font-inter), "Inter", system-ui, sans-serif;
   --font-mono: var(--font-mono-jb), ui-monospace, "JetBrains Mono", monospace;
 
@@ -76,7 +76,7 @@
     background-color: var(--color-navy-950);
     color: var(--color-chalk);
     font-family: var(--font-sans);
-    font-weight: 350;
+    font-weight: 400;
     font-synthesis-weight: none;
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
@@ -103,7 +103,9 @@
   h2,
   h3 {
     font-family: var(--font-display);
-    font-weight: 500;
+    /* 600, up from 500. At 500 the display face read as thin at the sizes it is
+       used, which flattened the hierarchy against body copy. */
+    font-weight: 600;
     text-wrap: balance;
   }
 
@@ -348,6 +350,32 @@
 
 .animate-marquee {
   animation: marquee-scroll var(--marquee-duration, 40s) linear infinite;
+}
+
+/**
+ * Underline that sweeps the slogan on hover.
+ *
+ * Not a linear wipe: the timing function is a symmetric ease-in-out, so it
+ * accelerates through the middle of the line and settles at each end. The
+ * effect is a rule that appears to be READING the slogan rather than being
+ * drawn across it.
+ *
+ * transform: scaleX with a left origin, so it stays on the compositor; a
+ * `width` transition would lay out every frame.
+ */
+.slogan-rule {
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .slogan-rule {
+    transition: transform 0.9s cubic-bezier(0.85, 0, 0.15, 1);
+  }
+
+  .group:hover .slogan-rule {
+    transform: scaleX(1);
+  }
 }
 
 /* Slow drift behind the closing call. Transform only, so it stays on the

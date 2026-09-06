@@ -87,7 +87,7 @@ export default function JoinPage() {
         <div className="mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
           <Reveal>
             <div className="border-b border-white/10 pb-6">
-              <h2 className="font-display text-chalk mt-3 text-3xl leading-[0.95] font-medium tracking-[-0.03em] sm:text-5xl">
+              <h2 className="font-display text-chalk mt-3 text-3xl leading-[0.95] font-semibold tracking-[-0.03em] sm:text-5xl">
                 What you&rsquo;d be working on
               </h2>
             </div>
@@ -136,7 +136,7 @@ export default function JoinPage() {
 
                     {/* Copy */}
                     <div>
-                      <h3 className="font-display text-chalk mt-3 text-3xl font-medium tracking-[-0.03em] sm:text-4xl">
+                      <h3 className="font-display text-chalk mt-3 text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">
                         {team.name}
                       </h3>
 
@@ -208,7 +208,7 @@ export default function JoinPage() {
       <section className="mx-auto max-w-[1800px] px-4 pb-16 sm:px-5 sm:pb-20">
         <Reveal>
           <div className="to-navy-950 border border-white/10 bg-gradient-to-br from-indigo-600/40 p-10 text-center sm:p-14">
-            <h2 className="font-display text-chalk mx-auto max-w-2xl text-3xl leading-[0.95] font-medium tracking-[-0.035em] sm:text-5xl">
+            <h2 className="font-display text-chalk mx-auto max-w-2xl text-3xl leading-[0.95] font-semibold tracking-[-0.035em] sm:text-5xl">
               Watch for the announcement
             </h2>
             <p className="text-chalk-dim/80 mx-auto mt-5 max-w-lg text-base leading-relaxed">

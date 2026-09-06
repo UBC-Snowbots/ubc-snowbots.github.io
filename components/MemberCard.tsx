@@ -51,7 +51,7 @@ export function MemberCard({
               className="grid-wash bg-navy-950 absolute inset-0 flex items-center justify-center"
               aria-hidden
             >
-              <span className="font-display text-4xl font-medium tracking-[-0.03em] text-amber-500/45 sm:text-5xl">
+              <span className="font-display text-4xl font-semibold tracking-[-0.03em] text-amber-500/45 sm:text-5xl">
                 {initials(person.name)}
               </span>
             </div>
@@ -85,7 +85,7 @@ export function PlaceholderCard({ note }: { note: string }) {
     <Reveal>
       <figure className="bg-navy-900 h-full border border-dashed border-amber-500/40">
         <div className="grid-wash bg-navy-950 relative flex aspect-[3/4] items-center justify-center">
-          <span className="font-display text-4xl font-medium tracking-[-0.03em] text-amber-500/35 sm:text-5xl">
+          <span className="font-display text-4xl font-semibold tracking-[-0.03em] text-amber-500/35 sm:text-5xl">
             ?
           </span>
         </div>

@@ -36,7 +36,7 @@ export default function SponsorsPage() {
         <div className="mt-14 space-y-12">
           {SPONSOR_TIERS.map((tier) => (
             <Reveal key={tier.tier}>
-              <h2 className="font-display text-chalk border-b border-white/10 pb-6 text-3xl font-medium tracking-[-0.03em] sm:text-4xl">
+              <h2 className="font-display text-chalk border-b border-white/10 pb-6 text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">
                 {tier.tier}
               </h2>
 
@@ -54,7 +54,7 @@ export default function SponsorsPage() {
         {/* CTA */}
         <Reveal>
           <div className="to-navy-950 mt-18 border border-white/10 bg-gradient-to-br from-indigo-600/40 p-10 text-center sm:p-16">
-            <h2 className="font-display text-chalk mx-auto mt-5 max-w-3xl text-3xl leading-[0.95] font-medium tracking-[-0.035em] sm:text-5xl">
+            <h2 className="font-display text-chalk mx-auto mt-5 max-w-3xl text-3xl leading-[0.95] font-semibold tracking-[-0.035em] sm:text-5xl">
               Put your name on a Mars rover.
             </h2>
             <p className="text-chalk-dim/80 mx-auto mt-6 max-w-lg text-base leading-relaxed">

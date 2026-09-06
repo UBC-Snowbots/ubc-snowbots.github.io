@@ -51,7 +51,7 @@ export default function TeamBanner({
 
       <div className="px-5 text-center">
         <h2
-          className={`font-display text-chalk leading-[0.95] font-medium tracking-[-0.035em] ${
+          className={`font-display text-chalk leading-[0.95] font-semibold tracking-[-0.035em] ${
             inline ? "text-3xl sm:text-5xl" : "text-4xl sm:text-6xl"
           }`}
         >

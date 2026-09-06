@@ -30,7 +30,7 @@ export default function ContactPage() {
               before (or entirely without) hydration. */}
           <div>
             <Reveal>
-              <h2 className="font-display text-chalk text-3xl leading-[0.95] font-medium tracking-[-0.03em] sm:text-5xl">
+              <h2 className="font-display text-chalk text-3xl leading-[0.95] font-semibold tracking-[-0.03em] sm:text-5xl">
                 Send us a message
               </h2>
             </Reveal>

@@ -44,7 +44,7 @@ export default async function SubteamPage({ params }: Params) {
         <Reveal>
           <div className="bg-navy-900 flex flex-col gap-6 border border-white/10 p-8 sm:flex-row sm:items-center sm:justify-between sm:p-10">
             <div>
-              <p className="font-display text-chalk mt-3 text-2xl font-medium tracking-[-0.02em] sm:text-3xl">
+              <p className="font-display text-chalk mt-3 text-2xl font-semibold tracking-[-0.02em] sm:text-3xl">
                 Applications open every Fall.
               </p>
             </div>
@@ -76,7 +76,7 @@ export default async function SubteamPage({ params }: Params) {
             ------------------------------------------------------------ */}
         <Reveal>
           <div className="mt-14 border-b border-white/10 pb-6">
-            <h2 className="font-display text-chalk mt-3 text-3xl leading-[0.95] font-medium tracking-[-0.03em] sm:text-5xl">
+            <h2 className="font-display text-chalk mt-3 text-3xl leading-[0.95] font-semibold tracking-[-0.03em] sm:text-5xl">
               {owned.length ? "The systems we build" : "What we handle"}
             </h2>
           </div>
@@ -102,7 +102,7 @@ export default async function SubteamPage({ params }: Params) {
                   </Reveal>
 
                   <Reveal delay={110}>
-                    <h3 className="font-display text-chalk mt-3 text-3xl font-medium tracking-[-0.03em] sm:text-4xl">
+                    <h3 className="font-display text-chalk mt-3 text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">
                       {sub.name}
                     </h3>
                     <p className="font-display text-chalk mt-4 text-lg leading-snug font-semibold tracking-[-0.01em]">
@@ -182,7 +182,7 @@ export default async function SubteamPage({ params }: Params) {
 
         {/* Other subteams */}
         <Reveal>
-          <h2 className="font-display text-chalk mt-16 text-2xl font-medium tracking-[-0.02em] sm:text-3xl">
+          <h2 className="font-display text-chalk mt-16 text-2xl font-semibold tracking-[-0.02em] sm:text-3xl">
             Other subteams
           </h2>
           <div className="mt-6 flex flex-wrap gap-3">
