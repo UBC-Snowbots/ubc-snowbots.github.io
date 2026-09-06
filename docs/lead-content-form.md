@@ -24,7 +24,7 @@ answers can be pasted straight into `lib/content.ts` with no rewriting.
   [Section 3](#section-3--what-youve-built-the-long-one)). Do not show a lead
   sections for hardware they do not own.
 - **Required fields:** everything in Sections 1, 2 and 3 except where marked
-  _optional_. Section 4 requires at least one project. Section 5 is optional.
+  _optional_. Section 4 is optional.
 - Long-answer questions should be **Paragraph** type; short factual ones
   **Short answer**. Where a question expects a number with units, say so in the
   help text — a bare number is not usable.
@@ -72,8 +72,8 @@ Ask these questions **once per subsystem** the lead owns. Route by sub-team:
 | Rover Lab  | Rover Lab                           |
 | Electrical | Power & Electronics, Communications |
 | Software   | Control Base                        |
-| Science    | _none — skip to Section 4_          |
-| Business   | _none — skip to Section 4_          |
+| Science    | _none_                              |
+| Business   | _none_                              |
 
 ### Questions to repeat for each subsystem
 
@@ -107,30 +107,11 @@ measured, answer `N/A` rather than leaving it blank — a blank reads as forgott
 | **Control Base**        | Console hardware · Camera feeds · Autonomy · Simulation                                                         |
 
 > Note for Science and Business leads: you own no hardware subsystem, so this
-> section is skipped. Section 2 and Section 4 still apply to you.
+> section is skipped. Section 2 still applies to you.
 
 ---
 
-## Section 4 — R&D projects
-
-Two to four projects per sub-team. These are **research and development** efforts
-— things you investigated, prototyped or proved out — not routine build tasks.
-
-Repeat this block **2–4 times** (label them "R&D Project 1", "R&D Project 2", …).
-Mark the first required, the rest optional.
-
-| Question                                     | Type         | Notes                                                                                                                                                          |
-| -------------------------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Project title                                | Short answer | Required for project 1. Short and concrete, e.g. "Swappable end-effector coupling"                                                                             |
-| One-line label                               | Short answer | 2–4 words shown above the title, e.g. "Prototype", "Test campaign", "2026 redesign"                                                                            |
-| What was the question you set out to answer? | Paragraph    | Required. What problem or unknown prompted this?                                                                                                               |
-| What did you try, and what happened?         | Paragraph    | Required, 80–150 words. What was built or tested, and the outcome — including if it did not work. A failed experiment with a clear finding is worth publishing |
-| Where did it end up?                         | Paragraph    | Is it on the current rover, shelved, or continuing?                                                                                                            |
-| Photo                                        | File upload  | Optional                                                                                                                                                       |
-
----
-
-## Section 5 — Open roles _(optional)_
+## Section 4 — Open roles _(optional)_
 
 Feeds the "What you'd be working on" section of `/join`. Skip if you are not
 recruiting right now.
@@ -176,8 +157,7 @@ For whoever transfers the responses into the codebase — everything goes into
 | 3 — how it works / what it survives | the two entries in `SUBSYSTEMS[].detail`         |
 | 3 — tech specs                      | `SUBSYSTEMS[].specs`                             |
 | 3 — photo and caption               | `SUBSYSTEMS[].image` and `.imageCaption`         |
-| 4 — R&D projects                    | `SUBTEAMS[].projects`                            |
-| 5 — open roles                      | `SUBTEAMS[].openRoles`                           |
+| 4 — open roles                      | `SUBTEAMS[].openRoles`                           |
 
 Photos go in `public/media/` — subsystem shots under `team/`, portraits under
 `people/`. Anything still marked `PLACEHOLDER` renders in amber on the live site,

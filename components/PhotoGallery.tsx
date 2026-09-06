@@ -107,12 +107,17 @@ export default function PhotoGallery({ photos, alt }: { photos: Photo[]; alt: st
             className="relative aspect-[4/3] w-full shrink-0 snap-center overflow-hidden"
           >
             {photo.kind === "video" ? (
+              // object-CONTAIN, not cover. These clips are shot on phones in
+              // portrait (720x1280) and the frame is 4:3, so cover would keep
+              // only ~42% of the clip's height — measured: it cut the rover's
+              // mast off and left mostly pavement. Contain letterboxes against
+              // the navy ground and shows the whole shot.
               <video
                 src={photo.src}
                 controls
                 playsInline
                 preload="metadata"
-                className="bg-navy-950 absolute inset-0 h-full w-full object-cover"
+                className="bg-navy-950 absolute inset-0 h-full w-full object-contain"
               />
             ) : (
               <img

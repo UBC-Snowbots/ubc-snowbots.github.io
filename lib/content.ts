@@ -241,6 +241,16 @@ export const SUBSYSTEMS: Subsystem[] = [
         src: "/media/subsystems/drivetrain-rear.jpg",
         caption: "Rear three-quarter view.",
       },
+      {
+        src: "/media/subsystems/rover-driving-1.mp4",
+        kind: "video",
+        caption: "Driving on pavement.",
+      },
+      {
+        src: "/media/subsystems/rover-driving-2.mp4",
+        kind: "video",
+        caption: "Climbing a curb.",
+      },
     ],
     photoSlot: "CHASSIS-02",
     ownedBy: "chassis",
@@ -260,7 +270,7 @@ export const SUBSYSTEMS: Subsystem[] = [
     photos: [
       {
         src: "/media/subsystems/comms-relay.jpg",
-        caption: "Relay components: antenna, battery, single-board computer.",
+        caption: "The assembled comms relay on its stand.",
       },
     ],
     photoSlot: "CHASSIS-03",
@@ -488,7 +498,15 @@ export const SUBSYSTEMS: Subsystem[] = [
       { src: "/media/subsystems/rover-lab-behind.jpg", caption: "From behind." },
       {
         src: "/media/subsystems/rover-lab-soil-collection.jpg",
-        caption: "Soil collection.",
+        caption: "The soil collection hopper.",
+      },
+      {
+        src: "/media/subsystems/rover-lab-pumps.jpg",
+        caption: "Pumps and tubing on the bench.",
+      },
+      {
+        src: "/media/subsystems/rover-lab-control-box.jpg",
+        caption: "Control electronics in their enclosure.",
       },
     ],
     photoSlot: "ROVERLAB-01",
@@ -557,16 +575,6 @@ export const TEAM_PHOTO = "/media/team/team-photo.jpg";
 export const TEAM_INTRO =
   "Get to know the brilliant minds driving innovation at UBC Rover. Each member brings unique expertise to our cutting-edge projects.";
 
-export type Project = {
-  index: string;
-  title: string;
-  eyebrow?: string;
-  blurb: string;
-  image?: string;
-  /** Human-readable slot id shown in the placeholder, e.g. "CHASSIS-P1". */
-  photoSlot: string;
-};
-
 export type OpenRole = {
   title: string;
   /** What you would actually be doing — NOT what the sub-team does. */
@@ -584,35 +592,9 @@ export type Subteam = {
   blurb: string;
   image: string;
   capabilities: string[];
-  /** R&D projects, rendered as Explore-style tiles on the sub-team page. */
-  projects: Project[];
   /** Rendered on /join. Strictly roles and responsibilities. */
   openRoles: OpenRole[];
 };
-
-const placeholderProjects = (name: string, slug: string): Project[] => [
-  {
-    index: "01",
-    title: "Project One",
-    eyebrow: "PLACEHOLDER",
-    blurb: `PLACEHOLDER — an R&D project the ${name} sub-team took on. Replace with a real one: the question it set out to answer, what was tried, and what came of it.`,
-    photoSlot: `${slug.toUpperCase()}-P1`,
-  },
-  {
-    index: "02",
-    title: "Project Two",
-    eyebrow: "PLACEHOLDER",
-    blurb: `PLACEHOLDER — a second ${name} R&D project. Two to four per sub-team reads best in this grid.`,
-    photoSlot: `${slug.toUpperCase()}-P2`,
-  },
-  {
-    index: "03",
-    title: "Project Three",
-    eyebrow: "PLACEHOLDER",
-    blurb: `PLACEHOLDER — a third ${name} R&D project.`,
-    photoSlot: `${slug.toUpperCase()}-P3`,
-  },
-];
 
 const placeholderRoles = (name: string): OpenRole[] => [
   {
@@ -641,36 +623,6 @@ export const SUBTEAMS: Subteam[] = [
       "Waterproofing",
       "Systems integration",
     ],
-    projects: [
-      {
-        index: "01",
-        title: "Drivetrain design",
-        blurb:
-          "Motor selection and integration so that all six wheels are securely held and easy to install. Includes R&D into steerable wheels.",
-        photoSlot: "CHASSIS-P1",
-      },
-      {
-        index: "02",
-        title: "Rebuilt baseplate layout",
-        blurb:
-          "Apply competition learnings from last year's baseplate to build a better layout: a more accessible and debuggable rover.",
-        photoSlot: "CHASSIS-P2",
-      },
-      {
-        index: "03",
-        title: "Mini-rover",
-        blurb:
-          "Build a mini-rover so the software team can test autonomous navigation at a smaller scale that is easier to debug and carry.",
-        photoSlot: "CHASSIS-P3",
-      },
-      {
-        index: "04",
-        title: "Comms relay",
-        blurb:
-          "Design and implement a comms relay for reliable long-range communication.",
-        photoSlot: "CHASSIS-P4",
-      },
-    ],
     openRoles: placeholderRoles("Chassis"),
   },
   {
@@ -685,27 +637,6 @@ export const SUBTEAMS: Subteam[] = [
       "Hot-swappable tooling",
       "Arm-wide CAN bus",
       "Custom PCBs",
-    ],
-    projects: [
-      {
-        index: "01",
-        title: "Axis redesign",
-        blurb: "Redesign of some axis.",
-        photoSlot: "ARM-P1",
-      },
-      {
-        index: "02",
-        title: "Assembly and wiring",
-        blurb: "Upgrading design for more focus on assembly and wiring.",
-        photoSlot: "ARM-P2",
-      },
-      {
-        index: "03",
-        title: "Competition post-mortem",
-        blurb:
-          "Analysis and redesign with respect to problem points from our last competition.",
-        photoSlot: "ARM-P3",
-      },
     ],
     openRoles: placeholderRoles("Arm"),
   },
@@ -723,11 +654,6 @@ export const SUBTEAMS: Subteam[] = [
       "Operator training",
     ],
     // TODO(team): the four items the Software lead listed under "subteam
-    // projects" are the four subsystems already documented above
-    // (Communications & Perception, Autonomy, Control Base, Firmware), so
-    // rendering them here would duplicate that section verbatim. Needs real
-    // R&D projects: the question investigated and what came of it.
-    projects: placeholderProjects("Software", "software"),
     openRoles: placeholderRoles("Software"),
   },
   {
@@ -742,27 +668,6 @@ export const SUBTEAMS: Subteam[] = [
       "Power distribution",
       "Emergency stop systems",
       "Competition-ready PCBs",
-    ],
-    projects: [
-      {
-        index: "01",
-        title: "Battery speccing",
-        blurb: "Collecting power consumption data on our loads to spec our main battery.",
-        photoSlot: "ELECTRICAL-P1",
-      },
-      {
-        index: "02",
-        title: "Performance feedback",
-        blurb:
-          "Using sensors to relay current and voltage readings to our control base in real time.",
-        photoSlot: "ELECTRICAL-P2",
-      },
-      {
-        index: "03",
-        title: "Remote stop",
-        blurb: "A software-operated emergency kill switch for the rover.",
-        photoSlot: "ELECTRICAL-P3",
-      },
     ],
     openRoles: placeholderRoles("Electrical"),
   },
@@ -779,7 +684,6 @@ export const SUBTEAMS: Subteam[] = [
       "Life detection",
       "Autonomous lab systems",
     ],
-    projects: placeholderProjects("Rover Lab", "roverlab"),
     openRoles: placeholderRoles("Rover Lab"),
   },
   {
@@ -795,7 +699,6 @@ export const SUBTEAMS: Subteam[] = [
       "Computer vision",
       "Habitability analysis",
     ],
-    projects: placeholderProjects("Science", "science"),
     openRoles: placeholderRoles("Science"),
   },
   {
@@ -806,7 +709,6 @@ export const SUBTEAMS: Subteam[] = [
       "The technical subteams might build the brain and skeleton of the rover, but Business is the blood that keeps the entire team pumping. We secure the corporate sponsorships, capital, and resources required to turn our ideas into a highly competitive Rover. By directing our digital brand, managing the treasury, and producing critical media like the SAR video, we build the operational foundation that makes UBC Rover possible.",
     image: "/media/team/business.jpeg",
     capabilities: ["Sponsor outreach", "Treasury", "Digital brand", "Media production"],
-    projects: placeholderProjects("Business", "business"),
     openRoles: placeholderRoles("Business"),
   },
 ];
