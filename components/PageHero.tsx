@@ -43,9 +43,9 @@ export default function PageHero({
         <div aria-hidden className="grid-wash absolute inset-0 -z-10 opacity-60" />
       )}
 
-      <div /* pt clears the fixed header stack: 104px below sm, 120px above.
+      <div /* pt clears the fixed header stack: 67px below sm, 83px above.
              Both values leave the same 24px gap. */
-        className="mx-auto max-w-[1800px] px-4 pt-28 pb-10 sm:px-5 sm:pt-32 sm:pb-14"
+        className="mx-auto max-w-[1800px] px-4 pt-24 pb-10 sm:px-5 sm:pt-28 sm:pb-14"
       >
         {/* initiallyVisible: this masthead is the first viewport on every
             interior page, so it must not wait for hydration to become opaque. */}

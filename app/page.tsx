@@ -2,6 +2,7 @@ import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import HoverPanel from "@/components/HoverPanel";
 import SectionTile from "@/components/SectionTile";
+import SubteamPanel from "@/components/SubteamPanel";
 import StripeRule from "@/components/StripeRule";
 import {
   COMPETITIONS,
@@ -41,10 +42,10 @@ export default function Home() {
           className="from-navy-950/82 via-navy-950/28 absolute inset-0 -z-10 bg-gradient-to-r to-transparent"
         />
 
-        {/* pt clears the fixed header stack (banner 36px + bar 64/80px + 3px
-            rule). The block is bottom-aligned, so without a top pad the eyebrow
-            slides under the header on short viewports. */}
-        <div className="mx-auto w-full max-w-[1800px] px-4 pt-28 pb-12 sm:px-5 sm:pt-32 sm:pb-20 [@media(max-height:820px)]:pt-24 [@media(max-height:820px)]:pb-10">
+        {/* pt clears the fixed header stack (bar 64/80px + 3px rule). The block
+            is bottom-aligned, so without a top pad the eyebrow slides under the
+            header on short viewports. */}
+        <div className="mx-auto w-full max-w-[1800px] px-4 pt-24 pb-12 sm:px-5 sm:pt-28 sm:pb-20 [@media(max-height:820px)]:pt-20 [@media(max-height:820px)]:pb-10">
           <Reveal initiallyVisible>
             {/* White, not the amber .text-eyebrow: at 11px this needs 4.5:1, and
               amber over a photographic sky cannot reach that without darkening
@@ -94,10 +95,10 @@ export default function Home() {
                 Apply Now
               </Link>
               <Link
-                href="/subteams"
+                href="/compete"
                 className="text-chalk border border-white/25 px-8 py-4 font-mono text-[11px] tracking-[0.18em] uppercase transition-colors duration-200 hover:border-amber-500 hover:text-amber-500"
               >
-                See What We Build
+                See Where We Compete
               </Link>
             </div>
           </Reveal>
@@ -110,7 +111,7 @@ export default function Home() {
       {/* Raised band. It sits between the hero photo and the panel grid, both
           image-heavy, so a step up in the navy marks it as the page's one block
           of pure writing without turning it into a different-coloured page. */}
-      <section className="section-raised flex min-h-[100svh] flex-col justify-center">
+      <section className="flex min-h-[100svh] flex-col justify-center">
         <div className="mx-auto w-full max-w-[1800px] px-4 py-16 sm:px-5 sm:py-20">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] lg:gap-16">
             <Reveal from="left">
@@ -190,7 +191,7 @@ export default function Home() {
       <section aria-labelledby="explore-heading" className="relative">
         <div aria-hidden className="grid-wash absolute inset-0 opacity-40" />
 
-        <div className="relative mx-auto max-w-[1800px] px-4 pt-14 pb-10 sm:px-5 sm:pt-16 sm:pb-12">
+        <div className="relative mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
           <Reveal>
             {/* One word. The earlier version was a title plus an eyebrow plus
                 a standfirst — three lines of scaffolding over a grid that
@@ -206,12 +207,13 @@ export default function Home() {
 
           {/* Uneven mosaic: one wide tile, then two full rows of two. */}
           <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-2">
+            {/* Not a SectionTile: the sub-teams have no index page, so this
+                panel lists the seven destinations instead of being one. */}
+            <Reveal>
+              <SubteamPanel />
+            </Reveal>
             {SECTIONS.map((tile, i) => (
-              <Reveal
-                key={tile.href}
-                delay={(i % 2) * 90}
-                className={tile.span === "wide" ? "lg:col-span-2" : ""}
-              >
+              <Reveal key={tile.href} delay={((i + 1) % 2) * 90}>
                 <SectionTile tile={tile} />
               </Reveal>
             ))}
@@ -225,8 +227,8 @@ export default function Home() {
       {/* No rule between this and Explore, and the two share one vertical
           rhythm: they are one continuous surface of panels, and a border plus
           a full section pad was cutting them into two unrelated lists. */}
-      <section>
-        <div className="mx-auto max-w-[1800px] px-4 pb-14 sm:px-5 sm:pb-16">
+      <section className="section-raised">
+        <div className="mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
           <Reveal>
             <h2 className="font-display text-chalk mb-8 text-4xl leading-[0.95] font-medium tracking-[-0.035em] sm:mb-10 sm:text-5xl">
               Our Competitions
@@ -276,7 +278,7 @@ export default function Home() {
       {/* ==================================================================
           SPONSORS — logo wall.
           ================================================================== */}
-      <section className="bg-navy-900/60 border-t border-white/10">
+      <section className="border-t border-white/10">
         <div className="mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
           <Reveal>
             <div className="flex flex-wrap items-end justify-between gap-6">
@@ -327,28 +329,42 @@ export default function Home() {
           one viewport so the final snap position shows the whole recruitment
           message AND the footer together, with nothing cut off.
           ================================================================== */}
-      <section className="relative isolate overflow-hidden border-t border-white/10">
+      {/* CLOSING CALL — the last thing on the page, so it gets room.
+          It was previously compressed to share a viewport with the footer, and
+          at 2xl the closing line was smaller than the section headings above
+          it, which read as the page trailing off rather than landing. */}
+      <section className="relative isolate flex min-h-[70svh] items-center overflow-hidden border-t border-white/10">
         <div
           aria-hidden
           className="via-navy-850 to-navy-950 absolute inset-0 -z-10 bg-gradient-to-br from-indigo-600"
         />
         <div aria-hidden className="grid-wash absolute inset-0 -z-10 opacity-30" />
+        {/* Slow amber wash drifting behind the type. The only animation on the
+            page that runs unprompted, which is affordable here because it is
+            one element, transform-only, and the last thing before the footer. */}
+        <div
+          aria-hidden
+          className="animate-drift absolute -top-1/3 left-1/2 -z-10 h-[70vmax] w-[70vmax] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(218,156,62,0.14),transparent_62%)]"
+        />
 
-        <div className="mx-auto max-w-[1800px] px-4 py-8 text-center sm:px-5 sm:py-10 [@media(max-height:760px)]:py-5">
+        <div className="mx-auto w-full max-w-[1800px] px-4 py-20 text-center sm:px-5 sm:py-24">
           <Reveal>
-            <h2 className="font-display text-chalk mx-auto mt-3 max-w-4xl text-2xl leading-[0.95] font-medium tracking-[-0.04em] sm:text-4xl [@media(max-height:760px)]:mt-0 [@media(max-height:760px)]:text-xl">
-              Build a rover with us.
+            <h2 className="font-display text-chalk mx-auto max-w-5xl text-[clamp(2.5rem,7vw,6rem)] leading-[0.9] font-extrabold tracking-[-0.045em]">
+              Build a rover with us
+              <span className="text-amber-500">.</span>
             </h2>
-            <div className="mt-6 flex flex-wrap justify-center gap-3 [@media(max-height:760px)]:mt-4">
+          </Reveal>
+          <Reveal delay={140}>
+            <div className="mt-10 flex flex-wrap justify-center gap-3">
               <Link
                 href={applyHref()}
-                className="text-navy-950 bg-amber-500 px-8 py-3.5 font-mono text-[11px] tracking-[0.18em] uppercase transition-colors duration-200 hover:bg-amber-400 [@media(max-height:760px)]:py-2.5"
+                className="text-navy-950 bg-amber-500 px-10 py-4 font-mono text-[11px] tracking-[0.18em] uppercase transition-colors duration-200 hover:bg-amber-400"
               >
                 Apply Now
               </Link>
               <Link
                 href="/contact"
-                className="text-chalk border border-white/25 px-8 py-3.5 font-mono text-[11px] tracking-[0.18em] uppercase transition-colors duration-200 hover:border-amber-500 hover:text-amber-500 [@media(max-height:760px)]:py-2.5"
+                className="text-chalk border border-white/25 px-10 py-4 font-mono text-[11px] tracking-[0.18em] uppercase transition-colors duration-200 hover:border-amber-500 hover:text-amber-500"
               >
                 Get in Touch
               </Link>

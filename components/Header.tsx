@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import ApplyBanner from "./ApplyBanner";
 import { ALL_NAV, NAV, NAV_EMPHASIS } from "@/lib/content";
 
 const MOBILE_LINKS = ALL_NAV;
@@ -24,6 +23,42 @@ export default function Header() {
   const sentinel = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+
+  /** Which drop-down is open, by label. */
+  const [menu, setMenu] = useState<string | null>(null);
+  /**
+   * Closing is delayed so the pointer can cross the gap between the trigger and
+   * the panel without the panel vanishing underneath it — the classic
+   * drop-down bug. Any re-entry cancels the pending close.
+   */
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const openMenu = (label: string) => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setMenu(label);
+  };
+  const scheduleClose = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => setMenu(null), 140);
+  };
+
+  useEffect(
+    () => () => {
+      if (closeTimer.current) clearTimeout(closeTimer.current);
+    },
+    [],
+  );
+
+  // Escape closes the drop-down, and leaving the page does too.
+  useEffect(() => {
+    if (!menu) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMenu(null);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [menu]);
+
+  // No effect closing this on route change: every link inside the panel closes
+  // it on click, and a synchronous setState in an effect is the cascading-render
+  // pattern the lint rule exists to catch.
 
   useEffect(() => {
     const node = sentinel.current;
@@ -109,21 +144,20 @@ export default function Header() {
       <div ref={sentinel} aria-hidden className="absolute top-0 h-px w-full" />
 
       <header className="fixed inset-x-0 top-0 z-50">
-        {/* Always visible, above the nav — this is the primary recruitment
-            call to action and it should never scroll out of reach. */}
-        <ApplyBanner />
-
         <div
           className={`relative transition-colors duration-500 ${
-            scrolled || open
-              ? "bg-navy-950/85 border-b border-white/10 backdrop-blur-md"
+            scrolled || open || menu
+              ? // Opaque whenever the drop-down is open, not only once scrolled.
+                // Transparent, the panel sat directly on the hero photo and its
+                // labels were unreadable — a menu has to bring its own ground.
+                "bg-navy-950/97 border-b border-white/10 backdrop-blur-md"
               : "border-b border-transparent bg-transparent"
           }`}
         >
           {/* Legibility scrim for the transparent state. Over a bright hero sky
               the nav labels drop to roughly 2:1 against the photo; this keeps
               them readable without making the bar look solid. */}
-          {!scrolled && !open ? (
+          {!scrolled && !open && !menu ? (
             <div
               aria-hidden
               className="from-navy-950/92 via-navy-950/55 pointer-events-none absolute inset-x-0 top-0 -z-10 h-36 bg-gradient-to-b to-transparent"
@@ -153,21 +187,56 @@ export default function Header() {
             {/* Desktop nav. Order is fixed in lib/content.ts: the five
                 informational pages, then Sponsors and Join Us emphasised as the
                 two calls to action. */}
-            <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">
-              {NAV.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  aria-current={isActive(item.href) ? "page" : undefined}
-                  className={`hover:text-chalk relative py-1 font-mono text-[11px] tracking-[0.16em] uppercase transition-colors duration-200 after:absolute after:-bottom-0.5 after:left-0 after:h-px after:bg-amber-500 after:transition-[width] after:duration-300 ${
-                    isActive(item.href)
-                      ? "text-chalk after:w-full"
-                      : "text-chalk-dim/90 after:w-0 hover:after:w-full"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              ))}
+            <nav
+              aria-label="Primary"
+              className="hidden items-center gap-8 lg:flex"
+              onPointerLeave={scheduleClose}
+            >
+              {NAV.map((item) => {
+                const active = item.href
+                  ? isActive(item.href)
+                  : !!item.menu?.items.some((i) => isActive(i.href));
+                const cls = `hover:text-chalk relative py-1 font-mono text-[11px] tracking-[0.16em] uppercase transition-colors duration-200 after:absolute after:-bottom-0.5 after:left-0 after:h-px after:bg-amber-500 after:transition-[width] after:duration-300 ${
+                  active
+                    ? "text-chalk after:w-full"
+                    : "text-chalk-dim/90 after:w-0 hover:after:w-full"
+                }`;
+
+                // A group heading with no page of its own is a button, not a
+                // link — there is nowhere for it to navigate to.
+                if (item.menu) {
+                  return (
+                    <button
+                      key={item.label}
+                      type="button"
+                      aria-expanded={menu === item.label}
+                      aria-haspopup="true"
+                      onPointerEnter={(e) =>
+                        e.pointerType === "mouse" && openMenu(item.label)
+                      }
+                      onFocus={() => openMenu(item.label)}
+                      onClick={() =>
+                        setMenu((m) => (m === item.label ? null : item.label))
+                      }
+                      className={cls}
+                    >
+                      {item.label}
+                    </button>
+                  );
+                }
+
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href as string}
+                    aria-current={active ? "page" : undefined}
+                    onPointerEnter={(e) => e.pointerType === "mouse" && scheduleClose()}
+                    className={cls}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
 
               {NAV_EMPHASIS.map((item) => (
                 <Link
@@ -213,6 +282,68 @@ export default function Header() {
             </button>
           </div>
 
+          {/* Drop-down. It grows out of the bar rather than floating over the
+              page — the header itself gets taller, which is what makes it read
+              as the bar opening rather than a menu landing on top of things.
+              It sits above the stripe rule so the rule stays the header's
+              bottom edge at either height.
+
+              Animated on grid-template-rows, not height: the open size is then
+              the content's own, where a max-height ceiling would either clip a
+              longer menu or ease wrongly for a short one. */}
+          {NAV.filter((n) => n.menu).map((item) => (
+            <div
+              key={item.label}
+              onPointerEnter={() => openMenu(item.label)}
+              onPointerLeave={scheduleClose}
+              className={`hidden overflow-hidden transition-[grid-template-rows,opacity] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] lg:grid ${
+                menu === item.label
+                  ? "grid-rows-[1fr] opacity-100"
+                  : "pointer-events-none grid-rows-[0fr] opacity-0"
+              }`}
+            >
+              <div className="min-h-0">
+                <div className="mx-auto grid max-w-[1800px] grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)] gap-16 px-4 pt-6 pb-10 sm:px-5">
+                  <div>
+                    <p className="text-chalk-dim/50 font-mono text-[10px] tracking-[0.22em] uppercase">
+                      {item.label}
+                    </p>
+                    <p className="text-chalk-dim/85 mt-5 max-w-sm text-sm leading-relaxed">
+                      {item.menu?.description}
+                    </p>
+                  </div>
+
+                  <ul className="grid gap-x-10 sm:grid-cols-2">
+                    {item.menu?.items.map((sub) => (
+                      <li key={sub.href}>
+                        <Link
+                          href={sub.href}
+                          onClick={() => setMenu(null)}
+                          className="group/item flex items-baseline gap-3 border-b border-white/10 py-3 transition-colors hover:border-amber-500/50"
+                        >
+                          <span
+                            aria-hidden
+                            className="font-mono text-xs text-amber-500/60 transition-colors group-hover/item:text-amber-500"
+                          >
+                            +
+                          </span>
+                          <span className="min-w-0">
+                            <span className="text-chalk block text-base transition-colors group-hover/item:text-amber-500">
+                              {sub.label}
+                            </span>
+                            <span className="text-chalk-dim/75 mt-0.5 block font-mono text-[10px] tracking-[0.1em]">
+                              {sub.blurb}
+                            </span>
+                          </span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          ))}
+
           <div className="stripe-rule-thin h-[3px] w-full" aria-hidden />
         </div>
       </header>
@@ -228,7 +359,7 @@ export default function Header() {
         role="dialog"
         aria-modal="true"
         aria-label="Menu"
-        className="bg-navy-950/98 fixed inset-0 z-40 overflow-y-auto overscroll-contain pt-32 pb-12 backdrop-blur-lg lg:hidden"
+        className="bg-navy-950/98 fixed inset-0 z-40 overflow-y-auto overscroll-contain pt-24 pb-12 backdrop-blur-lg lg:hidden"
       >
         <nav aria-label="Mobile" className="flex flex-col px-5">
           {MOBILE_LINKS.map((item, i) => (

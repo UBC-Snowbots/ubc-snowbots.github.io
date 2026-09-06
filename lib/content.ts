@@ -99,13 +99,6 @@ export type SectionTile = {
 
 export const SECTIONS: SectionTile[] = [
   {
-    title: "Sub-teams",
-    href: "/subteams",
-    blurb: "Seven teams, one rover",
-    image: "/media/team/software.jpg",
-    span: "narrow",
-  },
-  {
     title: "Competition",
     href: "/compete",
     blurb: "Utah desert, Alberta badlands",
@@ -1169,21 +1162,94 @@ export const INQUIRY_TYPES = [
 /* Navigation                                                                  */
 /* -------------------------------------------------------------------------- */
 
-export const NAV = [
-  { label: "Sub-Teams", href: "/subteams" },
+/**
+ * A nav entry. `menu` turns it into a drop-down trigger rather than a link:
+ * the sub-teams no longer have an index page, so "Sub-Teams" is a heading for
+ * seven destinations rather than a destination itself.
+ */
+export type NavItem = {
+  label: string;
+  href?: string;
+  menu?: {
+    /** Shown on the left of the panel, describing the whole group. */
+    description: string;
+    items: { label: string; href: string; blurb: string }[];
+  };
+};
+
+/**
+ * One line each, summarising a sub-team from the subsystems it actually owns —
+ * these are drawn from SUBSYSTEMS above, not invented, so a sub-team gaining or
+ * losing a subsystem is a visible reason to revisit its line.
+ */
+export const NAV: NavItem[] = [
+  {
+    label: "Sub-Teams",
+    menu: {
+      description:
+        "Seven sub-teams build one rover. Each owns a part of it end to end — designing it, making it, and standing behind it at competition.",
+      items: [
+        {
+          label: "Chassis",
+          href: "/subteams/chassis",
+          blurb: "Frame, drivetrain and comms relay",
+        },
+        {
+          label: "Arm",
+          href: "/subteams/arm",
+          blurb: "Six degrees of freedom and the end effector",
+        },
+        {
+          label: "Software",
+          href: "/subteams/software",
+          blurb: "Autonomy, comms, control base and firmware",
+        },
+        {
+          label: "Electrical",
+          href: "/subteams/electrical",
+          blurb: "Power distribution, motor drivers and lighting",
+        },
+        {
+          label: "Rover Lab",
+          href: "/subteams/rover-lab",
+          blurb: "Soil collection, processing and the onboard lab",
+        },
+        {
+          label: "Science",
+          href: "/subteams/science",
+          blurb: "Biochemical assays and life detection",
+        },
+        {
+          label: "Business",
+          href: "/subteams/business",
+          blurb: "Sponsorship, treasury and the team's public face",
+        },
+      ],
+    },
+  },
   { label: "Competition", href: "/compete" },
   { label: "Our Team", href: "/team" },
   { label: "Contact", href: "/contact" },
-] as const;
+];
 
 /**
  * The two calls to action, emphasised at the end of the nav. Kept separate from
  * NAV so the ordering and the bold treatment cannot drift apart.
  */
-export const NAV_EMPHASIS = [
+export const NAV_EMPHASIS: { label: string; href: string }[] = [
   { label: "Sponsors", href: "/sponsors" },
   { label: "Join Us", href: "/join" },
-] as const;
+];
 
-/** Every nav destination in order — used by the footer and the mobile panel. */
-export const ALL_NAV = [...NAV, ...NAV_EMPHASIS] as const;
+/**
+ * Every nav DESTINATION in order — used by the footer and the mobile panel.
+ * Sub-Teams is not among them: it is a group heading with no page of its own,
+ * so it expands to its seven sub-teams rather than appearing as a dead link.
+ */
+export const ALL_NAV: { label: string; href: string }[] = [
+  ...NAV.flatMap((n) =>
+    n.menu ? n.menu.items.map((i) => ({ label: i.label, href: i.href })) : [],
+  ),
+  ...NAV.filter((n) => n.href).map((n) => ({ label: n.label, href: n.href as string })),
+  ...NAV_EMPHASIS,
+];

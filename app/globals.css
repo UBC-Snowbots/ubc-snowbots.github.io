@@ -66,8 +66,9 @@
        each route change drops you mid-page and animates to the top for up to a
        second and a half. Instant scroll is what makes navigation feel snappy. */
 
-    /* Clears the fixed header stack (apply banner + nav bar + rule). */
-    scroll-padding-top: 7.5rem;
+    /* Clears the fixed header stack (nav bar + rule). The recruitment banner
+       that used to sit above it is gone, so this is 36px shorter than it was. */
+    scroll-padding-top: 5.75rem;
     -webkit-tap-highlight-color: transparent;
   }
 
@@ -347,6 +348,22 @@
 
 .animate-marquee {
   animation: marquee-scroll var(--marquee-duration, 40s) linear infinite;
+}
+
+/* Slow drift behind the closing call. Transform only, so it stays on the
+   compositor; it is stopped entirely by the reduced-motion block below. */
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(-50%, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-50%, 4%, 0) scale(1.12);
+  }
+}
+
+.animate-drift {
+  animation: drift 18s ease-in-out infinite;
 }
 
 @keyframes scroll-cue {

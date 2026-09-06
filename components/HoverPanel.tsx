@@ -79,10 +79,12 @@ export default function HoverPanel({
         </div>
 
         <div className="label-on-hover absolute inset-x-5 bottom-5 pr-10 sm:inset-x-7 sm:bottom-7">
+          {/* mt clears the title's descenders. Without it the location line
+              sat hard against the baseline above and read as part of it. */}
           <DecodeText
             text={decode}
             active={decoding}
-            className="text-chalk-dim/85 block font-mono text-[11px] tracking-[0.14em] uppercase"
+            className="text-chalk-dim/85 mt-1.5 block font-mono text-[11px] leading-relaxed tracking-[0.14em] uppercase"
           />
           {children}
         </div>
