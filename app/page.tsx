@@ -18,7 +18,10 @@ export default function Home() {
           HERO — full-bleed cinematic plate (Relativity), oversized condensed
           wordmark locked over it (Formula Electric).
           ================================================================== */}
-      <section className="relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden">
+      {/* A touch past one screen. At exactly 100svh a hairline of the next band
+          shows at the bottom on load, because svh rounds down against the real
+          viewport; the extra 8px absorbs that without being a scroll step. */}
+      <section className="relative isolate flex min-h-[calc(100svh+8px)] flex-col justify-end overflow-hidden">
         <img
           src="/media/rover-mog.jpg"
           alt="The UBC Rover vehicle deployed on desert terrain with its robotic arm extended."
@@ -107,20 +110,24 @@ export default function Home() {
           tile grid, which are both dark and image-heavy, so it reads as a pause
           rather than a different site — and it is the section that is pure
           words, which is exactly the one that benefits from paper. */}
-      <section className="section-light">
-        <div className="mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-20">
-            <Reveal>
-              <h2 className="font-display text-chalk mt-5 text-4xl leading-[0.95] font-medium tracking-[-0.035em] sm:text-6xl">
-                We build Mars rovers
-                <span className="text-amber-500">.</span>
+      <section className="section-light flex min-h-[100svh] flex-col justify-center">
+        <div className="mx-auto w-full max-w-[1800px] px-4 py-16 sm:px-5 sm:py-20">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] lg:gap-16">
+            <Reveal from="left">
+              {/* Hero-scale. This is the page's one written statement, so it
+                  carries the same weight as the wordmark rather than sitting a
+                  step below it. The full stop is set in the body colour, not
+                  amber: a single orange dot on an otherwise black-on-bone
+                  section was the only warm mark in it and read as decoration. */}
+              <h2 className="font-display text-navy-950 text-[clamp(2.25rem,4.6vw,4.25rem)] leading-[0.95] font-medium tracking-[-0.04em]">
+                We build Mars rovers.
                 <br />
                 On campus. From scratch.
               </h2>
             </Reveal>
 
-            <Reveal delay={120}>
-              <div className="text-chalk-dim/85 space-y-6 text-base leading-relaxed sm:text-lg">
+            <Reveal from="left" delay={140}>
+              <div className="text-navy-950/75 space-y-6 text-base leading-relaxed sm:text-lg">
                 <p>
                   UBC Rover is a multidisciplinary team of {SITE.memberCount} students
                   dedicated to designing and building the next generation of
@@ -133,7 +140,7 @@ export default function Home() {
                   robotics, earning top placements at the University Rover Challenge and
                   the Canadian International Rover Challenge.
                 </p>
-                <p className="text-chalk">
+                <p className="text-navy-950">
                   Alongside the engineering, we run community outreach to inspire the next
                   wave of STEM leaders.
                 </p>
@@ -142,11 +149,12 @@ export default function Home() {
           </div>
 
           {/* Stats band */}
-          <div className="mt-12 grid grid-cols-2 gap-px border border-white/10 bg-white/10 sm:mt-14 sm:grid-cols-3 lg:grid-cols-5">
+          <div className="mt-14 grid grid-cols-2 gap-px border border-white/10 bg-white/10 sm:mt-16 sm:grid-cols-3 lg:grid-cols-5">
             {STATS.map((stat, i) => (
               <Reveal
                 key={stat.label}
-                delay={i * 70}
+                from="left"
+                delay={200 + i * 70}
                 // Five items do not tile into 2 or 3 columns, and the grid's
                 // parent background shows through any uncovered cell as a pale
                 // block. Letting the last item span the remainder closes it.
@@ -161,7 +169,7 @@ export default function Home() {
                     className={
                       stat.value === "PLACEHOLDER"
                         ? "font-mono text-sm leading-none tracking-[0.14em] text-amber-500/70"
-                        : "font-display text-4xl leading-none font-medium tracking-[-0.04em] text-amber-500 xl:text-6xl"
+                        : "font-display text-navy-950 text-4xl leading-none font-medium tracking-[-0.04em] xl:text-6xl"
                     }
                   >
                     {stat.value}
@@ -187,11 +195,14 @@ export default function Home() {
 
         <div className="relative mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
           <Reveal>
-            {/* No visible heading. The four tiles are self-describing, and a
-                title plus eyebrow plus standfirst above them was three lines of
-                scaffolding explaining a grid that needs none. The heading stays
-                in the document for the landmark that labels this section. */}
-            <h2 id="explore-heading" className="sr-only">
+            {/* One word. The earlier version was a title plus an eyebrow plus
+                a standfirst — three lines of scaffolding over a grid that
+                explains itself. A single heading names the section without
+                arguing for it. */}
+            <h2
+              id="explore-heading"
+              className="font-display text-chalk mb-8 text-4xl leading-[0.95] font-medium tracking-[-0.035em] sm:mb-10 sm:text-5xl"
+            >
               Explore
             </h2>
           </Reveal>

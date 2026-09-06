@@ -58,6 +58,12 @@ type RevealProps = {
    * whose JS arrives quickly; it simply can no longer hide the hero.
    */
   initiallyVisible?: boolean;
+  /**
+   * Which way the element travels in from. "up" (the default) is the site-wide
+   * rhythm; "left" is for a block being read as a column, where entering along
+   * the reading direction leads the eye into the first word rather than at it.
+   */
+  from?: "up" | "left";
 };
 
 export default function Reveal({
@@ -66,6 +72,7 @@ export default function Reveal({
   className,
   as: Tag = "div",
   initiallyVisible = false,
+  from = "up",
 }: RevealProps) {
   const ref = useRef<HTMLElement>(null);
 
@@ -90,7 +97,7 @@ export default function Reveal({
   return (
     <Tag
       ref={ref}
-      data-reveal=""
+      data-reveal={from === "left" ? "left" : ""}
       data-revealed={initiallyVisible ? "true" : undefined}
       className={className}
       style={

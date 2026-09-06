@@ -75,9 +75,15 @@ export default function SectionTile({
         />
       </div>
 
-      {/* Label block, bottom-left */}
-      <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
-        <div className="flex items-end justify-between gap-4">
+      {/* Label block, bottom-left.
+          The title row lifts and the label sits in the gap it leaves, rather
+          than the label pushing the title — see .label-lift. --label-lift is
+          the distance, matched to the label's own line height. */}
+      <div
+        className="absolute inset-x-0 bottom-0 p-5 sm:p-7"
+        style={{ "--label-lift": "1.4rem" } as React.CSSProperties}
+      >
+        <div className="label-lift flex items-end justify-between gap-4">
           <h3 className="font-display text-chalk text-3xl leading-[0.95] font-medium tracking-[-0.03em] sm:text-5xl">
             {tile.title}
           </h3>
@@ -93,9 +99,9 @@ export default function SectionTile({
           </span>
         </div>
 
-        {/* min-h reserves the line whether or not the label is showing, so
-            neither the reveal nor the decode can reflow the tile. */}
-        <div className="label-on-hover mt-3 min-h-[1.25rem]">
+        {/* Absolute, so the label never contributes height: the card is the
+            same size hovered or not, and the decode cannot reflow it. */}
+        <div className="label-on-hover absolute inset-x-5 bottom-5 sm:inset-x-7 sm:bottom-7">
           <DecodeText
             text={tile.blurb}
             active={decoding}
