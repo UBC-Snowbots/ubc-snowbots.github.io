@@ -897,6 +897,8 @@ export const PEOPLE: Person[] = [
     image: "/media/people/matt.jpg",
     links: li("https://www.linkedin.com/in/mattyung12/"),
   },
+  // TODO(team): Eugene has no LinkedIn on record yet.
+  { name: "Eugene Lee", image: "/media/people/eugene.jpg" },
   // TODO(team): Darwyn has no portrait and no LinkedIn on record yet.
   { name: "Darwyn M" },
 ];
@@ -914,7 +916,7 @@ export const CAPTAIN_NAMES = ["Andres Fleet", "Rowan Zawadzki"] as const;
  * a stale one.
  */
 export const SUBTEAM_LEAD_NAMES: Record<string, string[]> = {
-  chassis: ["Andres Fleet"],
+  chassis: ["Eugene Lee"],
   arm: ["William Banquier", "Matt Yung"],
   "rover-lab": ["Jennifer Phung"],
   electrical: ["Darwyn M"],
