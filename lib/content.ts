@@ -1167,64 +1167,36 @@ export const INQUIRY_TYPES = [
  * the sub-teams no longer have an index page, so "Sub-Teams" is a heading for
  * seven destinations rather than a destination itself.
  */
+/**
+ * A nav entry. `menu` turns it into a drop-down trigger rather than a link:
+ * the sub-teams no longer have an index page, so "Sub-Teams" is a heading for
+ * seven destinations rather than a destination itself.
+ *
+ * The drop-down's third column is not stored here — it is derived from
+ * SUBSYSTEMS via subsystemsForSubteam(), so a sub-team gaining or losing a
+ * subsystem updates the menu with nothing to keep in sync.
+ */
 export type NavItem = {
   label: string;
   href?: string;
   menu?: {
     /** Shown on the left of the panel, describing the whole group. */
     description: string;
-    items: { label: string; href: string; blurb: string }[];
+    items: { label: string; slug: string; href: string }[];
   };
 };
 
-/**
- * One line each, summarising a sub-team from the subsystems it actually owns —
- * these are drawn from SUBSYSTEMS above, not invented, so a sub-team gaining or
- * losing a subsystem is a visible reason to revisit its line.
- */
 export const NAV: NavItem[] = [
   {
     label: "Sub-Teams",
     menu: {
       description:
         "Seven sub-teams build one rover. Each owns a part of it end to end — designing it, making it, and standing behind it at competition.",
-      items: [
-        {
-          label: "Chassis",
-          href: "/subteams/chassis",
-          blurb: "Frame, drivetrain and comms relay",
-        },
-        {
-          label: "Arm",
-          href: "/subteams/arm",
-          blurb: "Six degrees of freedom and the end effector",
-        },
-        {
-          label: "Software",
-          href: "/subteams/software",
-          blurb: "Autonomy, comms, control base and firmware",
-        },
-        {
-          label: "Electrical",
-          href: "/subteams/electrical",
-          blurb: "Power distribution, motor drivers and lighting",
-        },
-        {
-          label: "Rover Lab",
-          href: "/subteams/rover-lab",
-          blurb: "Soil collection, processing and the onboard lab",
-        },
-        {
-          label: "Science",
-          href: "/subteams/science",
-          blurb: "Biochemical assays and life detection",
-        },
-        {
-          label: "Business",
-          href: "/subteams/business",
-          blurb: "Sponsorship, treasury and the team's public face",
-        },
-      ],
+      items: SUBTEAMS.map((t) => ({
+        label: t.name,
+        slug: t.slug,
+        href: `/subteams/${t.slug}`,
+      })),
     },
   },
   { label: "Competition", href: "/compete" },
@@ -1232,10 +1204,6 @@ export const NAV: NavItem[] = [
   { label: "Contact", href: "/contact" },
 ];
 
-/**
- * The two calls to action, emphasised at the end of the nav. Kept separate from
- * NAV so the ordering and the bold treatment cannot drift apart.
- */
 export const NAV_EMPHASIS: { label: string; href: string }[] = [
   { label: "Sponsors", href: "/sponsors" },
   { label: "Join Us", href: "/join" },

@@ -3,7 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { ALL_NAV, NAV, NAV_EMPHASIS } from "@/lib/content";
+import DecodeText from "./DecodeText";
+import {
+  ALL_NAV,
+  NAV,
+  NAV_EMPHASIS,
+  SUBTEAMS,
+  subsystemsForSubteam,
+} from "@/lib/content";
 
 const MOBILE_LINKS = ALL_NAV;
 
@@ -26,6 +33,8 @@ export default function Header() {
 
   /** Which drop-down is open, by label. */
   const [menu, setMenu] = useState<string | null>(null);
+  /** Which sub-team the third column is showing. Defaults to the first. */
+  const [hovered, setHovered] = useState<string>(SUBTEAMS[0].slug);
   /**
    * Closing is delayed so the pointer can cross the gap between the trigger and
    * the panel without the panel vanishing underneath it — the classic
@@ -147,11 +156,14 @@ export default function Header() {
         <div
           className={`relative transition-colors duration-500 ${
             scrolled || open || menu
-              ? // Opaque whenever the drop-down is open, not only once scrolled.
-                // Transparent, the panel sat directly on the hero photo and its
-                // labels were unreadable — a menu has to bring its own ground.
-                "bg-navy-950/97 border-b border-white/10 backdrop-blur-md"
-              : "border-b border-transparent bg-transparent"
+              ? // Fully solid once scrolling starts, and whenever the drop-down
+                // is open — transparent, the panel sat straight on the hero
+                // photo and its labels were unreadable. A menu has to bring its
+                // own ground.
+                "bg-navy-950 border-b border-white/10"
+              : // At rest over the hero: a thin veil rather than nothing, so the
+                // bar reads as a surface without hiding the photo behind it.
+                "bg-navy-950/25 border-b border-transparent backdrop-blur-[2px]"
           }`}
         >
           {/* Legibility scrim for the transparent state. Over a bright hero sky
@@ -196,10 +208,11 @@ export default function Header() {
                 const active = item.href
                   ? isActive(item.href)
                   : !!item.menu?.items.some((i) => isActive(i.href));
-                const cls = `hover:text-chalk relative py-1 font-mono text-[11px] tracking-[0.16em] uppercase transition-colors duration-200 after:absolute after:-bottom-0.5 after:left-0 after:h-px after:bg-amber-500 after:transition-[width] after:duration-300 ${
-                  active
-                    ? "text-chalk after:w-full"
-                    : "text-chalk-dim/90 after:w-0 hover:after:w-full"
+                // No underline. The current page is marked by weight of colour
+                // alone — a sliding amber rule under every label was a second
+                // moving part competing with the drop-down for attention.
+                const cls = `hover:text-chalk py-1 font-mono text-[11px] tracking-[0.16em] uppercase transition-colors duration-200 ${
+                  active ? "text-chalk" : "text-chalk-dim/90"
                 }`;
 
                 // A group heading with no page of its own is a button, not a
@@ -243,10 +256,8 @@ export default function Header() {
                   key={item.href}
                   href={item.href}
                   aria-current={isActive(item.href) ? "page" : undefined}
-                  className={`relative py-1 font-mono text-[11px] font-bold tracking-[0.16em] uppercase transition-colors duration-200 after:absolute after:-bottom-0.5 after:left-0 after:h-px after:bg-amber-500 after:transition-[width] after:duration-300 hover:text-amber-500 ${
-                    isActive(item.href)
-                      ? "text-amber-500 after:w-full"
-                      : "text-chalk after:w-0 hover:after:w-full"
+                  className={`py-1 font-mono text-[11px] font-bold tracking-[0.16em] uppercase transition-colors duration-200 hover:text-amber-500 ${
+                    isActive(item.href) ? "text-amber-500" : "text-chalk"
                   }`}
                 >
                   {item.label}
@@ -290,7 +301,12 @@ export default function Header() {
 
               Animated on grid-template-rows, not height: the open size is then
               the content's own, where a max-height ceiling would either clip a
-              longer menu or ease wrongly for a short one. */}
+              longer menu or ease wrongly for a short one.
+
+              Three columns, following the reference: what the group is, the
+              members of it, and the parts of whichever member you are pointing
+              at. The third column is derived from SUBSYSTEMS rather than stored
+              in the nav, so it cannot fall out of step with the pages. */}
           {NAV.filter((n) => n.menu).map((item) => (
             <div
               key={item.label}
@@ -303,42 +319,84 @@ export default function Header() {
               }`}
             >
               <div className="min-h-0">
-                <div className="mx-auto grid max-w-[1800px] grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)] gap-16 px-4 pt-6 pb-10 sm:px-5">
+                <div className="mx-auto grid max-w-[1800px] grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)_minmax(0,1fr)] gap-14 px-4 pt-7 pb-12 sm:px-5">
                   <div>
                     <p className="text-chalk-dim/50 font-mono text-[10px] tracking-[0.22em] uppercase">
                       {item.label}
                     </p>
-                    <p className="text-chalk-dim/85 mt-5 max-w-sm text-sm leading-relaxed">
+                    <p className="text-chalk-dim/85 mt-6 max-w-sm text-sm leading-relaxed">
                       {item.menu?.description}
                     </p>
                   </div>
 
-                  <ul className="grid gap-x-10 sm:grid-cols-2">
-                    {item.menu?.items.map((sub) => (
-                      <li key={sub.href}>
-                        <Link
-                          href={sub.href}
-                          onClick={() => setMenu(null)}
-                          className="group/item flex items-baseline gap-3 border-b border-white/10 py-3 transition-colors hover:border-amber-500/50"
-                        >
-                          <span
-                            aria-hidden
-                            className="font-mono text-xs text-amber-500/60 transition-colors group-hover/item:text-amber-500"
+                  {/* One column, no descriptions — the names are the menu. */}
+                  <div>
+                    <p className="text-chalk-dim/50 font-mono text-[10px] tracking-[0.22em] uppercase">
+                      {item.label}
+                    </p>
+                    <ul className="mt-6">
+                      {item.menu?.items.map((sub) => (
+                        <li key={sub.href}>
+                          <Link
+                            href={sub.href}
+                            onClick={() => setMenu(null)}
+                            onPointerEnter={(e) =>
+                              e.pointerType === "mouse" && setHovered(sub.slug)
+                            }
+                            onFocus={() => setHovered(sub.slug)}
+                            className="group/item flex items-center gap-3 py-1.5"
                           >
-                            +
-                          </span>
-                          <span className="min-w-0">
-                            <span className="text-chalk block text-base transition-colors group-hover/item:text-amber-500">
-                              {sub.label}
+                            <span
+                              aria-hidden
+                              className={`font-mono text-xs transition-colors ${
+                                hovered === sub.slug
+                                  ? "text-amber-500"
+                                  : "text-chalk-dim/40"
+                              }`}
+                            >
+                              +
                             </span>
-                            <span className="text-chalk-dim/75 mt-0.5 block font-mono text-[10px] tracking-[0.1em]">
-                              {sub.blurb}
-                            </span>
-                          </span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
+                            <DecodeText
+                              text={sub.label}
+                              active={menu === item.label && hovered === sub.slug}
+                              className={`text-base transition-colors ${
+                                hovered === sub.slug ? "text-amber-500" : "text-chalk"
+                              }`}
+                            />
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Parts of whichever sub-team is under the pointer. Each one
+                      is an anchor into that sub-team's page, so the section is
+                      already in view on arrival rather than needing a scroll. */}
+                  <div>
+                    <DecodeText
+                      text="Projects"
+                      active={menu === item.label}
+                      className="text-chalk-dim/50 block font-mono text-[10px] tracking-[0.22em] uppercase"
+                    />
+                    <ul className="mt-6">
+                      {subsystemsForSubteam(hovered).map((sys) => (
+                        <li key={sys.slug}>
+                          <Link
+                            href={`/subteams/${hovered}#${sys.slug}`}
+                            onClick={() => setMenu(null)}
+                            className="text-chalk-dim/80 block py-1.5 text-base transition-colors hover:text-amber-500"
+                          >
+                            {sys.name}
+                          </Link>
+                        </li>
+                      ))}
+                      {subsystemsForSubteam(hovered).length === 0 ? (
+                        <li className="text-chalk-dim/40 py-1.5 font-mono text-xs">
+                          Not documented yet
+                        </li>
+                      ) : null}
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>

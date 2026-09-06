@@ -85,7 +85,7 @@ export default async function SubteamPage({ params }: Params) {
         {owned.length ? (
           <div className="mt-12 space-y-14 sm:space-y-18">
             {owned.map((sub, i) => (
-              <article key={sub.slug} id={sub.slug} className="scroll-mt-32">
+              <article key={sub.slug} id={sub.slug} className="scroll-mt-28">
                 <div
                   className={`grid gap-10 lg:grid-cols-2 lg:gap-14 ${
                     i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""

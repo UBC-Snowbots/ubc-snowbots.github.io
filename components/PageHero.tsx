@@ -43,9 +43,11 @@ export default function PageHero({
         <div aria-hidden className="grid-wash absolute inset-0 -z-10 opacity-60" />
       )}
 
-      <div /* pt clears the fixed header stack: 67px below sm, 83px above.
-             Both values leave the same 24px gap. */
-        className="mx-auto max-w-[1800px] px-4 pt-24 pb-10 sm:px-5 sm:pt-28 sm:pb-14"
+      <div /* The header is 67px below sm and 83px above. Clearing it is not the
+             same as giving the title room: at pt-24 the H1 sat 29px under a
+             fixed bar and read as crowded against it. These leave roughly 80px
+             of air, which is what makes the masthead look deliberate. */
+        className="mx-auto max-w-[1800px] px-4 pt-36 pb-14 sm:px-5 sm:pt-44 sm:pb-20"
       >
         {/* initiallyVisible: this masthead is the first viewport on every
             interior page, so it must not wait for hydration to become opaque. */}
