@@ -837,14 +837,16 @@ export type LeadLink = { kind: "github" | "linkedin" | "website"; href: string }
  * A person is stored once, with their photo and links, and referenced by name
  * from the role lists below.
  *
- * This shape exists because roles are many-to-many: Andres is both a captain
- * and the chassis lead, Rowan is both a captain and a software lead, and
- * Jennifer leads two sub-teams. A single `role` field per person cannot express
- * that without duplicating photos and links, which then drift apart.
+ * This shape exists because roles are many-to-many: Rowan is both a captain and
+ * a software lead. A single `role` field per person cannot express that without
+ * duplicating photos and links, which then drift apart. Andres and Jennifer
+ * used to hold two roles each as well — Andres captain + chassis, Jennifer
+ * rover lab + science — and both reduced to one when Eugene and Danyaal took
+ * those sub-teams, which is exactly the churn this shape absorbs without
+ * touching a photo.
  *
  * `image` is optional — where there is no portrait the card renders initials
  * rather than a stock silhouette. See components/MemberCard.tsx.
- * TODO(team): Andres and Darwyn are still without portraits.
  */
 export type Person = {
   name: string;
@@ -901,8 +903,8 @@ export const PEOPLE: Person[] = [
   { name: "Eugene Lee", image: "/media/people/eugene.jpg" },
   // TODO(team): Danyaal has no LinkedIn on record yet.
   { name: "Danyaal Abbas", image: "/media/people/danyaal.jpg" },
-  // TODO(team): Darwyn has no portrait and no LinkedIn on record yet.
-  { name: "Darwyn M" },
+  // TODO(team): Darwyn has no LinkedIn on record yet.
+  { name: "Darwyn M", image: "/media/people/darwyn.jpg" },
 ];
 
 const person = (name: string): Person => PEOPLE.find((p) => p.name === name) ?? { name };
