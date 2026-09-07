@@ -710,19 +710,6 @@ export type Subteam = {
   openRoles: OpenRole[];
 };
 
-const placeholderRoles = (name: string): OpenRole[] => [
-  {
-    title: "PLACEHOLDER - Role One",
-    doing: `PLACEHOLDER - what a new member on ${name} would actually be handed in their first term. Describe the work, not the subteam.`,
-    skills: ["PLACEHOLDER", "PLACEHOLDER"],
-  },
-  {
-    title: "PLACEHOLDER - Role Two",
-    doing: "PLACEHOLDER - a second role, with the concrete deliverable attached to it.",
-    skills: ["PLACEHOLDER", "PLACEHOLDER"],
-  },
-];
-
 export const SUBTEAMS: Subteam[] = [
   {
     slug: "chassis",
@@ -737,7 +724,28 @@ export const SUBTEAMS: Subteam[] = [
       "Waterproofing",
       "Systems integration",
     ],
-    openRoles: placeholderRoles("Chassis"),
+    openRoles: [
+      {
+        title: "Mechanical design",
+        doing:
+          "Contribute to the design and development of Chassis subsystems, propose solutions to open-ended problems, and support fabrication through machining, 3D printing and other shop processes. This year's projects are a drivetrain upgrade, a baseplate upgrade, and adding individual steering to the wheels.",
+        skills: [
+          "SolidWorks or similar CAD",
+          "Machining and shop access a plus",
+          "Mechanical design intuition",
+        ],
+      },
+      {
+        title: "Integration projects",
+        doing:
+          "Chassis leads integration with the other subteams. Tentative projects include a modular battery system that adjusts capacity to the task, and a deployable communications relay to double our effective range.",
+        skills: [
+          "DFMA principles",
+          "Load analysis and material selection",
+          "Reading electrical constraints into mechanical design",
+        ],
+      },
+    ],
   },
   {
     slug: "arm",
@@ -752,7 +760,30 @@ export const SUBTEAMS: Subteam[] = [
       "Arm-wide CAN bus",
       "Custom PCBs",
     ],
-    openRoles: placeholderRoles("Arm"),
+    openRoles: [
+      {
+        title: "Arm",
+        doing:
+          "Polishing the arm so it runs precisely, repeatably and reliably ahead of the University Rover Challenge. Design work, manufacturing, and running tests of arm performance.",
+        skills: [
+          "SolidWorks",
+          "Mechanical loading and stress analysis",
+          "Machine design, gear selection a plus",
+        ],
+      },
+      {
+        title: "End effector",
+        doing:
+          "Adding capability to the rover's hand through the design of new hot-swappable End of Arm Tooling.",
+        skills: ["Additive manufacturing", "Electromechanical actuators", "DFM/DFA"],
+      },
+      {
+        title: "Electrical integration",
+        doing:
+          "PCB design, wiring and motor management across the arm. Members focus on one area but are expected to become familiar with every aspect of building a robotic arm, from mechanical design through to electronics.",
+        skills: ["PCB design", "Electronics familiarity", "Wiring and motor management"],
+      },
+    ],
   },
   {
     slug: "software",
@@ -768,7 +799,30 @@ export const SUBTEAMS: Subteam[] = [
       "Operator training",
     ],
     // TODO(team): the four items the Software lead listed under "subteam
-    openRoles: placeholderRoles("Software"),
+    openRoles: [
+      {
+        title: "Systems engineering",
+        doing:
+          "Embedded systems, control, and simulation - from small microcontrollers up to the main drive system and the human-machine interface.",
+        skills: [
+          "C++ or Python",
+          "STM32, Arduino or Teensy",
+          "FreeRTOS, Zephyr or CMSIS",
+        ],
+      },
+      {
+        title: "Autonomy",
+        doing:
+          "Navigation and perception: computer vision, data from LiDAR, IMUs and cameras, and autonomous search and pathfinding algorithms.",
+        skills: ["ROS", "Computer vision", "Sensor fusion"],
+      },
+      {
+        title: "Communications",
+        doing:
+          "Long-distance Wi-Fi, the deployable relay, radio comms, network testing and Linux networking.",
+        skills: ["Linux", "Networking and radio", "Git and working in a team"],
+      },
+    ],
   },
   {
     slug: "electrical",
@@ -783,7 +837,27 @@ export const SUBTEAMS: Subteam[] = [
       "Emergency stop systems",
       "Competition-ready PCBs",
     ],
-    openRoles: placeholderRoles("Electrical"),
+    openRoles: [
+      {
+        title: "Power systems",
+        doing:
+          "Learn how lithium battery power systems are designed, tested and integrated into a larger system. This year that means collecting accurate power consumption data and speccing a new battery.",
+        skills: [
+          "Lithium batteries, BMS and protection circuits",
+          "Lab work: debugging, soldering, verification",
+        ],
+      },
+      {
+        title: "PCBs and embedded systems",
+        doing:
+          "Design and test in-house PCBs for motor controllers, sensor boards, power distribution and real-time microcontroller systems. This year: using sensors to collect real-time current and voltage data, and installing new motor drivers.",
+        skills: [
+          "PCB layout and routing, Altium",
+          "Microcontrollers, sensors, firmware",
+          "PID and system identification",
+        ],
+      },
+    ],
   },
   {
     slug: "rover-lab",
@@ -798,7 +872,30 @@ export const SUBTEAMS: Subteam[] = [
       "Onboard biochemical analysis",
       "Fluid filtration",
     ],
-    openRoles: placeholderRoles("Rover Lab"),
+    openRoles: [
+      {
+        title: "Soil collection",
+        doing:
+          "Develop a mechanism to break up the arid, compact soil found on Mars, a method to cache the samples, and feedback and control through sensors, cameras and similar peripherals.",
+        skills: ["SolidWorks", "Rapid prototyping", "Design for manufacturability"],
+      },
+      {
+        title: "Soil processing",
+        doing:
+          "Build a leak-proof, clog-resistant fluid transport system, manufacture and test filtration methods from material choice to design, and work to the science team's agitator RPM and sample turbidity specifications.",
+        skills: [
+          "CAD for fluid systems",
+          "Manufacturing and testing",
+          "Working to a specification",
+        ],
+      },
+      {
+        title: "Electrical systems",
+        doing:
+          "Design and manufacture a custom PCB that controls the lab's motors, valves and linear actuators, solder prototype boards, and route cabling to prevent damage and disconnection.",
+        skills: ["PCB design", "Soldering", "Microcontrollers and basic programming"],
+      },
+    ],
   },
   {
     slug: "science",
@@ -813,7 +910,44 @@ export const SUBTEAMS: Subteam[] = [
       "Computer vision",
       "Habitability analysis",
     ],
-    openRoles: placeholderRoles("Science"),
+    openRoles: [
+      {
+        title: "Life detection",
+        doing:
+          "Optimise the life-detection assays that run on the onboard spectrophotometer, and develop new ones. Team expert on astrobiology and the biology of Mars.",
+        skills: [
+          "Biochem, microbio or biomedical background",
+          "Wet lab skills",
+          "Experimental design",
+        ],
+      },
+      {
+        title: "Instrumentation",
+        doing:
+          "Optimise the onboard spectrophotometer across its design, function, calibration and integration with Rover Lab, and develop the novel sensors that life detection needs.",
+        skills: [
+          "Optical systems and lab instruments",
+          "Arduino, Raspberry Pi or STM32",
+          "CAD",
+        ],
+      },
+      {
+        title: "Geology",
+        doing:
+          "Optimise a custom stratigraphic profile interpretation pipeline, and work with the software team to train a computer vision model to read those profiles.",
+        skills: [
+          "Earth science or geological engineering",
+          "Mineral and geological identification",
+          "Interest in computer vision",
+        ],
+      },
+      {
+        title: "Lab-on-a-chip",
+        doing:
+          "Use our FormLabs 3B+ resin printer to miniaturise life-detection assays, design chips with integrated sensors, and take microfluidic design to a university design team competition for the first time.",
+        skills: ["Fluid dynamics", "SolidWorks", "Resin printing"],
+      },
+    ],
   },
   {
     slug: "business",
@@ -823,7 +957,50 @@ export const SUBTEAMS: Subteam[] = [
       "The technical subteams might build the brain and skeleton of the rover, but Business is the blood that keeps the entire team pumping. We secure the corporate sponsorships, capital, and resources required to turn our ideas into a highly competitive Rover. By directing our digital brand, managing the treasury, and producing critical media like the SAR video, we build the operational foundation that makes UBC Rover possible.",
     image: "/media/team/business.jpeg",
     capabilities: ["Sponsor outreach", "Treasury", "Digital brand", "Media production"],
-    openRoles: placeholderRoles("Business"),
+    openRoles: [
+      {
+        title: "Sponsor outreach",
+        doing:
+          "Lead direct outreach to corporate sponsors, manage professional communications, and negotiate funding or in-kind manufacturing donations. You would also develop and distribute the team's core sponsorship package. Three positions.",
+        skills: [
+          "Persuasive writing",
+          "Professional communication",
+          "Organisation and follow-through",
+        ],
+      },
+      {
+        title: "Social media",
+        doing:
+          "Take primary ownership of creating, managing and scheduling content across every platform, and work with the engineering subteams to turn technical updates into posts people actually read. One to two positions.",
+        skills: ["Canva or Adobe Creative Suite", "Visual storytelling", "Consistency"],
+      },
+      {
+        title: "Videographer",
+        doing:
+          "Produce, shoot and edit the System Acceptance Review video - the single most important competition submission of the year - plus content for technical showcases and sponsor updates. One position.",
+        skills: [
+          "Premiere or DaVinci Resolve",
+          "Shooting on location",
+          "Short-form editing",
+        ],
+      },
+      {
+        title: "Brand management",
+        doing:
+          "Oversee a cohesive visual identity across the logo, merchandise, stickers and banners, and develop and maintain the website: UI/UX, keeping it current, and managing the application portals. Two positions.",
+        skills: ["Graphic design", "Web design and UI/UX", "Event branding"],
+      },
+      {
+        title: "Treasury",
+        doing:
+          "Manage the team's finances: budgets, expense tracking and forecasting across every subteam, plus reimbursements and procurement logistics so parts arrive on time. One position.",
+        skills: [
+          "Spreadsheets and financial tracking",
+          "Detail orientation",
+          "Clear reporting",
+        ],
+      },
+    ],
   },
 ];
 
