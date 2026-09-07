@@ -43,13 +43,37 @@ export default function SubteamPanel() {
         />
       </div>
 
-      {/* The list sits in the panel's right half, its left edge lined up with
-          where the title's own measure ends, so the rules read as belonging to
-          this card rather than cutting across the whole photo.
+      <div
+        className="hoverable:absolute hoverable:inset-x-0 hoverable:bottom-0 p-5 sm:p-7"
+        style={{ "--label-lift": "1.4rem" } as React.CSSProperties}
+      >
+        <div className="label-lift">
+          <h3 className="font-display text-chalk text-3xl leading-[0.95] font-semibold tracking-[-0.03em] sm:text-5xl">
+            Subteams
+          </h3>
+        </div>
 
-          Absolute, so it adds no height and the card measures the same as its
-          neighbours whether the list is showing or not. */}
-      <div className="label-on-hover absolute inset-y-5 right-5 left-[38%] sm:inset-y-7 sm:right-7">
+        {/* The same decoded label every other panel carries. The arrow is the
+            only piece missing, because this panel is not itself a link. */}
+        <div className="label-on-hover hoverable:absolute hoverable:inset-x-5 hoverable:bottom-5 hoverable:mt-0 sm:hoverable:inset-x-7 sm:hoverable:bottom-7 mt-2">
+          <DecodeText
+            text="Seven teams, one rover"
+            active={decoding}
+            className="text-chalk-dim/85 mt-3 block font-mono text-[11px] tracking-[0.14em] uppercase"
+          />
+        </div>
+      </div>
+
+      {/* On a hover device the list sits in the panel's right half, its left
+          edge lined up with where the title's measure ends, and absolutely
+          positioned so it adds no height - the card measures the same whether
+          the list is showing or not.
+
+          On touch there is no hover to reveal it with, so it is simply always
+          there, flowing under the title. Absolute at every width was the bug:
+          on a phone the title never lifted, because lifting is a hover effect,
+          and the two sat on top of each other. */}
+      <div className="label-on-hover hoverable:absolute hoverable:inset-y-5 hoverable:right-5 hoverable:left-[38%] hoverable:px-0 hoverable:pb-0 sm:hoverable:inset-y-7 sm:hoverable:right-7 px-5 pb-4">
         <ul className="flex h-full flex-col justify-center">
           {SUBTEAMS.map((team) => (
             <li key={team.slug}>
@@ -70,27 +94,6 @@ export default function SubteamPanel() {
             </li>
           ))}
         </ul>
-      </div>
-
-      <div
-        className="absolute inset-x-0 bottom-0 p-5 sm:p-7"
-        style={{ "--label-lift": "1.4rem" } as React.CSSProperties}
-      >
-        <div className="label-lift">
-          <h3 className="font-display text-chalk text-3xl leading-[0.95] font-semibold tracking-[-0.03em] sm:text-5xl">
-            Subteams
-          </h3>
-        </div>
-
-        {/* The same decoded label every other panel carries. The arrow is the
-            only piece missing, because this panel is not itself a link. */}
-        <div className="label-on-hover absolute inset-x-5 bottom-5 sm:inset-x-7 sm:bottom-7">
-          <DecodeText
-            text="Seven teams, one rover"
-            active={decoding}
-            className="text-chalk-dim/85 mt-3 block font-mono text-[11px] tracking-[0.14em] uppercase"
-          />
-        </div>
       </div>
     </div>
   );

@@ -88,7 +88,7 @@ export const STATS: { value: string; label: string }[] = [
   { value: "64", label: "Students on the team" },
   { value: "780m", label: "Effective operational radius" },
   { value: "02", label: "International competitions" },
-  { value: "120", label: "Screws in the rover" },
+  { value: "749", label: "Components in the rover" },
 ];
 
 /* -------------------------------------------------------------------------- */
@@ -1212,7 +1212,7 @@ export const SPONSOR_TIERS: SponsorTier[] = [
     tier: "Champion",
     logos: [
       { src: "/media/sponsors/maxon.png", name: "maxon" },
-      { src: "/media/sponsors/protospace.png", name: "Protospace" },
+      { src: "/media/sponsors/protospace.png", name: "Protospace Mfg" },
       { src: "/media/sponsors/EDENTECH_logo.jpg", name: "Eden Tech" },
       {
         src: "/media/sponsors/AARC-WEST-Industrial-logo.png",
@@ -1291,7 +1291,7 @@ export const SPONSOR_IMPACT: SponsorImpact[] = [
       "Support from Maxon has enabled a ground-up redesign of our mobility platform through a complete drivetrain upgrade. Integrating their high-efficiency motors allowed us to significantly increase output torque and speed without drawing additional electrical power, all while slashing overall drivetrain weight by 66%. This critical reduction unlocked the available mass to develop our new individual wheel steering system, drastically improving the rover's maneuverability across harsh, complex terrain.",
   },
   {
-    sponsor: "Protospace",
+    sponsor: "Protospace Mfg",
     logo: "/media/sponsors/protospace.png",
     blurb:
       "Support from Protospace Mfg has been central to the structural overhaul of our rover. Leveraging their generous machining credit, we remanufactured our full suspension assembly to interface with our upgraded drivetrain and fabricated an all-new modular frame system that cuts assembly/disassembly time by 90%. On top of fabrication, Protospace provided powder-coating in UBC blue, ensuring our chassis is as sharp as it is rugged at competition.",

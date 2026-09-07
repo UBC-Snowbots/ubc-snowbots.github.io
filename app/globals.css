@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+/**
+ * Applies only where a real hover exists - mouse and trackpad, not touch.
+ *
+ * The panels reveal their label on hover, which means the label must be laid
+ * out DIFFERENTLY on a touch device: absolutely positioned so it costs no
+ * height where it can be revealed, and in normal flow where it is simply
+ * always there. Expressing that as a variant keeps both cases on the element
+ * they describe instead of splitting them across a stylesheet.
+ */
+@custom-variant hoverable (@media (hover: hover) and (pointer: fine));
+
 /* ============================================================================
    UBC ROVER — design tokens
    Palette sampled directly from the team recruitment flyer:

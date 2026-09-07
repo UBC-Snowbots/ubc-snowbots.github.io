@@ -72,13 +72,18 @@ export default function HoverPanel({
         className="absolute inset-x-0 bottom-0 p-5 sm:p-7"
         style={{ "--label-lift": lift } as React.CSSProperties}
       >
+        {/* On touch the label sits in normal flow beneath the title, so the
+            two cannot collide; on a hover device it is absolutely positioned,
+            costs no height, and the title lifts to open a gap for it. Before
+            this it was absolute at every width, so on a phone - where nothing
+            lifts, because there is no hover - the title sat on top of it. */}
         <div className="label-lift pr-10">
           <h3 className="font-display text-chalk text-3xl leading-[0.95] font-semibold tracking-[-0.03em] sm:text-5xl">
             {title}
           </h3>
         </div>
 
-        <div className="label-on-hover absolute inset-x-5 bottom-5 pr-10 sm:inset-x-7 sm:bottom-7">
+        <div className="label-on-hover hoverable:absolute hoverable:inset-x-5 hoverable:bottom-5 hoverable:mt-0 sm:hoverable:inset-x-7 sm:hoverable:bottom-7 mt-2 pr-10">
           {/* mt clears the title's descenders. Without it the location line
               sat hard against the baseline above and read as part of it. */}
           <DecodeText
