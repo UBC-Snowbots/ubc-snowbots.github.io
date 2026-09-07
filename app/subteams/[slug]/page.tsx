@@ -179,24 +179,6 @@ export default async function SubteamPage({ params }: Params) {
             ))}
           </div>
         )}
-
-        {/* Other subteams */}
-        <Reveal>
-          <h2 className="font-display text-chalk mt-16 text-2xl font-semibold tracking-[-0.02em] sm:text-3xl">
-            Other subteams
-          </h2>
-          <div className="mt-6 flex flex-wrap gap-3">
-            {SUBTEAMS.filter((t) => t.slug !== team.slug).map((other) => (
-              <Link
-                key={other.slug}
-                href={`/subteams/${other.slug}`}
-                className="text-chalk-dim/85 inline-block border border-white/15 px-6 py-3 font-mono text-[11px] tracking-[0.14em] uppercase transition-colors duration-200 hover:border-amber-500 hover:text-amber-500"
-              >
-                {other.name}
-              </Link>
-            ))}
-          </div>
-        </Reveal>
       </section>
     </>
   );

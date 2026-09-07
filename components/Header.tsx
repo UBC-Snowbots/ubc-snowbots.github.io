@@ -69,6 +69,18 @@ export default function Header() {
     return () => window.removeEventListener("keydown", onKey);
   }, [menu]);
 
+  // Softens the page behind the panel. An attribute on <html> rather than a
+  // prop threaded through the tree: the content should not have to know a menu
+  // exists to get out of its way.
+  useEffect(() => {
+    const el = document.documentElement;
+    if (menu) el.dataset.menuOpen = "true";
+    else delete el.dataset.menuOpen;
+    return () => {
+      delete el.dataset.menuOpen;
+    };
+  }, [menu]);
+
   // No effect closing this on route change: every link inside the panel closes
   // it on click, and a synchronous setState in an effect is the cascading-render
   // pattern the lint rule exists to catch.
@@ -342,7 +354,7 @@ export default function Header() {
               }`}
             >
               <div className="min-h-0">
-                <div className="mx-auto grid max-w-[1800px] grid-cols-[minmax(0,24rem)_minmax(0,13rem)_minmax(0,20rem)] justify-start gap-x-16 px-4 pt-7 pb-14 sm:px-5">
+                <div className="mx-auto grid max-w-[1800px] grid-cols-[minmax(0,24rem)_1fr] gap-x-16 px-4 pt-7 pb-14 sm:px-5">
                   <div>
                     <DecodeText
                       text={`${item.label} Info`}
@@ -354,51 +366,54 @@ export default function Header() {
                     </p>
                   </div>
 
-                  {/* One column, no descriptions — the names are the menu. */}
-                  <div>
-                    <DecodeText
-                      text={item.label}
-                      active={menu === item.label}
-                      className="text-chalk block font-mono text-[13px] tracking-[0.18em] uppercase"
-                    />
-                    <ul className="mt-4">
-                      {item.menu?.items.map((sub) => (
-                        <li key={sub.href}>
-                          <Link
-                            href={sub.href}
-                            onClick={() => setMenu(null)}
-                            onPointerEnter={(e) =>
-                              e.pointerType === "mouse" && setHovered(sub.slug)
-                            }
-                            onFocus={() => setHovered(sub.slug)}
-                            className="group/item flex items-center gap-3 py-1"
-                          >
-                            <span
-                              aria-hidden
-                              className={`font-mono text-xs transition-colors ${
-                                hovered === sub.slug
-                                  ? "text-amber-500"
-                                  : "text-chalk-dim/40"
-                              }`}
+                  {/* Columns two and three centre together in the space the
+                      info column leaves, rather than each taking a fixed track
+                      across the full width. */}
+                  <div className="flex justify-center gap-x-20">
+                    <div>
+                      <DecodeText
+                        text={item.label}
+                        active={menu === item.label}
+                        className="text-chalk block font-mono text-[13px] tracking-[0.18em] uppercase"
+                      />
+                      <ul className="mt-4">
+                        {item.menu?.items.map((sub) => (
+                          <li key={sub.href}>
+                            <Link
+                              href={sub.href}
+                              onClick={() => setMenu(null)}
+                              onPointerEnter={(e) =>
+                                e.pointerType === "mouse" && setHovered(sub.slug)
+                              }
+                              onFocus={() => setHovered(sub.slug)}
+                              className="group/item flex items-center gap-3 py-1"
                             >
-                              +
-                            </span>
-                            <span
-                              className={`text-base transition-colors ${
-                                hovered === sub.slug
-                                  ? "text-amber-500"
-                                  : "text-chalk hover:text-chalk-dim/55"
-                              }`}
-                            >
-                              {sub.label}
-                            </span>
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                              <span
+                                aria-hidden
+                                className={`font-mono text-xs transition-colors ${
+                                  hovered === sub.slug
+                                    ? "text-amber-500"
+                                    : "text-chalk-dim/40"
+                                }`}
+                              >
+                                +
+                              </span>
+                              <span
+                                className={`text-base transition-colors ${
+                                  hovered === sub.slug
+                                    ? "text-amber-500"
+                                    : "text-chalk hover:text-chalk-dim/55"
+                                }`}
+                              >
+                                {sub.label}
+                              </span>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
-                  {/* Parts of whichever subteam is under the pointer, each an
+                    {/* Parts of whichever subteam is under the pointer, each an
                       anchor into that subteam's page so the section is already
                       in view on arrival.
 
@@ -407,37 +422,41 @@ export default function Header() {
                       about, and defaulting to the first states a selection the
                       reader never made.
 
-                      `key` is the slug, so React REMOUNTS the column on every
-                      change - which is what replays the heading's decode and
-                      the list's fade from the start, rather than swapping text
-                      in place. */}
-                  {hovered ? (
-                    <div key={hovered}>
-                      <DecodeText
-                        text="Projects"
-                        active
-                        className="text-chalk block font-mono text-[13px] tracking-[0.18em] uppercase"
-                      />
-                      <ul className="animate-fade-up mt-4">
-                        {subsystemsForSubteam(hovered).map((sys) => (
-                          <li key={sys.slug}>
-                            <Link
-                              href={`/subteams/${hovered}#${sys.slug}`}
-                              onClick={() => setMenu(null)}
-                              className="text-chalk hover:text-chalk-dim/55 block py-1 text-base transition-colors"
-                            >
-                              {sys.name}
-                            </Link>
-                          </li>
-                        ))}
-                        {subsystemsForSubteam(hovered).length === 0 ? (
-                          <li className="text-chalk-dim/40 py-1 font-mono text-xs">
-                            Not documented yet
-                          </li>
-                        ) : null}
-                      </ul>
-                    </div>
-                  ) : null}
+                      The heading sits OUTSIDE the keyed list on purpose. This
+                      wrapper mounts once, when the first subteam is pointed at,
+                      and survives every swap after it - so the decode plays
+                      once per opening of the menu rather than on every hover.
+                      The list inside is keyed by slug, so it remounts and
+                      re-fades each time. Closing the menu clears `hovered`,
+                      which unmounts this and arms the decode again. */}
+                    {hovered ? (
+                      <div className="min-w-[16rem]">
+                        <DecodeText
+                          text="Projects"
+                          active
+                          className="text-chalk block font-mono text-[13px] tracking-[0.18em] uppercase"
+                        />
+                        <ul key={hovered} className="animate-fade-up mt-4">
+                          {subsystemsForSubteam(hovered).map((sys) => (
+                            <li key={sys.slug}>
+                              <Link
+                                href={`/subteams/${hovered}#${sys.slug}`}
+                                onClick={() => setMenu(null)}
+                                className="text-chalk hover:text-chalk-dim/55 block py-1 text-base transition-colors"
+                              >
+                                {sys.name}
+                              </Link>
+                            </li>
+                          ))}
+                          {subsystemsForSubteam(hovered).length === 0 ? (
+                            <li className="text-chalk-dim/40 py-1 font-mono text-xs">
+                              Not documented yet
+                            </li>
+                          ) : null}
+                        </ul>
+                      </div>
+                    ) : null}
+                  </div>
                 </div>
               </div>
             </div>

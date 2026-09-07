@@ -286,6 +286,27 @@
     }
   }
 
+  /**
+   * Everything below the header softens while a drop-down is open.
+   *
+   * Driven by a data attribute on <html> that the header sets, so the effect is
+   * pure CSS and the page content knows nothing about the menu.
+   *
+   * A filter creates a containing block for fixed descendants, which is why
+   * this is on <main> and not on <body> - blurring the body would drag the
+   * fixed header into the blurred layer along with everything else.
+   */
+  .page-dim {
+    transition:
+      filter 0.5s var(--ease-out-quart),
+      opacity 0.5s var(--ease-out-quart);
+  }
+
+  [data-menu-open="true"] .page-dim {
+    opacity: 0.55;
+    filter: blur(5px);
+  }
+
   /* Native scroll strip without the scrollbar chrome — the gallery supplies
      its own controls, and the bar would sit over the image. */
   .no-scrollbar {
@@ -323,20 +344,38 @@
 [data-reveal] {
   opacity: 0;
   transform: translate3d(0, 18px, 0);
-}
-
-/* Enters along the reading direction instead of from below. */
-[data-reveal="left"] {
-  transform: translate3d(-28px, 0, 0);
   transition:
     opacity 0.7s var(--ease-out-quart),
     transform 0.7s var(--ease-out-expo);
   transition-delay: var(--reveal-delay, 0ms);
 }
 
+/* Enters along the reading direction instead of from below; "right" is its
+   mirror, so a facing pair converges rather than both sliding the same way. */
+[data-reveal="left"] {
+  transform: translate3d(-28px, 0, 0);
+}
+
+[data-reveal="right"] {
+  transform: translate3d(28px, 0, 0);
+}
+
 [data-reveal][data-revealed="true"] {
   opacity: 1;
   transform: translate3d(0, 0, 0);
+}
+
+/**
+ * Revealed while already past the viewport top - i.e. the reader scrolled by
+ * faster than the animation runs.
+ *
+ * Playing a 0.7s entrance for something they have already scrolled past means
+ * a queue of sections still fading in above them. This is NOT "scroll faster,
+ * animate faster": the entrance is simply skipped for content that was never
+ * going to be watched arriving.
+ */
+[data-reveal][data-instant] {
+  transition-duration: 0ms;
 }
 
 @keyframes marquee-scroll {
@@ -353,34 +392,50 @@
 }
 
 /**
- * Underline that sweeps the slogan on hover.
+ * Underline that sweeps the slogan while hovered.
  *
- * Not a linear wipe: the timing function is a symmetric ease-in-out, so it
- * accelerates through the middle of the line and settles at each end. The
- * effect is a rule that appears to be READING the slogan rather than being
- * drawn across it.
+ * It passes in from the left, then continues out to the right, and repeats -
+ * a rule travelling along the line rather than one that arrives and parks.
  *
- * transform: scaleX with a left origin, so it stays on the compositor; a
- * `width` transition would lay out every frame.
+ * The two halves are one animation: scaleX grows against a left origin, then
+ * the origin flips to the right and scaleX shrinks. The flip happens at the
+ * instant scale is 1, where both origins describe the same full-width box, so
+ * it is invisible. The timing function accelerates through the middle of the
+ * line and settles at each end.
+ *
+ * scaleX only, so it never leaves the compositor; a width animation would lay
+ * out every frame.
  */
 .slogan-rule {
   transform: scaleX(0);
   transform-origin: left center;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .slogan-rule {
-    transition: transform 0.9s cubic-bezier(0.85, 0, 0.15, 1);
+@keyframes slogan-sweep {
+  0% {
+    transform: scaleX(0);
+    transform-origin: left center;
   }
-
-  .group:hover .slogan-rule {
+  45% {
     transform: scaleX(1);
+    transform-origin: left center;
+  }
+  55% {
+    transform: scaleX(1);
+    transform-origin: right center;
+  }
+  100% {
+    transform: scaleX(0);
+    transform-origin: right center;
   }
 }
 
-/* Used by the drop-down's projects column, which is remounted on every
-   subteam change so this replays each time. Slow on purpose: the list is
-   swapping under the pointer and should read as settling, not blinking. */
+@media (hover: hover) and (pointer: fine) {
+  .group:hover .slogan-rule {
+    animation: slogan-sweep 1.9s cubic-bezier(0.85, 0, 0.15, 1) infinite;
+  }
+}
+
 @keyframes fade-up {
   from {
     opacity: 0;
@@ -393,7 +448,7 @@
 }
 
 .animate-fade-up {
-  animation: fade-up 0.55s var(--ease-out-quart) both;
+  animation: fade-up 0.74s var(--ease-out-quart) both;
 }
 
 @keyframes scroll-cue {

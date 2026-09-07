@@ -14,7 +14,7 @@ export default function CompetePage() {
   return (
     <>
       <PageHero
-        title="Two Competitions."
+        title="Two Competitions"
         lede="A year of design and fabrication is judged in a few days of heat, dust and failure modes you did not plan for."
         image="/media/team/chassis.jpg"
       />
@@ -24,12 +24,12 @@ export default function CompetePage() {
       <section>
         <div className="mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
           <div className="space-y-16 sm:space-y-20">
-            {COMPETITIONS.map((comp) => (
+            {COMPETITIONS.map((comp, i) => (
               <article
                 key={comp.abbr}
                 className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-16"
               >
-                <Reveal>
+                <Reveal from={i % 2 === 0 ? "left" : "right"}>
                   <h2 className="font-display mt-4 text-[clamp(3.5rem,9vw,7rem)] leading-[0.85] font-semibold tracking-[-0.045em] text-amber-500">
                     {comp.abbr}
                   </h2>
@@ -71,7 +71,7 @@ export default function CompetePage() {
                   </a>
                 </Reveal>
 
-                <Reveal delay={120}>
+                <Reveal from={i % 2 === 0 ? "left" : "right"} delay={120}>
                   <div className="relative aspect-[4/3] overflow-hidden border border-white/10 lg:aspect-auto lg:h-full lg:min-h-[28rem]">
                     <img
                       src={comp.image}

@@ -27,10 +27,15 @@ function getObserver(): IntersectionObserver | null {
     observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) {
-            (entry.target as HTMLElement).dataset.revealed = "true";
-            observer?.unobserve(entry.target);
-          }
+          if (!entry.isIntersecting) continue;
+          const el = entry.target as HTMLElement;
+          // Already above the fold when it was first seen? Then the reader
+          // scrolled past faster than the entrance plays, and animating it
+          // would leave a queue of sections fading in behind them. Skip
+          // straight to the settled state for those.
+          if (entry.boundingClientRect.top < 0) el.dataset.instant = "true";
+          el.dataset.revealed = "true";
+          observer?.unobserve(entry.target);
         }
       },
       // Fire slightly before the element reaches the viewport edge so the
@@ -60,10 +65,11 @@ type RevealProps = {
   initiallyVisible?: boolean;
   /**
    * Which way the element travels in from. "up" (the default) is the site-wide
-   * rhythm; "left" is for a block being read as a column, where entering along
-   * the reading direction leads the eye into the first word rather than at it.
+   * rhythm; "left" is for a block read as a column, where entering along the
+   * reading direction leads the eye into the first word rather than at it.
+   * "right" is its mirror, for the second of a facing pair.
    */
-  from?: "up" | "left";
+  from?: "up" | "left" | "right";
 };
 
 export default function Reveal({
@@ -97,7 +103,7 @@ export default function Reveal({
   return (
     <Tag
       ref={ref}
-      data-reveal={from === "left" ? "left" : ""}
+      data-reveal={from === "up" ? "" : from}
       data-revealed={initiallyVisible ? "true" : undefined}
       className={className}
       style={

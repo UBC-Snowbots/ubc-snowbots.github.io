@@ -107,7 +107,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <SmoothScroll />
         <Header />
-        <main id="main" className="flex-1">
+        <main id="main" className="page-dim flex-1">
           {children}
         </main>
         <Footer />
