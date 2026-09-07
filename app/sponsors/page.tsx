@@ -62,7 +62,7 @@ export default function SponsorsPage() {
             </p>
             <a
               href={`mailto:${SITE.email}?subject=Sponsorship%20enquiry`}
-              className="text-navy-950 mt-9 inline-block bg-amber-500 px-8 py-4 font-mono text-[11px] tracking-[0.18em] uppercase transition-colors duration-200 hover:bg-amber-400"
+              className="text-navy-950 mt-9 inline-block bg-amber-500 px-8 py-4 font-mono text-[13px] font-semibold tracking-[0.16em] uppercase transition-colors duration-200 hover:bg-amber-400"
             >
               Become a sponsor
             </a>

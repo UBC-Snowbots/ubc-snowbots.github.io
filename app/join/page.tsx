@@ -53,7 +53,7 @@ export default function JoinPage() {
                   href={JOINING_PACKAGE.url}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="text-navy-950 inline-block bg-amber-500 px-7 py-3.5 font-mono text-[11px] tracking-[0.16em] uppercase transition-colors duration-200 hover:bg-amber-400"
+                  className="text-navy-950 inline-block bg-amber-500 px-7 py-3.5 font-mono text-[13px] font-semibold tracking-[0.16em] uppercase transition-colors duration-200 hover:bg-amber-400"
                 >
                   {JOINING_PACKAGE.label}
                 </a>
@@ -71,7 +71,7 @@ export default function JoinPage() {
 
               <Link
                 href={applyHref()}
-                className="text-chalk inline-block border border-white/25 px-7 py-3.5 font-mono text-[11px] tracking-[0.16em] uppercase transition-colors duration-200 hover:border-amber-500 hover:text-amber-500"
+                className="text-chalk inline-block border border-white/25 px-7 py-3.5 font-mono text-[13px] font-semibold tracking-[0.16em] uppercase transition-colors duration-200 hover:border-amber-500 hover:text-amber-500"
               >
                 Apply Now
               </Link>
@@ -219,7 +219,7 @@ export default function JoinPage() {
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <a
                 href={`mailto:${SITE.email}`}
-                className="text-navy-950 inline-block bg-amber-500 px-7 py-3.5 font-mono text-[11px] tracking-[0.16em] uppercase transition-colors duration-200 hover:bg-amber-400"
+                className="text-navy-950 inline-block bg-amber-500 px-7 py-3.5 font-mono text-[13px] font-semibold tracking-[0.16em] uppercase transition-colors duration-200 hover:bg-amber-400"
               >
                 Email the team
               </a>
@@ -229,7 +229,7 @@ export default function JoinPage() {
                   href={social.href}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="text-chalk inline-block border border-white/25 px-7 py-3.5 font-mono text-[11px] tracking-[0.16em] uppercase transition-colors duration-200 hover:border-amber-500 hover:text-amber-500"
+                  className="text-chalk inline-block border border-white/25 px-7 py-3.5 font-mono text-[13px] font-semibold tracking-[0.16em] uppercase transition-colors duration-200 hover:border-amber-500 hover:text-amber-500"
                 >
                   {social.label}
                 </a>
