@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
+import InquirySelect from "@/components/InquirySelect";
 import StripeRule from "@/components/StripeRule";
-import { FORMSPREE_ENDPOINT, INQUIRY_TYPES, SITE, SOCIALS } from "@/lib/content";
+import { FORMSPREE_ENDPOINT, SITE, SOCIALS } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -36,7 +37,12 @@ export default function ContactPage() {
             </Reveal>
 
             <Reveal delay={80}>
-              <form action={FORMSPREE_ENDPOINT} method="POST" className="mt-10 space-y-6">
+              <form
+                id="enquiry"
+                action={FORMSPREE_ENDPOINT}
+                method="POST"
+                className="mt-10 scroll-mt-28 space-y-6"
+              >
                 <div className="grid gap-6 sm:grid-cols-2">
                   <div>
                     <label className={labelClass} htmlFor="first-name">
@@ -82,18 +88,7 @@ export default function ContactPage() {
                   <label className={labelClass} htmlFor="inquiry">
                     Inquiry type
                   </label>
-                  <select
-                    className={fieldClass}
-                    id="inquiry"
-                    name="Inquiry Type"
-                    defaultValue={INQUIRY_TYPES[0]}
-                  >
-                    {INQUIRY_TYPES.map((type) => (
-                      <option key={type} value={type} className="bg-navy-950">
-                        {type}
-                      </option>
-                    ))}
-                  </select>
+                  <InquirySelect className={fieldClass} />
                 </div>
 
                 <div>

@@ -31,7 +31,7 @@ export default function TeamPage() {
         image={TEAM_PHOTO}
       />
 
-      <section className="mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
+      <section className="mx-auto max-w-[1800px] px-4 py-10 sm:px-5 sm:py-12">
         <Reveal>
           <p className="text-chalk-dim/85 mx-auto max-w-3xl text-center text-base leading-relaxed text-balance sm:text-lg">
             {TEAM_INTRO}

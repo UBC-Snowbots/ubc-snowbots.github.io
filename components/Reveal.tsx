@@ -67,9 +67,11 @@ type RevealProps = {
    * Which way the element travels in from. "up" (the default) is the site-wide
    * rhythm; "left" is for a block read as a column, where entering along the
    * reading direction leads the eye into the first word rather than at it.
-   * "right" is its mirror, for the second of a facing pair.
+   * "right" is its mirror, for the second of a facing pair. "fade" travels
+   * nowhere at all, for content that alternates sides in layout and so has no
+   * single direction to come from.
    */
-  from?: "up" | "left" | "right";
+  from?: "up" | "left" | "right" | "fade";
 };
 
 export default function Reveal({

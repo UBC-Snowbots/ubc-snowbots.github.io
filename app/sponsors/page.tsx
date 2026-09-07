@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import SponsorLogo from "@/components/SponsorLogo";
-import { SITE, SPONSOR_OFFER, SPONSOR_TIERS, sponsorBlurbFor } from "@/lib/content";
+import { SPONSOR_OFFER, SPONSOR_TIERS, sponsorBlurbFor } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Sponsors",
@@ -60,12 +61,15 @@ export default function SponsorsPage() {
             <p className="text-chalk-dim/80 mx-auto mt-6 max-w-lg text-base leading-relaxed">
               We would be glad to talk through what a partnership could look like.
             </p>
-            <a
-              href={`mailto:${SITE.email}?subject=Sponsorship%20enquiry`}
+            {/* Into the contact form with the inquiry already set, rather
+                than a mailto: - a mailto only works if the reader has a desktop
+                mail client configured, and silently does nothing otherwise. */}
+            <Link
+              href="/contact?inquiry=Sponsorship#enquiry"
               className="text-navy-950 mt-9 inline-block bg-amber-500 px-8 py-4 font-mono text-[13px] font-semibold tracking-[0.16em] uppercase transition-colors duration-200 hover:bg-amber-400"
             >
               Become a sponsor
-            </a>
+            </Link>
           </div>
         </Reveal>
       </section>

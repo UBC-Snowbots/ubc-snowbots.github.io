@@ -27,9 +27,14 @@ export default function CompetePage() {
             {COMPETITIONS.map((comp, i) => (
               <article
                 key={comp.abbr}
-                className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-16"
+                // Alternating: the second competition puts its photo on the
+                // left and its text on the right, so the page reads as a
+                // rhythm rather than two identical rows.
+                className={`grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-16 ${
+                  i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
+                }`}
               >
-                <Reveal from={i % 2 === 0 ? "left" : "right"}>
+                <Reveal from="fade">
                   <h2 className="font-display mt-4 text-[clamp(3.5rem,9vw,7rem)] leading-[0.85] font-semibold tracking-[-0.045em] text-amber-500">
                     {comp.abbr}
                   </h2>
@@ -71,7 +76,7 @@ export default function CompetePage() {
                   </a>
                 </Reveal>
 
-                <Reveal from={i % 2 === 0 ? "left" : "right"} delay={120}>
+                <Reveal from="fade" delay={120}>
                   <div className="relative aspect-[4/3] overflow-hidden border border-white/10 lg:aspect-auto lg:h-full lg:min-h-[28rem]">
                     <img
                       src={comp.image}

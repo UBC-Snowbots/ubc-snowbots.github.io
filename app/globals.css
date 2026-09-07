@@ -360,6 +360,14 @@
   transform: translate3d(28px, 0, 0);
 }
 
+/* Opacity only. For blocks that alternate sides down the page, where any single
+   travel direction would be wrong for half of them. */
+[data-reveal="fade"] {
+  transform: none;
+  transition: opacity 1.1s var(--ease-out-quart);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
 [data-reveal][data-revealed="true"] {
   opacity: 1;
   transform: translate3d(0, 0, 0);
