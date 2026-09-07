@@ -34,31 +34,57 @@ export default function SponsorsPage() {
             </p>
           </div>
         </Reveal>
+      </section>
 
-        {/* Tiers */}
-        <div className="mt-12 space-y-10">
-          {SPONSOR_TIERS.map((tier) => (
-            <Reveal key={tier.tier}>
-              <h2 className="font-display text-chalk border-b border-white/10 pb-6 text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">
-                {tier.tier}
-              </h2>
+      {/* Tiers. Each is a full-width band alternating between the two navies,
+          which is what separates them now that the horizontal rules are gone -
+          a rule under every heading was reading as a divider between the
+          heading and its OWN logos rather than between tiers. */}
+      {SPONSOR_TIERS.map((tier, i) => {
+        // The top tier shows its write-ups inline rather than behind a hover.
+        // These are the sponsors who gave most, and what their money bought is
+        // the argument to the next sponsor - it should not be something you
+        // have to discover.
+        const openTier = i === 0;
+        return (
+          <section key={tier.tier} className={i % 2 === 1 ? "section-raised" : undefined}>
+            <div className="mx-auto max-w-[1800px] px-4 py-14 text-center sm:px-5 sm:py-16">
+              <Reveal>
+                <h2 className="font-display text-chalk text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">
+                  {tier.tier}
+                </h2>
+              </Reveal>
 
-              <ul className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-                {tier.logos.map((logo) => (
-                  <li key={logo.src}>
-                    <SponsorLogo logo={logo} blurb={sponsorBlurbFor(logo.name)} />
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-          ))}
-        </div>
+              <Reveal delay={80}>
+                <ul
+                  className={
+                    openTier
+                      ? "mx-auto mt-8 grid max-w-5xl gap-8 sm:grid-cols-2"
+                      : "mx-auto mt-8 flex max-w-6xl flex-wrap justify-center gap-4"
+                  }
+                >
+                  {tier.logos.map((logo) => (
+                    <li key={logo.src} className={openTier ? "" : "w-40 sm:w-44"}>
+                      <SponsorLogo
+                        logo={logo}
+                        blurb={sponsorBlurbFor(logo.name)}
+                        alwaysOpen={openTier}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            </div>
+          </section>
+        );
+      })}
 
+      <section className="mx-auto max-w-[1800px] px-4 pb-14 sm:px-5 sm:pb-16">
         {/* Closing call, built the same way as the home page's: an inset box
             that inverts on hover, with a rule sweeping the slogan. Two pages
             ending on the same device is the point - it reads as one site. */}
         <Reveal>
-          <div className="group section-raised relative isolate mt-16 overflow-hidden border border-white/10 transition-colors duration-500 hover:bg-[var(--color-navy-950)]">
+          <div className="group section-raised relative isolate overflow-hidden border border-white/10 transition-colors duration-500 hover:bg-[var(--color-navy-950)]">
             <div className="px-6 py-20 text-center sm:px-10 sm:py-24">
               <h2 className="font-display text-chalk mx-auto inline-block max-w-4xl text-[clamp(2rem,5vw,4rem)] leading-[0.92] font-extrabold tracking-[-0.04em]">
                 Put your name on our rover

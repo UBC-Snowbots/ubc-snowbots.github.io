@@ -42,7 +42,20 @@ const EDGE = 12;
  *     top 1008px in a 900px viewport. Hence the portal to document.body, which
  *     is the only reliable way out of a transformed ancestor.
  */
-export default function SponsorLogo({ logo, blurb }: { logo: Sponsor; blurb?: string }) {
+export default function SponsorLogo({
+  logo,
+  blurb,
+  /**
+   * Renders the write-up beneath the logo instead of behind a hover, for the
+   * top tier - what their support bought is the argument to the next sponsor,
+   * so it should not be something a reader has to find.
+   */
+  alwaysOpen = false,
+}: {
+  logo: Sponsor;
+  blurb?: string;
+  alwaysOpen?: boolean;
+}) {
   const chipRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
@@ -125,7 +138,7 @@ export default function SponsorLogo({ logo, blurb }: { logo: Sponsor; blurb?: st
         decoding="async"
         className="max-h-full max-w-full object-contain"
       />
-      {blurb ? (
+      {blurb && !alwaysOpen ? (
         // Without a marker, a logo that opens a panel looks identical to one
         // that does not, and nobody discovers the writing behind it.
         <span
@@ -139,6 +152,18 @@ export default function SponsorLogo({ logo, blurb }: { logo: Sponsor; blurb?: st
   );
 
   if (!blurb) return chip;
+
+  if (alwaysOpen) {
+    return (
+      <div className="flex h-full flex-col items-center text-center">
+        <div className="w-44">{chip}</div>
+        <p className="font-display text-chalk mt-5 text-lg font-semibold tracking-[-0.01em]">
+          {logo.name}
+        </p>
+        <p className="text-chalk-dim/85 mt-3 text-sm leading-relaxed">{blurb}</p>
+      </div>
+    );
+  }
 
   return (
     <>

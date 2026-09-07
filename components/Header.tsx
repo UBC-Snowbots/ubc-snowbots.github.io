@@ -354,7 +354,7 @@ export default function Header() {
               }`}
             >
               <div className="min-h-0">
-                <div className="mx-auto grid max-w-[1800px] grid-cols-[minmax(0,25.25rem)_minmax(0,13rem)_minmax(0,20rem)] justify-start gap-x-16 px-4 pt-7 pb-14 sm:px-5">
+                <div className="mx-auto grid max-w-[1800px] grid-cols-[minmax(0,25.25rem)_minmax(0,13rem)_minmax(0,20rem)] justify-start gap-x-[79px] px-4 pt-7 pb-14 sm:px-5">
                   <div>
                     <DecodeText
                       text={`${item.label} Info`}

@@ -16,10 +16,17 @@ export default function PageHero({
   title,
   lede,
   image,
+  /**
+   * Centred on the standalone pages, left on the subteam pages. A subteam page
+   * opens into a left-aligned column of prose and specs, so a centred masthead
+   * would sit off-axis from everything under it.
+   */
+  align = "center",
 }: {
   title: string;
   lede?: string;
   image?: string;
+  align?: "left" | "center";
 }) {
   return (
     <section className="relative isolate overflow-hidden border-b border-white/10">
@@ -47,16 +54,20 @@ export default function PageHero({
              same as giving the title room: at pt-24 the H1 sat 29px under a
              fixed bar and read as crowded against it. These leave roughly 80px
              of air, which is what makes the masthead look deliberate. */
-        className="mx-auto max-w-[1800px] px-4 pt-36 pb-14 sm:px-5 sm:pt-44 sm:pb-20"
+        className={`mx-auto max-w-[1800px] px-4 pt-36 pb-14 sm:px-5 sm:pt-44 sm:pb-20 ${align === "center" ? "text-center" : ""}`}
       >
         {/* initiallyVisible: this masthead is the first viewport on every
             interior page, so it must not wait for hydration to become opaque. */}
         <Reveal initiallyVisible>
-          <h1 className="font-display text-chalk max-w-4xl text-5xl leading-[0.9] font-semibold tracking-[-0.04em] sm:text-7xl lg:text-8xl">
+          <h1
+            className={`font-display text-chalk max-w-4xl ${align === "center" ? "mx-auto" : ""} text-5xl leading-[0.9] font-semibold tracking-[-0.04em] sm:text-7xl lg:text-8xl`}
+          >
             {title}
           </h1>
           {lede ? (
-            <p className="text-chalk-dim/80 mt-7 max-w-2xl text-base leading-relaxed sm:text-lg">
+            <p
+              className={`text-chalk-dim/80 mt-7 max-w-2xl text-base leading-relaxed sm:text-lg ${align === "center" ? "mx-auto text-balance" : ""}`}
+            >
               {lede}
             </p>
           ) : null}

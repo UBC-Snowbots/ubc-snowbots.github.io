@@ -192,7 +192,7 @@ export const SUBSYSTEMS: Subsystem[] = [
   {
     slug: "frame",
     name: "Frame",
-    role: "Carry the rest of the rover's components safely.",
+    role: "Safely carries all the components of the Rover.",
     summary:
       "The frame is a modular foundation of the chassis. It allows for flexibility in attachment location, and is designed for easy assembly in the field. The frame allows the rover to be a test and competition vehicle.",
     detail: [
@@ -216,17 +216,15 @@ export const SUBSYSTEMS: Subsystem[] = [
   {
     slug: "drivetrain",
     name: "Drivetrain",
-    role: "Allow traversal over rough terrain while keeping the chassis and components from moving.",
+    role: "Allows traversal over challenging terrain while keeping the chassis level and maintaining traction.",
     summary:
-      "The rocker-bogie suspension system allows for traversal over uneven terrain while still maintaining the vehicle more or less level. Six wheels follow the tried-and-tested NASA design that has been used for three generations of rover.",
+      "The rocker-bogie suspension system allows for traversal over uneven terrain while still maintaining the vehicle more or less level with equal contact force on each wheel. Six wheels follow the tried-and-tested NASA design that has been used for three generations of rover.",
     detail: [
-      "The design philosophy of the rocker-bogie suspension system is weight minimization. Topology optimization was performed on the differential and the rocker-bogie legs. The differential links are made of brass and are self-lubricating. The rocker-bogie system has a greater moment of inertia due to the use of struts that increase the second moment of area while minimizing added weight, similar to a plane wing.",
-      "Uneven terrain can range up to obstacles 20 cm in height, such as a rock. The suspension system must be able to endure forces that include the weight of the rover, arm, and any added components while handling rough terrain.",
+      "The design philosophy of the rocker-bogie suspension system is weight minimization. Topology optimization was performed on the differential and the rocker-bogie legs. The rocker-bogie system has a greater moment of inertia due to the use of struts that increase the second moment of area while minimizing added weight, similar to a plane wing. Our drivetrain was selected to optimize available power per kg while maintaining speed and hill climbing ability.",
+      "Obstacles we need to traverse can be up to 30 cm in height, drops up to 1 m, and hills as steep as 35\u00b0. The suspension system must be able to endure forces that include the weight of the rover, arm, and any added components all while handling this rough terrain.",
     ],
     specs: [
       { label: "Wheels", value: "6" },
-      { label: "Suspension material", value: "Aluminium 6061-T6" },
-      { label: "Topology optimisation saving", value: "40%" },
       { label: "Mass", value: "6 kg" },
       { label: "Power", value: "900 W" },
       { label: "Torque", value: "33 N·m" },
@@ -261,15 +259,14 @@ export const SUBSYSTEMS: Subsystem[] = [
   {
     slug: "comms-relay",
     name: "Comms Relay",
-    role: "Extends the communication range and driving range of the rover.",
+    role: "Deployable module to increase the range of the rover.",
     summary:
       "The comms relay allows for the rover to communicate over longer distances or around structures that block the signal from the comms base antenna. The comms relay can deploy from the rover automatically, and allows for the absence of human intervention in extending the rover's range.",
     detail: [
-      "The comms relay is designed around deploying the most stable and reliable relay while still ensuring portability. Still in the developmental and testing phases, the comms relay relies on a gear mechanism that prioritizes reliability.",
-      "The comms relay has to survive inclement weather, harsh terrain, and unpredictable landing spots.",
+      "The comms relay is designed around deploying the most stable and reliable relay while still ensuring portability. Still in the developmental and testing phases, the comms relay relies on a rack and pinion mechanism that prioritizes reliability.",
+      "The comms relay has to survive the inclement weather, harsh terrain, and unpredictable landing conditions.",
     ],
     specs: [
-      { label: "Range extension", value: "300 m beyond line of sight" },
       { label: "Material", value: "3D-printed PLA" },
       { label: "Weight", value: "2 kg" },
       { label: "Deployable height", value: "0.4 m" },
@@ -303,7 +300,7 @@ export const SUBSYSTEMS: Subsystem[] = [
     photos: [
       {
         src: "/media/subsystems/arm-6dof.jpg",
-        caption: "The arm mounted on the rover.",
+        caption: "The arm on the bench, wiring exposed.",
       },
     ],
     photoSlot: "ARM-01",
@@ -354,7 +351,7 @@ export const SUBSYSTEMS: Subsystem[] = [
     photos: [
       {
         src: "/media/subsystems/arm-electrical.jpg",
-        caption: "A custom CAN board mounted on the arm.",
+        caption: "Power distribution and motor driver boards, wired up.",
       },
     ],
     photoSlot: "ARM-03",
@@ -370,7 +367,7 @@ export const SUBSYSTEMS: Subsystem[] = [
       "Our communications system is a 5 GHz point-to-point network, optimized for range and throughput. Using H.265 compression, we can stream multiple camera feeds at the same time over our network.",
     detail: [
       "Many teams use two omnidirectional antennas, however we use a dish to manually or automatically rotate towards the rover. This allows us to communicate with our rover at large distances with a high throughput.",
-      "Our network has an effective range of 780 m with an average latency of under 3 ms. It can also stream up to 5 camera feeds simultaneously.",
+      "Our network has an effective range of 780 m with an average latency of under 3 ms. It can also stream up to 5 camera feeds at 30 fps simultaneously.",
     ],
     specs: [
       { label: "Bandwidth", value: "20–80 MHz" },
@@ -442,8 +439,8 @@ export const SUBSYSTEMS: Subsystem[] = [
     summary:
       "While our on-board computers handle more general tasks, our firmware is built for specific applications. It is the final layer of code that will translate a raw voltage into a temperature reading, or a software command into motor movement.",
     detail: [
-      "Firmware is a joint team between Electrical and Software.",
-      "PLACEHOLDER - operating conditions not yet supplied for this subsystem.",
+      "Firmware is a joint team between electrical and software. Our firmware protects our hardware by setting hard limits, while pushing our hardware to its full capabilities. We make sure the software side can utilize all our hardware's features through standardized, simple interfaces.",
+      "Our firmware operates across distributed boards exposed to vibration, EMI, and unreliable links back to the main computer. It must detect faults and recover on its own, with zero tolerance for corrupting sensor/actuator state mid-operation.",
     ],
     specs: [
       { label: "Boards running custom firmware", value: "8" },
@@ -514,7 +511,7 @@ export const SUBSYSTEMS: Subsystem[] = [
       "The motor drivers receive software communications and send commands and power to the motors. They also deal with feedback, allowing the control base to access position, velocity and acceleration data to better understand the unique Mars-like terrains.",
     detail: [
       "As the wheels and top plate of the chassis frequently need to be removed, we decided to use aviator connectors to attach the drivers to the motors. These are durable and easy to use, so assembly can happen in a timely manner - which is extremely important in a competition environment. Wiring therefore plays an important and often overlooked role in the drivetrain system's success.",
-      "The motor drivers can provide over 1000 W of power to our drivetrain. This allows masterful maneuvering of rocky terrain, loose gravel and steep cliffs. This is all operating with over 40 kg of weight from the battery, chassis and arm module.",
+      "The motor drivers can provide over 1000 W of power to our drivetrain. This allows masterful maneuvering of rocky terrain, loose gravel and steep cliffs. This is all operating with 50 kg of mass from the battery, chassis and arm.",
     ],
     specs: [
       { label: "Drivers", value: "Phidget VINT, one isolated per motor" },

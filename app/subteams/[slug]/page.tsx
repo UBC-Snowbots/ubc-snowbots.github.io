@@ -37,7 +37,7 @@ export default async function SubteamPage({ params }: Params) {
 
   return (
     <>
-      <PageHero title={team.name} lede={team.blurb} image={team.image} />
+      <PageHero title={team.name} lede={team.blurb} image={team.image} align="left" />
 
       <section className="mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
         {/* Apply */}
