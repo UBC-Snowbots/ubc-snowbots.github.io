@@ -75,17 +75,30 @@ export default async function SubteamPage({ params }: Params) {
             list rather than rendering an empty section.
             ------------------------------------------------------------ */}
         <Reveal>
-          <div className="mt-14 border-b border-white/10 pb-6">
+          <div className="mt-12 border-b border-white/10 pb-6">
             <h2 className="font-display text-chalk mt-3 text-3xl leading-[0.95] font-semibold tracking-[-0.03em] sm:text-5xl">
               {owned.length ? "The systems we build" : "What we handle"}
             </h2>
           </div>
         </Reveal>
+      </section>
 
-        {owned.length ? (
-          <div className="mt-12 space-y-14 sm:space-y-18">
-            {owned.map((sub, i) => (
-              <article key={sub.slug} id={sub.slug} className="scroll-mt-28">
+      {/* Each subsystem is its own full-width band, alternating between the two
+          navies. They were previously rows inside one padded section, which
+          made a long page read as an undifferentiated column; a change of
+          ground is what tells you one system has ended and the next begun.
+
+          Full-width means each band owns its horizontal padding, so the article
+          markup below is unchanged apart from the wrapper. */}
+      {owned.length ? (
+        <div>
+          {owned.map((sub, i) => (
+            <section
+              key={sub.slug}
+              id={sub.slug}
+              className={`scroll-mt-28 ${i % 2 === 1 ? "section-raised" : ""}`}
+            >
+              <article className="mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
                 <div
                   className={`grid gap-10 lg:grid-cols-2 lg:gap-14 ${
                     i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
@@ -161,10 +174,12 @@ export default async function SubteamPage({ params }: Params) {
                   </Reveal>
                 </div>
               </article>
-            ))}
-          </div>
-        ) : (
-          <div className="mt-12 grid gap-px border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
+            </section>
+          ))}
+        </div>
+      ) : (
+        <section className="mx-auto max-w-[1800px] px-4 pb-14 sm:px-5 sm:pb-16">
+          <div className="grid gap-px border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
             {team.capabilities.map((cap, i) => (
               <Reveal key={cap} delay={i * 60} className="bg-navy-950">
                 <div className="h-full p-7">
@@ -178,8 +193,8 @@ export default async function SubteamPage({ params }: Params) {
               </Reveal>
             ))}
           </div>
-        )}
-      </section>
+        </section>
+      )}
     </>
   );
 }

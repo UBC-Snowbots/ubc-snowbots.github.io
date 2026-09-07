@@ -80,6 +80,8 @@ export default function SponsorLogo({ logo, blurb }: { logo: Sponsor; blurb?: st
 
     panel.style.left = `${left}px`;
     panel.style.top = `${top}px`;
+    // Never taller than the viewport, whatever the copy length.
+    panel.style.maxHeight = `${vh - EDGE * 2}px`;
   }, []);
 
   useLayoutEffect(() => {
@@ -170,7 +172,20 @@ export default function SponsorLogo({ logo, blurb }: { logo: Sponsor; blurb?: st
               ref={panelRef}
               id={panelId}
               role="tooltip"
-              className="border-navy-600 bg-navy-900 fixed z-50 border p-5 shadow-2xl shadow-black/50"
+              // pointer-events-none is load-bearing, not decoration.
+              //
+              // When the panel is too tall to sit above or below the chip it
+              // gets clamped and lands ON the chip. The panel is portalled to
+              // <body>, so the pointer entering it is a pointerleave for the
+              // button: the panel closed, the pointer was over the chip again,
+              // it reopened, and it flickered on and off indefinitely.
+              // Reproduced at a 700px viewport height, where a 417px panel has
+              // nowhere to go.
+              //
+              // This is a tooltip - text, nothing to click or select - so
+              // making it transparent to the pointer costs nothing and the
+              // overlap becomes harmless.
+              className="border-navy-600 bg-navy-900 pointer-events-none fixed z-50 overflow-hidden border p-5 shadow-2xl shadow-black/50"
             >
               <p className="font-display text-chalk text-base font-semibold tracking-[-0.01em]">
                 {logo.name}

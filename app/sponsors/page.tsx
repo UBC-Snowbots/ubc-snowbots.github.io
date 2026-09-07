@@ -25,16 +25,18 @@ export default function SponsorsPage() {
             the source site. The team does not tier its benefits, so neither do
             we; inventing a ladder would be promising things on their behalf. */}
         <Reveal>
-          <div className="bg-navy-900 flex flex-col gap-4 border border-white/10 p-6 sm:flex-row sm:items-baseline sm:gap-8 sm:p-7">
-            <p className="text-eyebrow shrink-0">The offer</p>
-            <p className="text-chalk-dim/85 max-w-3xl text-sm leading-relaxed">
+          {/* w-fit so the box hugs its copy instead of ruling a line across the
+              full 1800px, and mx-auto to centre what is left. */}
+          <div className="bg-navy-900 mx-auto flex w-fit max-w-3xl flex-col gap-3 border border-white/10 p-6 text-center sm:p-7">
+            <p className="text-eyebrow">The offer</p>
+            <p className="text-chalk-dim/85 text-sm leading-relaxed text-balance">
               {SPONSOR_OFFER}
             </p>
           </div>
         </Reveal>
 
         {/* Tiers */}
-        <div className="mt-14 space-y-12">
+        <div className="mt-12 space-y-10">
           {SPONSOR_TIERS.map((tier) => (
             <Reveal key={tier.tier}>
               <h2 className="font-display text-chalk border-b border-white/10 pb-6 text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">
@@ -52,24 +54,32 @@ export default function SponsorsPage() {
           ))}
         </div>
 
-        {/* CTA */}
+        {/* Closing call, built the same way as the home page's: an inset box
+            that inverts on hover, with a rule sweeping the slogan. Two pages
+            ending on the same device is the point - it reads as one site. */}
         <Reveal>
-          <div className="to-navy-950 mt-18 border border-white/10 bg-gradient-to-br from-indigo-600/40 p-10 text-center sm:p-16">
-            <h2 className="font-display text-chalk mx-auto mt-5 max-w-3xl text-3xl leading-[0.95] font-semibold tracking-[-0.035em] sm:text-5xl">
-              Put your name on a Mars rover.
-            </h2>
-            <p className="text-chalk-dim/80 mx-auto mt-6 max-w-lg text-base leading-relaxed">
-              We would be glad to talk through what a partnership could look like.
-            </p>
-            {/* Into the contact form with the inquiry already set, rather
-                than a mailto: - a mailto only works if the reader has a desktop
-                mail client configured, and silently does nothing otherwise. */}
-            <Link
-              href="/contact?inquiry=Sponsorship#enquiry"
-              className="text-navy-950 mt-9 inline-block bg-amber-500 px-8 py-4 font-mono text-[13px] font-semibold tracking-[0.16em] uppercase transition-colors duration-200 hover:bg-amber-400"
-            >
-              Become a sponsor
-            </Link>
+          <div className="group section-raised relative isolate mt-16 overflow-hidden border border-white/10 transition-colors duration-500 hover:bg-[var(--color-navy-950)]">
+            <div className="px-6 py-20 text-center sm:px-10 sm:py-24">
+              <h2 className="font-display text-chalk mx-auto inline-block max-w-4xl text-[clamp(2rem,5vw,4rem)] leading-[0.92] font-extrabold tracking-[-0.04em]">
+                Put your name on our rover
+                <span
+                  aria-hidden
+                  className="slogan-rule mt-3 block h-[3px] w-full bg-amber-500"
+                />
+              </h2>
+              <p className="text-chalk-dim/80 mx-auto mt-8 max-w-lg text-base leading-relaxed">
+                We would be glad to talk through what a partnership could look like.
+              </p>
+              {/* Into the contact form with the inquiry already set, rather than
+                  a mailto: - a mailto only works if the reader has a desktop
+                  mail client configured, and silently does nothing otherwise. */}
+              <Link
+                href="/contact?inquiry=Sponsorship#enquiry"
+                className="text-navy-950 mt-9 inline-block bg-amber-500 px-8 py-4 font-mono text-[13px] font-semibold tracking-[0.16em] uppercase transition-colors duration-200 hover:bg-amber-400"
+              >
+                Become a sponsor
+              </Link>
+            </div>
           </div>
         </Reveal>
       </section>
