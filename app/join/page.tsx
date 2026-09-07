@@ -204,33 +204,42 @@ export default function JoinPage() {
           colour change. */}
       <section className="mx-auto max-w-[1800px] px-4 py-16 sm:px-5 sm:py-20">
         <Reveal>
-          <div className="to-navy-950 border border-white/10 bg-gradient-to-br from-indigo-600/40 p-10 text-center sm:p-14">
-            <h2 className="font-display text-chalk mx-auto max-w-2xl text-3xl leading-[0.95] font-semibold tracking-[-0.035em] sm:text-5xl">
-              Watch for the announcement
-            </h2>
-            <p className="text-chalk-dim/80 mx-auto mt-5 max-w-lg text-base leading-relaxed">
-              Recruitment opens every Fall and we post it on our socials. Questions before
-              then are welcome any time.
-            </p>
+          {/* Same closing device as the home page and /sponsors: a box that
+              inverts on hover with a rule sweeping the slogan. Three pages
+              ending the same way is what makes them read as one site. */}
+          <div className="group section-raised relative isolate overflow-hidden border border-white/10 transition-colors duration-500 hover:bg-[var(--color-navy-950)]">
+            <div className="px-6 py-20 text-center sm:px-10 sm:py-24">
+              <h2 className="font-display text-chalk mx-auto inline-block max-w-3xl text-[clamp(2rem,5vw,4rem)] leading-[0.92] font-extrabold tracking-[-0.04em]">
+                Watch for the announcement
+                <span
+                  aria-hidden
+                  className="slogan-rule mt-3 block h-[3px] w-full bg-amber-500"
+                />
+              </h2>
+              <p className="text-chalk-dim/80 mx-auto mt-8 max-w-lg text-base leading-relaxed">
+                Recruitment opens every Fall and we post it on our socials. Questions
+                before then are welcome any time.
+              </p>
 
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <a
-                href={`mailto:${SITE.email}`}
-                className="text-navy-950 inline-block bg-amber-500 px-7 py-3.5 font-mono text-[13px] font-semibold tracking-[0.16em] uppercase transition-colors duration-200 hover:bg-amber-400"
-              >
-                Email the team
-              </a>
-              {SOCIALS.map((social) => (
+              <div className="mt-9 flex flex-wrap justify-center gap-3">
                 <a
-                  key={social.href}
-                  href={social.href}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="text-chalk inline-block border border-white/25 px-7 py-3.5 font-mono text-[13px] font-semibold tracking-[0.16em] uppercase transition-colors duration-200 hover:border-amber-500 hover:text-amber-500"
+                  href={`mailto:${SITE.email}`}
+                  className="text-navy-950 inline-block bg-amber-500 px-7 py-3.5 font-mono text-[13px] font-semibold tracking-[0.16em] uppercase transition-colors duration-200 hover:bg-amber-400"
                 >
-                  {social.label}
+                  Email the team
                 </a>
-              ))}
+                {SOCIALS.map((social) => (
+                  <a
+                    key={social.href}
+                    href={social.href}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="text-chalk inline-block border border-white/25 px-7 py-3.5 font-mono text-[13px] font-semibold tracking-[0.16em] uppercase transition-colors duration-200 hover:border-amber-500 hover:text-amber-500"
+                  >
+                    {social.label}
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         </Reveal>
