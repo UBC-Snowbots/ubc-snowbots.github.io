@@ -238,7 +238,12 @@ export default function Header() {
                 // destination, so none should look half-disabled while the
                 // pointer is elsewhere; dimming then reads as "you are touching
                 // this one" without introducing another colour.
-                const cls = `py-1 font-mono text-[11px] tracking-[0.16em] uppercase transition-colors duration-200 ${
+                // font-semibold, not the inherited 400. A mono face at 11px
+                // with 400 stems is thin enough that on a non-retina display
+                // the strokes land between pixels and the label reads as faded.
+                // Weight thickens the stems without changing cap height, which
+                // is the part that was already right.
+                const cls = `py-1 font-mono text-[11px] font-semibold tracking-[0.16em] uppercase transition-colors duration-200 ${
                   active ? "text-amber-500" : "text-chalk hover:text-chalk-dim/55"
                 }`;
 
