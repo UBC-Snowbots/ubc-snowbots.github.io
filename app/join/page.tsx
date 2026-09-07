@@ -50,6 +50,7 @@ export default function JoinPage() {
                   className="text-navy-950 inline-block bg-amber-500 px-7 py-3.5 font-mono text-[13px] font-semibold tracking-[0.16em] uppercase transition-colors duration-200 hover:bg-amber-400"
                 >
                   {JOINING_PACKAGE.label}
+                  <span className="sr-only"> (PDF, opens in a new tab)</span>
                 </a>
               ) : (
                 /* Disabled rather than a link to nowhere — see JOINING_PACKAGE

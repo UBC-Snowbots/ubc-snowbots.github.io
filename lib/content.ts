@@ -67,7 +67,8 @@ export const applyIsExternal = (): boolean => applyHref().startsWith("http");
  * rather than a link to nowhere.
  */
 export const JOINING_PACKAGE = {
-  url: null as string | null,
+  url: "https://ugc.production.linktr.ee/431d8953-3a37-4834-a853-4a16f3f74138_2026-27-Recruitment-Package.pdf" as
+    string | null,
   label: "Joining Package",
   pending: "Joining Package - coming soon",
 } as const;
