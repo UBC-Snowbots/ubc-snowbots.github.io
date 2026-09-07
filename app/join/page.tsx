@@ -1,15 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
+import ApplyLink from "@/components/ApplyLink";
 import Reveal from "@/components/Reveal";
-import {
-  JOINING_PACKAGE,
-  SITE,
-  SOCIALS,
-  SUBTEAMS,
-  applyHref,
-  leadsForSubteam,
-} from "@/lib/content";
+import { JOINING_PACKAGE, SITE, SOCIALS, SUBTEAMS, leadsForSubteam } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Join Us",
@@ -69,12 +63,9 @@ export default function JoinPage() {
                 </span>
               )}
 
-              <Link
-                href={applyHref()}
-                className="text-chalk inline-block border border-white/25 px-7 py-3.5 font-mono text-[13px] font-semibold tracking-[0.16em] uppercase transition-colors duration-200 hover:border-amber-500 hover:text-amber-500"
-              >
+              <ApplyLink className="text-chalk inline-block border border-white/25 px-7 py-3.5 font-mono text-[13px] font-semibold tracking-[0.16em] uppercase transition-colors duration-200 hover:border-amber-500 hover:text-amber-500">
                 Apply Now
-              </Link>
+              </ApplyLink>
             </div>
           </div>
         </Reveal>
@@ -83,21 +74,28 @@ export default function JoinPage() {
       {/* One compact block per subteam, alternating sides. */}
       {/* Light band between the joining-package strip and the roles grid, so
           the page reads as three moves rather than one long scroll. */}
-      <section className="section-raised">
-        <div className="mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
-          <Reveal>
-            <div className="border-b border-white/10 pb-6">
-              <h2 className="font-display text-chalk mt-3 text-3xl leading-[0.95] font-semibold tracking-[-0.03em] sm:text-5xl">
-                What you&rsquo;d be working on
-              </h2>
-            </div>
-          </Reveal>
+      <section className="mx-auto max-w-[1800px] px-4 pt-14 sm:px-5 sm:pt-16">
+        <Reveal>
+          <h2 className="font-display text-chalk text-3xl leading-[0.95] font-semibold tracking-[-0.03em] sm:text-5xl">
+            What you&rsquo;d be working on
+          </h2>
+        </Reveal>
+      </section>
 
-          <div className="mt-12 space-y-12 sm:space-y-12">
-            {SUBTEAMS.map((team, i) => {
-              const leads = leadsForSubteam(team.slug);
-              return (
-                <Reveal key={team.slug} delay={(i % 2) * 70}>
+      {/* One band per subteam, alternating. Each owns its vertical padding, so
+          the colour change always lands in empty space rather than across a
+          card - a boundary cutting through content reads as a rendering fault
+          rather than a division. */}
+      <div className="mt-10">
+        {SUBTEAMS.map((team, i) => {
+          const leads = leadsForSubteam(team.slug);
+          return (
+            <section
+              key={team.slug}
+              className={i % 2 === 1 ? "section-raised" : undefined}
+            >
+              <div className="mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
+                <Reveal>
                   <article
                     className={`grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-14 ${
                       // Alternate which side the photo sits on.
@@ -174,12 +172,9 @@ export default function JoinPage() {
                       </ul>
 
                       <div className="mt-7 flex flex-wrap items-center gap-4">
-                        <Link
-                          href={applyHref()}
-                          className="text-navy-950 inline-block bg-amber-500 px-6 py-3 font-mono text-[11px] tracking-[0.16em] uppercase transition-colors duration-200 hover:bg-amber-400"
-                        >
+                        <ApplyLink className="text-navy-950 inline-block bg-amber-500 px-6 py-3 font-mono text-[11px] tracking-[0.16em] uppercase transition-colors duration-200 hover:bg-amber-400">
                           Apply to {team.name}
-                        </Link>
+                        </ApplyLink>
                         <Link
                           href={`/subteams/${team.slug}`}
                           className="group inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.16em] text-amber-500 uppercase"
@@ -198,14 +193,16 @@ export default function JoinPage() {
                     </div>
                   </article>
                 </Reveal>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+              </div>
+            </section>
+          );
+        })}
+      </div>
 
-      {/* CTA */}
-      <section className="mx-auto max-w-[1800px] px-4 pb-16 sm:px-5 sm:pb-20">
+      {/* CTA. pt as well as pb: the band above may be the raised navy, and the
+          box needs clear ground around it rather than butting straight onto a
+          colour change. */}
+      <section className="mx-auto max-w-[1800px] px-4 py-16 sm:px-5 sm:py-20">
         <Reveal>
           <div className="to-navy-950 border border-white/10 bg-gradient-to-br from-indigo-600/40 p-10 text-center sm:p-14">
             <h2 className="font-display text-chalk mx-auto max-w-2xl text-3xl leading-[0.95] font-semibold tracking-[-0.035em] sm:text-5xl">

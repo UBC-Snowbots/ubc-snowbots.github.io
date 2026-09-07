@@ -20,7 +20,7 @@ export default function SponsorsPage() {
         image="/media/team/arm.jpg"
       />
 
-      <section className="mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
+      <section className="mx-auto max-w-[1800px] px-4 pt-14 pb-8 sm:px-5 sm:pt-16 sm:pb-10">
         {/* What sponsorship gets you — one undifferentiated offer, quoted from
             the source site. The team does not tier its benefits, so neither do
             we; inventing a ladder would be promising things on their behalf. */}
@@ -79,7 +79,10 @@ export default function SponsorsPage() {
         );
       })}
 
-      <section className="mx-auto max-w-[1800px] px-4 pb-14 sm:px-5 sm:pb-16">
+      {/* py, not just pb: the tier above may be the raised navy, and the box
+          below is raised too. Without top padding the two backgrounds meet with
+          nothing between them and read as one shape with a seam through it. */}
+      <section className="mx-auto max-w-[1800px] px-4 py-16 sm:px-5 sm:py-20">
         {/* Closing call, built the same way as the home page's: an inset box
             that inverts on hover, with a rule sweeping the slogan. Two pages
             ending on the same device is the point - it reads as one site. */}

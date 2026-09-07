@@ -1,17 +1,11 @@
 import Link from "next/link";
+import ApplyLink from "@/components/ApplyLink";
 import Reveal from "@/components/Reveal";
 import HoverPanel from "@/components/HoverPanel";
 import SectionTile from "@/components/SectionTile";
 import SubteamPanel from "@/components/SubteamPanel";
 import StripeRule from "@/components/StripeRule";
-import {
-  COMPETITIONS,
-  SECTIONS,
-  SITE,
-  SPONSOR_TIERS,
-  STATS,
-  applyHref,
-} from "@/lib/content";
+import { COMPETITIONS, SECTIONS, SITE, SPONSOR_TIERS, STATS } from "@/lib/content";
 
 export default function Home() {
   return (
@@ -88,12 +82,9 @@ export default function Home() {
 
           <Reveal delay={300} initiallyVisible>
             <div className="mt-8 flex flex-wrap items-center gap-4 [@media(max-height:820px)]:mt-5">
-              <Link
-                href={applyHref()}
-                className="text-navy-950 bg-amber-500 px-8 py-4 font-mono text-[13px] font-semibold tracking-[0.16em] uppercase transition-colors duration-200 hover:bg-amber-400"
-              >
+              <ApplyLink className="text-navy-950 bg-amber-500 px-8 py-4 font-mono text-[13px] font-semibold tracking-[0.16em] uppercase transition-colors duration-200 hover:bg-amber-400">
                 Apply Now
-              </Link>
+              </ApplyLink>
               <Link
                 href="/compete"
                 className="text-chalk border border-white/25 px-8 py-4 font-mono text-[13px] font-semibold tracking-[0.16em] uppercase transition-colors duration-200 hover:border-amber-500 hover:text-amber-500"
@@ -349,12 +340,9 @@ export default function Home() {
             </Reveal>
             <Reveal delay={140}>
               <div className="mt-10 flex flex-wrap justify-center gap-3">
-                <Link
-                  href={applyHref()}
-                  className="text-navy-950 bg-amber-500 px-10 py-4 font-mono text-[13px] font-semibold tracking-[0.16em] uppercase transition-colors duration-200 hover:bg-amber-400"
-                >
+                <ApplyLink className="text-navy-950 bg-amber-500 px-10 py-4 font-mono text-[13px] font-semibold tracking-[0.16em] uppercase transition-colors duration-200 hover:bg-amber-400">
                   Apply Now
-                </Link>
+                </ApplyLink>
                 <Link
                   href="/contact"
                   className="text-chalk border border-white/25 px-10 py-4 font-mono text-[13px] font-semibold tracking-[0.16em] uppercase transition-colors duration-200 hover:border-amber-500 hover:text-amber-500"

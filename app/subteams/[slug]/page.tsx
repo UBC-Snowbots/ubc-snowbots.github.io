@@ -3,8 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import PageHero from "@/components/PageHero";
 import PhotoSlot from "@/components/PhotoSlot";
+import ApplyLink from "@/components/ApplyLink";
 import Reveal from "@/components/Reveal";
-import { SUBTEAMS, applyHref, getSubteam, subsystemsForSubteam } from "@/lib/content";
+import { SUBTEAMS, getSubteam, subsystemsForSubteam } from "@/lib/content";
 
 /** Static export needs every route enumerated at build time. */
 export function generateStaticParams() {
@@ -49,12 +50,9 @@ export default async function SubteamPage({ params }: Params) {
               </p>
             </div>
             <div className="flex flex-wrap gap-4">
-              <Link
-                href={applyHref()}
-                className="text-navy-950 bg-amber-500 px-8 py-4 font-mono text-[11px] tracking-[0.16em] uppercase transition-colors duration-200 hover:bg-amber-400"
-              >
+              <ApplyLink className="text-navy-950 bg-amber-500 px-8 py-4 font-mono text-[11px] tracking-[0.16em] uppercase transition-colors duration-200 hover:bg-amber-400">
                 Apply Now
-              </Link>
+              </ApplyLink>
               <Link
                 href="/join"
                 className="text-chalk border border-white/25 px-8 py-4 font-mono text-[11px] tracking-[0.16em] uppercase transition-colors duration-200 hover:border-amber-500 hover:text-amber-500"
