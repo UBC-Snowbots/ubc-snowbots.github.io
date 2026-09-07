@@ -4,13 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import DecodeText from "./DecodeText";
-import {
-  ALL_NAV,
-  NAV,
-  NAV_EMPHASIS,
-  SUBTEAMS,
-  subsystemsForSubteam,
-} from "@/lib/content";
+import { ALL_NAV, NAV, NAV_EMPHASIS, subsystemsForSubteam } from "@/lib/content";
 
 const MOBILE_LINKS = ALL_NAV;
 
@@ -33,8 +27,15 @@ export default function Header() {
 
   /** Which drop-down is open, by label. */
   const [menu, setMenu] = useState<string | null>(null);
-  /** Which subteam the third column is showing. Defaults to the first. */
-  const [hovered, setHovered] = useState<string>(SUBTEAMS[0].slug);
+  /**
+   * Which subteam the third column is showing, or null for none.
+   *
+   * Starts null on purpose: with no subteam pointed at there is nothing for the
+   * column to be about, and showing the first one by default states a
+   * selection the reader never made. It also resets when the menu closes, so
+   * reopening starts clean rather than resuming an old hover.
+   */
+  const [hovered, setHovered] = useState<string | null>(null);
   /**
    * Closing is delayed so the pointer can cross the gap between the trigger and
    * the panel without the panel vanishing underneath it — the classic
@@ -47,7 +48,10 @@ export default function Header() {
   };
   const scheduleClose = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
-    closeTimer.current = setTimeout(() => setMenu(null), 140);
+    closeTimer.current = setTimeout(() => {
+      setMenu(null);
+      setHovered(null);
+    }, 140);
   };
 
   useEffect(
@@ -331,17 +335,17 @@ export default function Header() {
             <div
               key={item.label}
               onPointerEnter={() => openMenu(item.label)}
-              className={`hidden overflow-hidden transition-[grid-template-rows,opacity] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] lg:grid ${
+              className={`hidden overflow-hidden transition-[grid-template-rows,opacity] duration-[650ms] ease-[cubic-bezier(0.16,1,0.3,1)] lg:grid ${
                 menu === item.label
                   ? "grid-rows-[1fr] opacity-100"
                   : "pointer-events-none grid-rows-[0fr] opacity-0"
               }`}
             >
               <div className="min-h-0">
-                <div className="mx-auto grid max-w-[1800px] grid-cols-3 gap-12 px-4 pt-7 pb-14 sm:px-5">
+                <div className="mx-auto grid max-w-[1800px] grid-cols-[minmax(0,24rem)_minmax(0,13rem)_minmax(0,20rem)] justify-start gap-x-16 px-4 pt-7 pb-14 sm:px-5">
                   <div>
                     <DecodeText
-                      text={item.label}
+                      text={`${item.label} Info`}
                       active={menu === item.label}
                       className="text-chalk block font-mono text-[13px] tracking-[0.18em] uppercase"
                     />
@@ -394,34 +398,46 @@ export default function Header() {
                     </ul>
                   </div>
 
-                  {/* Parts of whichever subteam is under the pointer. Each one
-                      is an anchor into that subteam's page, so the section is
-                      already in view on arrival rather than needing a scroll. */}
-                  <div>
-                    <DecodeText
-                      text="Projects"
-                      active={menu === item.label}
-                      className="text-chalk block font-mono text-[13px] tracking-[0.18em] uppercase"
-                    />
-                    <ul className="mt-4">
-                      {subsystemsForSubteam(hovered).map((sys) => (
-                        <li key={sys.slug}>
-                          <Link
-                            href={`/subteams/${hovered}#${sys.slug}`}
-                            onClick={() => setMenu(null)}
-                            className="text-chalk-dim/80 block py-1.5 text-base transition-colors hover:text-amber-500"
-                          >
-                            {sys.name}
-                          </Link>
-                        </li>
-                      ))}
-                      {subsystemsForSubteam(hovered).length === 0 ? (
-                        <li className="text-chalk-dim/40 py-1 font-mono text-xs">
-                          Not documented yet
-                        </li>
-                      ) : null}
-                    </ul>
-                  </div>
+                  {/* Parts of whichever subteam is under the pointer, each an
+                      anchor into that subteam's page so the section is already
+                      in view on arrival.
+
+                      Absent entirely until something is pointed at: with no
+                      subteam chosen there is nothing for the column to be
+                      about, and defaulting to the first states a selection the
+                      reader never made.
+
+                      `key` is the slug, so React REMOUNTS the column on every
+                      change - which is what replays the heading's decode and
+                      the list's fade from the start, rather than swapping text
+                      in place. */}
+                  {hovered ? (
+                    <div key={hovered}>
+                      <DecodeText
+                        text="Projects"
+                        active
+                        className="text-chalk block font-mono text-[13px] tracking-[0.18em] uppercase"
+                      />
+                      <ul className="animate-fade-up mt-4">
+                        {subsystemsForSubteam(hovered).map((sys) => (
+                          <li key={sys.slug}>
+                            <Link
+                              href={`/subteams/${hovered}#${sys.slug}`}
+                              onClick={() => setMenu(null)}
+                              className="text-chalk hover:text-chalk-dim/55 block py-1 text-base transition-colors"
+                            >
+                              {sys.name}
+                            </Link>
+                          </li>
+                        ))}
+                        {subsystemsForSubteam(hovered).length === 0 ? (
+                          <li className="text-chalk-dim/40 py-1 font-mono text-xs">
+                            Not documented yet
+                          </li>
+                        ) : null}
+                      </ul>
+                    </div>
+                  ) : null}
                 </div>
               </div>
             </div>

@@ -336,11 +336,6 @@ export default function Home() {
           whole surface responding to the pointer is the point. */}
       <section className="mx-auto max-w-[1800px] px-4 py-16 sm:px-5 sm:py-20">
         <div className="group section-raised relative isolate overflow-hidden border border-white/10 transition-colors duration-500 hover:bg-[var(--color-navy-950)]">
-          <div
-            aria-hidden
-            className="animate-drift pointer-events-none absolute -top-1/3 left-1/2 -z-10 h-[70vmax] w-[70vmax] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(218,156,62,0.12),transparent_62%)]"
-          />
-
           <div className="px-6 py-20 text-center sm:px-10 sm:py-28">
             <Reveal>
               <h2 className="font-display text-chalk mx-auto inline-block max-w-5xl text-[clamp(2.25rem,6vw,5rem)] leading-[0.9] font-extrabold tracking-[-0.045em]">

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ALL_NAV, SITE, SOCIALS } from "@/lib/content";
+import { NAV, NAV_EMPHASIS, SITE, SOCIALS, SUBTEAMS } from "@/lib/content";
 
 /**
  * Deliberately compact.
@@ -17,10 +17,24 @@ import { ALL_NAV, SITE, SOCIALS } from "@/lib/content";
 export default function Footer() {
   const columns = [
     {
+      // Explore is the top-level pages only. It used to be ALL_NAV, which
+      // expands the subteam group - seven extra rows in one column made the
+      // footer tall and buried the pages among them.
       heading: "Explore",
-      links: ALL_NAV.map((item) => ({
-        label: item.label,
-        href: item.href,
+      links: [
+        ...NAV.filter((n) => n.href).map((n) => ({
+          label: n.label,
+          href: n.href as string,
+          external: false,
+        })),
+        ...NAV_EMPHASIS.map((n) => ({ ...n, external: false })),
+      ],
+    },
+    {
+      heading: "Subteams",
+      links: SUBTEAMS.map((t) => ({
+        label: t.name,
+        href: `/subteams/${t.slug}`,
         external: false,
       })),
     },
@@ -41,8 +55,8 @@ export default function Footer() {
     <footer className="bg-navy-950 relative border-t border-white/10">
       <div className="stripe-rule-thin h-[3px] w-full" aria-hidden />
 
-      <div className="mx-auto max-w-[1800px] px-4 py-7 sm:px-5 sm:py-9 [@media(max-height:760px)]:py-5">
-        <div className="grid gap-6 md:grid-cols-[1.6fr_1fr_1fr] md:gap-10 [@media(max-height:760px)]:gap-4">
+      <div className="mx-auto max-w-[1800px] px-4 py-6 sm:px-5 sm:py-7 [@media(max-height:760px)]:py-4">
+        <div className="grid gap-6 md:grid-cols-[1.4fr_1fr_1fr_1fr] md:gap-10 [@media(max-height:760px)]:gap-4">
           {/* Identity */}
           <div>
             <p className="font-display text-chalk text-2xl leading-none font-extrabold tracking-[-0.03em] sm:text-3xl">
@@ -56,14 +70,16 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Link columns — 2-up on mobile so the footer stays short. */}
-          <div className="grid grid-cols-2 gap-8 md:col-span-2 md:gap-10">
+          {/* Link columns - 3-up at every width so the footer stays short. At
+              grid-cols-2 the third column wrapped onto a second row, which made
+              the block 412px instead of 231px. */}
+          <div className="grid grid-cols-3 gap-6 md:col-span-3 md:gap-10">
             {columns.map((col) => (
               <nav key={col.heading} aria-label={col.heading}>
                 <p className="text-chalk-dim/70 mb-3 font-mono text-[10px] tracking-[0.18em] uppercase">
                   {col.heading}
                 </p>
-                <ul className="space-y-1.5 [@media(max-height:760px)]:space-y-0.5">
+                <ul className="space-y-1 [@media(max-height:760px)]:space-y-0.5">
                   {col.links.map((link) =>
                     link.external ? (
                       <li key={link.href}>
@@ -93,7 +109,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="text-chalk-dim/70 mt-6 flex flex-col gap-2 border-t border-white/10 pt-4 text-[11px] sm:flex-row sm:items-center sm:justify-between [@media(max-height:760px)]:mt-4 [@media(max-height:760px)]:pt-3">
+        <div className="text-chalk-dim/70 mt-5 flex flex-col gap-2 border-t border-white/10 pt-4 text-[11px] sm:flex-row sm:items-center sm:justify-between [@media(max-height:760px)]:mt-4 [@media(max-height:760px)]:pt-3">
           <p>
             <a
               href={`mailto:${SITE.email}`}

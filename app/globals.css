@@ -3,7 +3,7 @@
 /* ============================================================================
    UBC ROVER — design tokens
    Palette sampled directly from the team recruitment flyer:
-     navy field      #0F2141  (top block)
+     navy field      #041530  (top block, team-chosen)
      indigo field    #37447D → #47548E  (bottom block, gradient)
      amber rule      #DA9C3E / #CA7A32  (diagonal stripe)
      rust rule       #93331D           (diagonal stripe)
@@ -11,9 +11,9 @@
    ========================================================================= */
 @theme {
   /* -- navy: the ground the whole site sits on ---------------------------- */
-  --color-navy-950: #070d1b;
-  --color-navy-900: #0b1730;
-  --color-navy-850: #0f2141;
+  --color-navy-950: #020e21;
+  --color-navy-900: #031228;
+  --color-navy-850: #041530;
   --color-navy-800: #132342;
   --color-navy-700: #192648;
   --color-navy-600: #1e2c55;
@@ -378,20 +378,22 @@
   }
 }
 
-/* Slow drift behind the closing call. Transform only, so it stays on the
-   compositor; it is stopped entirely by the reduced-motion block below. */
-@keyframes drift {
-  0%,
-  100% {
-    transform: translate3d(-50%, 0, 0) scale(1);
+/* Used by the drop-down's projects column, which is remounted on every
+   subteam change so this replays each time. Slow on purpose: the list is
+   swapping under the pointer and should read as settling, not blinking. */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0);
   }
-  50% {
-    transform: translate3d(-50%, 4%, 0) scale(1.12);
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
-.animate-drift {
-  animation: drift 18s ease-in-out infinite;
+.animate-fade-up {
+  animation: fade-up 0.55s var(--ease-out-quart) both;
 }
 
 @keyframes scroll-cue {
