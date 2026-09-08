@@ -460,6 +460,12 @@ export const SUBSYSTEMS: Subsystem[] = [
       { label: "Favourite controller", value: "STM32G474" },
       { label: "Favourite protocol", value: "CAN FD, with SIC transceivers" },
     ],
+    photos: [
+      {
+        src: "/media/subsystems/firmware-esp32.jpg",
+        caption: "An ESP32 dev board on the bench.",
+      },
+    ],
     photoSlot: "SOFTWARE-04",
     ownedBy: "software",
   },
