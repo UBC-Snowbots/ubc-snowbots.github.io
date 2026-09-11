@@ -73,6 +73,13 @@ export const JOINING_PACKAGE = {
   pending: "Joining Package - coming soon",
 } as const;
 
+export const RECRUITMENT_PACKAGE = {
+  url: "https://docs.google.com/document/d/1mBFkbrs7JIXGqi51hKgDNdkRa_tdR4XK/edit?usp=sharing&ouid=103291662898292710339&rtpof=true&sd=true" as
+    string | null,
+  label: "Recruitment Package",
+  pending: "Recruitment Package - coming soon",
+} as const;
+
 /* -------------------------------------------------------------------------- */
 /* Home page — "Who we are" figures                                            */
 /* -------------------------------------------------------------------------- */
@@ -88,7 +95,7 @@ export const STATS: { value: string; label: string }[] = [
   { value: "18", label: "Years active" },
   { value: "64", label: "Students on the team" },
   { value: "780m", label: "Effective operational radius" },
-  { value: "02", label: "International competitions" },
+  { value: "02", label: "International competitionFs" },
   { value: "749", label: "Components in the rover" },
 ];
 
