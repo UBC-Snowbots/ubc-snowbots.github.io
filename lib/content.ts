@@ -66,12 +66,6 @@ export const applyIsExternal = (): boolean => applyHref().startsWith("http");
  * exists. While it is null the button renders as a visibly disabled placeholder
  * rather than a link to nowhere.
  */
-export const JOINING_PACKAGE = {
-  url: "https://docs.google.com/document/d/1mBFkbrs7JIXGqi51hKgDNdkRa_tdR4XK/edit?usp=sharing&ouid=103291662898292710339&rtpof=true&sd=true" as
-    string | null,
-  label: "Joining Package",
-  pending: "Joining Package - coming soon",
-} as const;
 
 export const RECRUITMENT_PACKAGE = {
   url: "https://ugc.production.linktr.ee/431d8953-3a37-4834-a853-4a16f3f74138_2026-27-Recruitment-Package.pdf" as

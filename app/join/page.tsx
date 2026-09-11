@@ -3,7 +3,7 @@ import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import ApplyLink from "@/components/ApplyLink";
 import Reveal from "@/components/Reveal";
-import { JOINING_PACKAGE, RECRUITMENT_PACKAGE, SITE, SOCIALS, SUBTEAMS, leadsForSubteam } from "@/lib/content";
+import { RECRUITMENT_PACKAGE, SITE, SOCIALS, SUBTEAMS, leadsForSubteam } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Join Us",
