@@ -66,11 +66,9 @@ export default async function SubteamPage({ params }: Params) {
         {/* ------------------------------------------------------------
             What we do.
 
-            For subteams that own hardware this is the full subsystem
-            breakdown — main job, description and a Tech Specs table each,
-            in the style of NASA's Perseverance components page. Science and
-            Business own no subsystem, so they fall back to their capability
-            list rather than rendering an empty section.
+            Each supplied subsystem or activity gets its full description,
+            with photos and specifications when available. Teams without
+            detailed entries fall back to their capability list.
             ------------------------------------------------------------ */}
         <Reveal>
           <div className="mt-12 border-b border-white/10 pb-6">
@@ -98,19 +96,25 @@ export default async function SubteamPage({ params }: Params) {
             >
               <article className="mx-auto max-w-[1800px] px-4 py-14 sm:px-5 sm:py-16">
                 <div
-                  className={`grid gap-10 lg:grid-cols-2 lg:gap-14 ${
-                    i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
-                  }`}
+                  className={
+                    sub.photoSlot
+                      ? `grid gap-10 lg:grid-cols-2 lg:gap-14 ${
+                          i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
+                        }`
+                      : "max-w-4xl"
+                  }
                 >
-                  <Reveal>
-                    <PhotoSlot
-                      photos={sub.photos}
-                      alt={`${sub.name} on the UBC Rover.`}
-                      slot={sub.photoSlot}
-                      caption={sub.imageCaption}
-                      expects={sub.expects}
-                    />
-                  </Reveal>
+                  {sub.photoSlot ? (
+                    <Reveal>
+                      <PhotoSlot
+                        photos={sub.photos}
+                        alt={`${sub.name} on the UBC Rover.`}
+                        slot={sub.photoSlot}
+                        caption={sub.imageCaption}
+                        expects={sub.expects}
+                      />
+                    </Reveal>
+                  ) : null}
 
                   <Reveal delay={110}>
                     <h3 className="font-display text-chalk mt-3 text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">
