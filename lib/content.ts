@@ -67,14 +67,14 @@ export const applyIsExternal = (): boolean => applyHref().startsWith("http");
  * rather than a link to nowhere.
  */
 export const JOINING_PACKAGE = {
-  url: "https://ugc.production.linktr.ee/431d8953-3a37-4834-a853-4a16f3f74138_2026-27-Recruitment-Package.pdf" as
+  url: "https://docs.google.com/document/d/1mBFkbrs7JIXGqi51hKgDNdkRa_tdR4XK/edit?usp=sharing&ouid=103291662898292710339&rtpof=true&sd=true" as
     string | null,
   label: "Joining Package",
   pending: "Joining Package - coming soon",
 } as const;
 
 export const RECRUITMENT_PACKAGE = {
-  url: "https://docs.google.com/document/d/1mBFkbrs7JIXGqi51hKgDNdkRa_tdR4XK/edit?usp=sharing&ouid=103291662898292710339&rtpof=true&sd=true" as
+  url: "https://ugc.production.linktr.ee/431d8953-3a37-4834-a853-4a16f3f74138_2026-27-Recruitment-Package.pdf" as
     string | null,
   label: "Recruitment Package",
   pending: "Recruitment Package - coming soon",
@@ -150,10 +150,10 @@ export const SECTIONS: SectionTile[] = [
  * the top, then one section per subsystem with body copy, a labelled image and
  * a Tech Specs table.
  *
- * Subteam copy and specifications checked against the "Subteam Descriptions"
- * Drive document on 2026-09-10:
- * https://docs.google.com/document/d/1E9uWJLtchkwXRg5BzTE2gqjSCCgxLyTdhRBWVKeg6YA/edit
- * Omit fields the leads have not supplied rather than inventing details.
+ * TODO(team): every `specs` value and every `detail` paragraph below is a
+ * PLACEHOLDER. These need the real numbers from the current rover — motor
+ * counts, reduction ratios, payload, reach, bus voltages, radio band and link
+ * budget, and so on. The layout is final; the data is not.
  */
 /**
  * One item in a photo slot. `kind: "video"` renders a <video> slide — the
@@ -195,8 +195,8 @@ export type Subsystem = {
    */
   photos?: Photo[];
   imageCaption?: string;
-  /** Optional photo slot; omit for sections supplied as text only. */
-  photoSlot?: string;
+  /** Human-readable slot id shown in the placeholder, e.g. "CHASSIS-01". */
+  photoSlot: string;
   /**
    * Source filenames from the team Drive earmarked for this slot, listed in the
    * placeholder. Recorded so the intended mapping is visible and correctable
@@ -235,7 +235,7 @@ export const SUBSYSTEMS: Subsystem[] = [
   },
   {
     slug: "drivetrain",
-    name: "Suspension and Drivetrain",
+    name: "Drivetrain",
     role: "Allows traversal over challenging terrain while keeping the chassis level and maintaining traction.",
     summary:
       "The rocker-bogie suspension system allows for traversal over uneven terrain while still maintaining the vehicle more or less level with equal contact force on each wheel. Six wheels follow the tried-and-tested NASA design that has been used for three generations of rover.",
@@ -245,8 +245,6 @@ export const SUBSYSTEMS: Subsystem[] = [
     ],
     specs: [
       { label: "Wheels", value: "6" },
-      { label: "Suspension material", value: "Aluminium 6061-T6" },
-      { label: "Topology optimization weight savings", value: "40%" },
       { label: "Mass", value: "6 kg" },
       { label: "Power", value: "900 W" },
       { label: "Torque", value: "33 N·m" },
@@ -289,7 +287,6 @@ export const SUBSYSTEMS: Subsystem[] = [
       "The comms relay has to survive the inclement weather, harsh terrain, and unpredictable landing conditions.",
     ],
     specs: [
-      { label: "Range extension", value: "300 m beyond line of sight" },
       { label: "Material", value: "3D-printed PLA" },
       { label: "Weight", value: "2 kg" },
       { label: "Deployable height", value: "0.4 m" },
@@ -341,9 +338,9 @@ export const SUBSYSTEMS: Subsystem[] = [
       "The end effector has all the same heat / dust / wet requirements as the arm. Really hot day's dust always attacking it, we also need to monitor vibrations as anything from the system gets amplified as it comes all the way up to the end effector. We had to design it with that in mind.",
     ],
     specs: [
+      { label: "Payload", value: "Over 5 kg" },
       { label: "Tooling", value: "Wire cutters, screwdrivers" },
       { label: "Coupling", value: "Hot-swappable" },
-      { label: "Largest graspable object", value: "20 cm" },
     ],
     photos: [
       {
@@ -367,7 +364,7 @@ export const SUBSYSTEMS: Subsystem[] = [
     specs: [
       { label: "PCBs", value: "6" },
       { label: "Motors", value: "7, all with encoders" },
-      { label: "Highest motor stall current", value: "100 A" },
+      { label: "Stall current", value: "Over 100 A on some" },
       { label: "Cameras", value: "2" },
       { label: "Microcontrollers", value: "1, end-effector mounted" },
     ],
@@ -492,13 +489,12 @@ export const SUBSYSTEMS: Subsystem[] = [
       "Our power distribution boards are built to withstand 90 A of continuous current. It can supply power on four different voltage rails, totalling 22 individual channels. All of this operates under 1000 W+ loads in high heat conditions to keep the rover's heart beating.",
     ],
     specs: [
-      { label: "Input voltage", value: "21–29 V" },
+      { label: "Input voltage", value: "19–21 V" },
       { label: "Output rails", value: "5 V, 12 V, 18 V, 24 V" },
       { label: "Channels", value: "22" },
       { label: "Continuous current", value: "90 A" },
       { label: "Load", value: "1000 W+" },
       { label: "Per-output connector", value: "XT30 with fuse holder" },
-      { label: "Connected systems", value: "7+" },
     ],
     photos: [
       {
@@ -527,10 +523,8 @@ export const SUBSYSTEMS: Subsystem[] = [
       { label: "Supply rail", value: "18 V" },
       { label: "LEDs", value: "4" },
       { label: "Driver", value: "Constant current" },
-      { label: "Brightness", value: "Consistent across all LEDs" },
       { label: "Colour range", value: "Any HEX value" },
-      { label: "Camera attachment", value: "Top-mounted floodlight" },
-      { label: "Coverage", value: "Maximum" },
+      { label: "Additional", value: "Floodlight on the PTZ camera" },
     ],
     photoSlot: "ELECTRICAL-02",
     ownedBy: "electrical",
@@ -575,8 +569,6 @@ export const SUBSYSTEMS: Subsystem[] = [
       { label: "Max collection rate", value: "40 L/min" },
       { label: "Drill motor", value: "12 V stepper" },
       { label: "Caching", value: "Tri-chambered carousel" },
-      { label: "Soil storage capacity", value: "3 samples" },
-      { label: "Feedback", value: "Ultrasonic data, 2 video feeds" },
     ],
     photos: [
       {
@@ -609,9 +601,7 @@ export const SUBSYSTEMS: Subsystem[] = [
     ],
     specs: [
       { label: "Max agitator speed", value: "12,000 RPM" },
-      { label: "Filter mesh sizes", value: "5–100 µm" },
-      { label: "Assembly material", value: "3D-printed PETG-CF" },
-      { label: "Swappable filter reserve", value: "3" },
+      { label: "Filtration", value: "Swappable micrometre mesh" },
       { label: "Flow control", value: "Pumps and solenoid valves" },
     ],
     photos: [
@@ -636,11 +626,6 @@ export const SUBSYSTEMS: Subsystem[] = [
     specs: [
       { label: "Max simultaneous actuators + sensors", value: "10" },
       { label: "Supported voltage rails", value: "5 V, 12 V, 24 V" },
-      {
-        label: "Electromechanical components",
-        value:
-          "1 stepper motor, 3 servo motors, 1 linear actuator, 1 vacuum pump, ultrasonic sensor, 2 camera feeds",
-      },
     ],
     photos: [
       {
@@ -650,31 +635,6 @@ export const SUBSYSTEMS: Subsystem[] = [
     ],
     photoSlot: "ROVERLAB-03",
     ownedBy: "rover-lab",
-  },
-
-  /* ---- Science ------------------------------------------------------- */
-  {
-    slug: "life-detection",
-    name: "Life Detection",
-    role: "We develop assays to determine the presence of life.",
-    summary:
-      "Using the soil collected by our onboard Rover Lab, our life detection system uses assays developed by our Science subteam to determine whether a soil sample contains life. We work on optimizing existing life detection assays using our onboard spectrophotometer and developing novel assays.",
-    detail: [
-      "Our subteam focuses on all kinds of projects. This can be anything from wet and dry lab work, literature review, design and printing of custom microfluidic chips on our new Formlabs 3B+ resin printer, designing and building sensing equipment and circuits, or the development of miniaturized onboard testing equipment.",
-      "We need to create assays that can be used on our rover without human intervention, making the optimization of our assays incredibly important.",
-    ],
-    ownedBy: "science",
-  },
-  {
-    slug: "science-hardware",
-    name: "Hardware",
-    role: "We design the hardware that makes our science testing possible.",
-    summary:
-      "We build and improve the spectrophotometer system used in our autonomous testing and work to become the first student team to develop lab-on-a-chip capabilities for life detection. This includes all aspects of the design, function, calibration, and integration with these subsystems.",
-    detail: [
-      "Our current system integrates with Rover Lab to perform onboard testing on a macro scale. This takes up significant weight on the rover, so our current R&D project is to miniaturize the whole testing system onto a lab-on-a-chip using our Formlabs 3B+ resin printer.",
-    ],
-    ownedBy: "science",
   },
 
   /* ---- Business ------------------------------------------------------ */
@@ -756,7 +716,7 @@ export type Subteam = {
   discipline: string;
   /** Group photo for this subteam's banner. Falls back to TEAM_PHOTO. */
   photo?: string;
-  /** Introduction supplied by the subteam lead in Subteam Descriptions. */
+  /** TODO(team): subteam leads to rewrite. Carried over from the old site. */
   blurb: string;
   image: string;
   capabilities: string[];
@@ -770,7 +730,7 @@ export const SUBTEAMS: Subteam[] = [
     name: "Chassis",
     discipline: "Mechanical",
     blurb:
-      "The Chassis team does hands-on, in-person assembly while learning and practicing mechanical design. We get our hands dirty, which is exactly why we can explain and stand behind every design decision we make. We are the main driver of integration, pulling the work of every other subteam together into a traversal-ready vehicle. Our job is to carry those components on a foundation that is rugged, reliable, and reconfigurable.",
+      "The Chassis team does hands-on, in-person assembly while learning and practicing mechanical design. We get our hands dirty, which is exactly why we can explain and stand behind every design decision we make. We are the main driver of integration, pulling the work of every other subteam together into a traversal-ready vehicle. Our job is to carry those components on a foundation that is reliable, debuggable, and clean.",
     image: "/media/team/chassis.jpg",
     capabilities: [
       "Suspension & drivetrain",
@@ -782,7 +742,7 @@ export const SUBTEAMS: Subteam[] = [
       {
         title: "Mechanical design",
         doing:
-          "Contribute to the design and development of Chassis subsystems, propose solutions to open-ended problems, and support fabrication through machining, 3D printing and other shop processes. This year's drivetrain upgrade focuses on motor selection and integration so all six wheels are securely held and easy to install, with research into steerable wheels.",
+          "Contribute to the design and development of Chassis subsystems, propose solutions to open-ended problems, and support fabrication through machining, 3D printing and other shop processes. This year's projects are a drivetrain upgrade, a baseplate upgrade, and adding individual steering to the wheels.",
         skills: [
           "SolidWorks or similar CAD",
           "Machining and shop access a plus",
@@ -792,7 +752,7 @@ export const SUBTEAMS: Subteam[] = [
       {
         title: "Integration projects",
         doing:
-          "Apply lessons from last year's baseplate to build a more accessible rover layout that is easier to debug. Build a miniature rover so Software can test autonomous navigation at a smaller scale, and develop a communications relay for reliable long-range communication.",
+          "Chassis leads integration with the other subteams. Tentative projects include a modular battery system that adjusts capacity to the task, and a deployable communications relay to double our effective range.",
         skills: [
           "DFMA principles",
           "Load analysis and material selection",
@@ -852,6 +812,7 @@ export const SUBTEAMS: Subteam[] = [
       "Unity simulation",
       "Operator training",
     ],
+    // TODO(team): the four items the Software lead listed under "subteam
     openRoles: [
       {
         title: "Systems engineering",
@@ -903,7 +864,7 @@ export const SUBTEAMS: Subteam[] = [
       {
         title: "PCBs and embedded systems",
         doing:
-          "Design and test in-house PCBs for motor controllers, sensor boards, power distribution and real-time microcontroller systems. This year's projects include relaying current and voltage readings to the control base in real time and developing a software-operated emergency kill switch.",
+          "Design and test in-house PCBs for motor controllers, sensor boards, power distribution and real-time microcontroller systems. This year: using sensors to collect real-time current and voltage data, and installing new motor drivers.",
         skills: [
           "PCB layout and routing, Altium",
           "Microcontrollers, sensors, firmware",
@@ -955,13 +916,13 @@ export const SUBTEAMS: Subteam[] = [
     name: "Science",
     discipline: "Science",
     blurb:
-      "Curiosity, Perseverance, Spirit, and Opportunity. Every Mars mission has had one thing in common: a drive to understand the unknown through the lens of science. This is the very same mission behind the Science subteam, where we search the ‘Martian’ surface for the biomarkers of life. From designing lab-on-a-chip microfluidic systems to building DIY Raman spectrometers, success on our team requires drive, innovation, and a keen eye for detail.",
+      "We design an autonomous life-detection lab for the rover, combining biochemical assays, custom instruments, microfluidic lab-on-a-chip systems, and computer vision to analyze Martian habitability with minimal samples.",
     image: "/media/team/science.png",
     capabilities: [
-      "Life detection assays",
-      "Instrumentation",
-      "Geoscience",
-      "Microfluidics",
+      "Biochemical assays",
+      "Microfluidic lab-on-a-chip",
+      "Computer vision",
+      "Habitability analysis",
     ],
     openRoles: [
       {
@@ -1068,8 +1029,7 @@ export const getSubteam = (slug: string) => SUBTEAMS.find((t) => t.slug === slug
 /**
  * The rover subsystems a given subteam owns. These render inside the subteam's
  * own "What we do" section — there is no separate rover page for them to live
- * on. Science's assays and hardware and Business's activities use the same
- * structure as the engineering subsystems.
+ * on. Science and Business own no hardware subsystem and correctly return [].
  */
 export const subsystemsForSubteam = (slug: string) =>
   SUBSYSTEMS.filter((sub) => sub.ownedBy === slug);
