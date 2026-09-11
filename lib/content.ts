@@ -73,6 +73,13 @@ export const JOINING_PACKAGE = {
   pending: "Joining Package - coming soon",
 } as const;
 
+export const RECRUITMENT_PACKAGE = {
+  url: "https://docs.google.com/document/d/1mBFkbrs7JIXGqi51hKgDNdkRa_tdR4XK/edit?usp=sharing&ouid=103291662898292710339&rtpof=true&sd=true" as
+    string | null,
+  label: "Recruitment Package",
+  pending: "Recruitment Package - coming soon",
+} as const;
+
 /* -------------------------------------------------------------------------- */
 /* Home page — "Who we are" figures                                            */
 /* -------------------------------------------------------------------------- */
