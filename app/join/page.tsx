@@ -114,7 +114,11 @@ export default function JoinPage() {
                     <div>
                       <div className="relative aspect-[16/9] overflow-hidden border border-white/10">
                         <img
-                          src={team.image}
+                          src={
+                            team.slug === "rover-lab"
+                              ? "/media/team/rover-lab-join.png"
+                              : team.image
+                          }
                           alt={`${team.name} subteam at work.`}
                           loading="lazy"
                           decoding="async"
