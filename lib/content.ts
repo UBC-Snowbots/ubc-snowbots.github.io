@@ -73,13 +73,6 @@ export const RECRUITMENT_PACKAGE = {
   pending: "Recruitment Package - coming soon",
 } as const;
 
-export const RECRUITMENT_PACKAGE = {
-  url: "https://docs.google.com/document/d/1mBFkbrs7JIXGqi51hKgDNdkRa_tdR4XK/edit?usp=sharing&ouid=103291662898292710339&rtpof=true&sd=true" as
-    string | null,
-  label: "Recruitment Package",
-  pending: "Recruitment Package - coming soon",
-} as const;
-
 /* -------------------------------------------------------------------------- */
 /* Home page — "Who we are" figures                                            */
 /* -------------------------------------------------------------------------- */
@@ -159,7 +152,12 @@ export const SECTIONS: SectionTile[] = [
  * One item in a photo slot. `kind: "video"` renders a <video> slide — the
  * Software team supplied an RL demo as MP4, not a still.
  */
-export type Photo = { src: string; caption?: string; kind?: "image" | "video" };
+export type Photo = {
+  src: string;
+  caption?: string;
+  kind?: "image" | "video";
+  autoPlay?: boolean;
+};
 
 /** One row of a subsystem's tech-spec table. */
 export type Spec = { label: string; value: string };
@@ -423,8 +421,15 @@ export const SUBSYSTEMS: Subsystem[] = [
         value: "RL with domain randomisation, excluding observation module",
       },
     ],
+    photos: [
+      {
+        src: "/media/subsystems/rover-autonomy.mp4",
+        kind: "video",
+        autoPlay: true,
+        caption: "Rover autonomy demonstration.",
+      },
+    ],
     photoSlot: "SOFTWARE-02",
-    expects: ["Software RL.mp4 - video"],
     ownedBy: "software",
   },
   {
@@ -635,6 +640,32 @@ export const SUBSYSTEMS: Subsystem[] = [
     ],
     photoSlot: "ROVERLAB-03",
     ownedBy: "rover-lab",
+  },
+
+  {
+    slug: "life-detection",
+    name: "Life Detection",
+    role: "We develop assays to determine the presence of life.",
+    summary:
+      "Using the soil collected by our onboard Rover Lab, our life detection system uses assays developed by our Science subteam to determine whether a soil sample contains life. We work on optimizing existing life detection assays using our onboard spectrophotometer and developing novel assays.",
+    detail: [
+      "Our subteam focuses on all kinds of projects. This can be anything from wet and dry lab work, literature review, design and printing of custom microfluidic chips on our new FormLabs 3B+ resin printer, designing and building sensing equipment and circuits, or the development of miniaturized onboard testing equipment.",
+      "We need to create assays that can be used on our rover without human intervention, making the optimization of our assays incredibly important.",
+    ],
+    photoSlot: "SCIENCE-01",
+    ownedBy: "science",
+  },
+  {
+    slug: "science-hardware",
+    name: "Hardware",
+    role: "We design the hardware that makes our science testing possible.",
+    summary:
+      "We build and improve the spectrophotometer system used in our autonomous testing and work to become the first student team to develop lab-on-a-chip capabilities for life detection. This includes all aspects of the design, function, calibration, and integration with these subsystems.",
+    detail: [
+      "Our current system integrates with the Rover Lab to perform on-board testing on a macro scale. This takes up significant weight on the Rover, so our current R&D project is to miniaturize the whole testing system onto a lab-on-a-chip using our FormLabs 3B+ resin printer.",
+    ],
+    photoSlot: "SCIENCE-02",
+    ownedBy: "science",
   },
 
   /* ---- Business ------------------------------------------------------ */
@@ -916,7 +947,7 @@ export const SUBTEAMS: Subteam[] = [
     name: "Science",
     discipline: "Science",
     blurb:
-      "We design an autonomous life-detection lab for the rover, combining biochemical assays, custom instruments, microfluidic lab-on-a-chip systems, and computer vision to analyze Martian habitability with minimal samples.",
+      "Curiosity, Perseverance, Spirit, and Opportunity. Every Mars mission has had one thing in common: a drive to understand the unknown through the lens of science. This is the very same mission behind the Science subteam, where we search the ‘Martian’ surface for the biomarkers of life. From designing lab-on-a-chip microfluidic systems to building DIY Raman spectrometers, success on our team requires drive, innovation, and a keen eye for detail.",
     image: "/media/team/science.png",
     capabilities: [
       "Biochemical assays",
@@ -1029,7 +1060,7 @@ export const getSubteam = (slug: string) => SUBTEAMS.find((t) => t.slug === slug
 /**
  * The rover subsystems a given subteam owns. These render inside the subteam's
  * own "What we do" section — there is no separate rover page for them to live
- * on. Science and Business own no hardware subsystem and correctly return [].
+ * on. Business owns no hardware subsystem and correctly returns [].
  */
 export const subsystemsForSubteam = (slug: string) =>
   SUBSYSTEMS.filter((sub) => sub.ownedBy === slug);

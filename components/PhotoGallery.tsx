@@ -115,6 +115,9 @@ export default function PhotoGallery({ photos, alt }: { photos: Photo[]; alt: st
               <video
                 src={photo.src}
                 controls
+                autoPlay={photo.autoPlay}
+                muted={photo.autoPlay}
+                loop
                 playsInline
                 preload="metadata"
                 className="bg-navy-950 absolute inset-0 h-full w-full object-contain"
