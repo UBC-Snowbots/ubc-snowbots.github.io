@@ -128,7 +128,7 @@ export default function PhotoGallery({ photos, alt }: { photos: Photo[]; alt: st
                 alt={photo.caption ?? alt}
                 loading={warm ? "eager" : "lazy"}
                 decoding="async"
-                className="absolute inset-0 h-full w-full object-cover"
+                className={`absolute inset-0 h-full w-full ${photo.objectFit === "contain" ? "bg-navy-950 object-contain" : "object-cover"}`}
               />
             )}
           </div>

@@ -157,6 +157,7 @@ export type Photo = {
   caption?: string;
   kind?: "image" | "video";
   autoPlay?: boolean;
+  objectFit?: "cover" | "contain";
 };
 
 /** One row of a subsystem's tech-spec table. */
@@ -531,6 +532,7 @@ export const SUBSYSTEMS: Subsystem[] = [
       { label: "Colour range", value: "Any HEX value" },
       { label: "Additional", value: "Floodlight on the PTZ camera" },
     ],
+    photos: [{ src: "/media/subsystems/lighting-system.png", objectFit: "contain" }],
     photoSlot: "ELECTRICAL-02",
     ownedBy: "electrical",
   },
