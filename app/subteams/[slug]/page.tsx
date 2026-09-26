@@ -5,7 +5,7 @@ import PageHero from "@/components/PageHero";
 import PhotoSlot from "@/components/PhotoSlot";
 import ApplyLink from "@/components/ApplyLink";
 import Reveal from "@/components/Reveal";
-import { SUBTEAMS, getSubteam, subsystemsForSubteam } from "@/lib/content";
+import { APPLY, SUBTEAMS, getSubteam, subsystemsForSubteam } from "@/lib/content";
 
 /** Static export needs every route enumerated at build time. */
 export function generateStaticParams() {
@@ -46,7 +46,7 @@ export default async function SubteamPage({ params }: Params) {
           <div className="bg-navy-900 flex flex-col gap-6 border border-white/10 p-8 sm:flex-row sm:items-center sm:justify-between sm:p-10">
             <div>
               <p className="font-display text-chalk mt-3 text-2xl font-semibold tracking-[-0.02em] sm:text-3xl">
-                Applications open every Fall.
+                {APPLY.formUrl ? "Applications open every Fall." : APPLY.bannerText}
               </p>
             </div>
             <div className="flex flex-wrap gap-4">
@@ -57,7 +57,7 @@ export default async function SubteamPage({ params }: Params) {
                 href="/join"
                 className="text-chalk border border-white/25 px-8 py-4 font-mono text-[11px] tracking-[0.16em] uppercase transition-colors duration-200 hover:border-amber-500 hover:text-amber-500"
               >
-                See open roles
+                {APPLY.formUrl ? "See open roles" : "Explore subteams"}
               </Link>
             </div>
           </div>

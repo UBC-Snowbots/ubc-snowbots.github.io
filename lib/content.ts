@@ -28,35 +28,18 @@ export const SITE = {
 /* -------------------------------------------------------------------------- */
 
 /**
- * The top banner and every "Apply" button point here.
+ * Every "Apply" button uses this application form while recruitment is open.
  *
- * TODO(team): replace `formUrl` with the real application form when the Fall
- * cycle opens. While it is null every Apply control routes to /join, which
- * carries the current status — that is deliberate, so nothing ever links to a
- * dead or wrong form.
+ * Set `formUrl` to the application form when recruitment opens. While it is
+ * null, Apply controls display the closed status without linking to the form.
  */
 export const APPLY = {
-  formUrl:
-    "https://docs.google.com/forms/d/e/1FAIpQLScKwPUzilAh6Iyq0v1xhxPfeMoywmIl6XQo5ipadU_MnVOm8Q/viewform" as
-      string | null,
-  fallbackHref: "/join",
-  bannerText: "Applications open every Fall",
+  formUrl: null as string | null,
+  bannerText: "Recruitment now closed.",
   /** Shown on in-page buttons, where "Apply" reads better than the nav label. */
   buttonCta: "Apply Now",
   cta: "Join Us",
 } as const;
-
-export const applyHref = (): string => APPLY.formUrl ?? APPLY.fallbackHref;
-
-/**
- * True while the apply target is the external form rather than the /join page.
- *
- * The two need different link handling - an external form should open in a new
- * tab and carry rel="noreferrer noopener", an internal route should not - and
- * which one it is depends on a value that changes between seasons. Deriving it
- * means no call site has to be edited when the form is swapped out or pulled.
- */
-export const applyIsExternal = (): boolean => applyHref().startsWith("http");
 
 /**
  * The overall joining package — the equivalent of UBC Formula Electric's

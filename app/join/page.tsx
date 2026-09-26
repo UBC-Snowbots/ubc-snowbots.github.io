@@ -4,6 +4,7 @@ import PageHero from "@/components/PageHero";
 import ApplyLink from "@/components/ApplyLink";
 import Reveal from "@/components/Reveal";
 import {
+  APPLY,
   RECRUITMENT_PACKAGE,
   SITE,
   SOCIALS,
@@ -13,8 +14,9 @@ import {
 
 export const metadata: Metadata = {
   title: "Join Us",
-  description:
-    "UBC Rover recruits every Fall. See what each subteam works on and apply to the one that fits.",
+  description: APPLY.formUrl
+    ? "UBC Rover recruits every Fall. See what each subteam works on and apply to the one that fits."
+    : "Recruitment now closed. Explore UBC Rover's subteams and watch for the next announcement.",
 };
 
 /**
@@ -32,7 +34,11 @@ export default function JoinPage() {
     <>
       <PageHero
         title="Join Us!"
-        lede="Hands-on experience in robotics, software and mechanical design. Find the subteam that fits and apply to it directly."
+        lede={
+          APPLY.formUrl
+            ? "Hands-on experience in robotics, software and mechanical design. Find the subteam that fits and apply to it directly."
+            : `${APPLY.bannerText} Explore our subteams and watch for the next announcement.`
+        }
         image="/media/team/electrical.jpg"
       />
 

@@ -49,8 +49,8 @@ site used, so submissions keep arriving in the existing inbox.
 
 Two things worth knowing:
 
-- `RECRUITMENT.open` is the single flag that flips the Join page status. Set it to
-  `true` in September.
+- `APPLY.formUrl` controls the application links. Set it to the current form URL
+  when recruitment opens; leave it `null` while recruitment is closed.
 - `SECTIONS[].span` is `"wide"` or `"narrow"` and controls the home page mosaic.
   With five tiles the working pattern is **one wide, then two rows of two
   narrow** — a second wide tile strands one tile beside an empty cell.
